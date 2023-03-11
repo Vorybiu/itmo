@@ -1,0 +1,1707 @@
+source: |
+  section data:
+      result 0;
+      first 1;
+      second 2;
+      even 1;
+      max 4000000
+      digits 0,0,0,0,0,0,0,0,0
+      temp_digit digits
+
+
+  section text:
+
+  _start:
+      ld second
+      and even
+      je sum
+      jmp next
+  sum:
+      ld result
+      add second
+      st result
+  next:
+      ld second
+      add first
+      st second
+      sub first
+      st first
+      ld second
+      sub max
+      jl _start
+      ld temp_digit
+
+      add #1
+      st temp_digit
+
+  digits_result:
+      ld result
+      mod #10
+      add #'0'
+      st $temp_digit
+      ld result
+      div #10
+      cmp #0
+      je print_result
+      st result
+      ld temp_digit
+      add #1
+      st temp_digit
+      jmp digits_result
+
+  print_result:
+      ld $temp_digit
+      cmp #0
+      je end
+      st OUT
+      ld temp_digit
+      sub #1
+      st temp_digit
+      jmp print_result
+
+  end:
+      hlt
+
+input: |
+log: |+
+  INFO machine:simulation { INPUT MESSAGE } [ `` ]
+  INFO machine:simulation { INPUT TOKENS  } [  ]
+  DEBUG machine:new_tick {TICK: 0 IP: 0 DA: 0} IR: 0x0 ACC: 0 ALU [a:0 b:0 => 0] FLAGS: [Z:0 N:0]  Action: NOP 0 
+  DEBUG machine:new_tick {TICK: 1 IP: 1 DA: 0} IR: 0xf0000012 ACC: 0 ALU [a:0 b:0 => 0] FLAGS: [Z:0 N:0]  Action: JMP 18 
+  DEBUG machine:new_tick {TICK: 2 IP: 18 DA: 0} IR: 0xf0000012 ACC: 0 ALU [a:0 b:0 => 0] FLAGS: [Z:0 N:0]  Action: JMP 18 
+  DEBUG machine:new_tick {TICK: 3 IP: 19 DA: 18} IR: 0x20000005 ACC: 0 ALU [a:0 b:0 => 0] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 4 IP: 19 DA: 5} IR: 0x20000005 ACC: 0 ALU [a:0 b:0 => 0] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 5 IP: 19 DA: 5} IR: 0x20000005 ACC: 2 ALU [a:0 b:0 => 0] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 6 IP: 20 DA: 19} IR: 0x60000006 ACC: 2 ALU [a:0 b:0 => 0] FLAGS: [Z:0 N:0]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 7 IP: 20 DA: 6} IR: 0x60000006 ACC: 2 ALU [a:0 b:0 => 0] FLAGS: [Z:0 N:0]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 8 IP: 20 DA: 6} IR: 0x60000006 ACC: 0 ALU [a:2 b:1 => 0] FLAGS: [Z:1 N:0]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 9 IP: 21 DA: 20} IR: 0xb0000016 ACC: 0 ALU [a:2 b:1 => 0] FLAGS: [Z:1 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 10 IP: 22 DA: 20} IR: 0xb0000016 ACC: 0 ALU [a:2 b:1 => 0] FLAGS: [Z:1 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 11 IP: 23 DA: 22} IR: 0x20000003 ACC: 0 ALU [a:2 b:1 => 0] FLAGS: [Z:1 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 12 IP: 23 DA: 3} IR: 0x20000003 ACC: 0 ALU [a:2 b:1 => 0] FLAGS: [Z:1 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 13 IP: 23 DA: 3} IR: 0x20000003 ACC: 0 ALU [a:2 b:1 => 0] FLAGS: [Z:1 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 14 IP: 24 DA: 23} IR: 0x40000005 ACC: 0 ALU [a:2 b:1 => 0] FLAGS: [Z:1 N:0]  Action: ADD 5 
+  DEBUG machine:new_tick {TICK: 15 IP: 24 DA: 5} IR: 0x40000005 ACC: 0 ALU [a:2 b:1 => 0] FLAGS: [Z:1 N:0]  Action: ADD 5 
+  DEBUG machine:new_tick {TICK: 16 IP: 24 DA: 5} IR: 0x40000005 ACC: 2 ALU [a:0 b:2 => 2] FLAGS: [Z:0 N:0]  Action: ADD 5 
+  DEBUG machine:new_tick {TICK: 17 IP: 25 DA: 24} IR: 0x30000003 ACC: 2 ALU [a:0 b:2 => 2] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 18 IP: 25 DA: 3} IR: 0x30000003 ACC: 2 ALU [a:0 b:2 => 2] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 19 IP: 25 DA: 3} IR: 0x30000003 ACC: 2 ALU [a:0 b:2 => 2] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 20 IP: 26 DA: 25} IR: 0x20000005 ACC: 2 ALU [a:0 b:2 => 2] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 21 IP: 26 DA: 5} IR: 0x20000005 ACC: 2 ALU [a:0 b:2 => 2] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 22 IP: 26 DA: 5} IR: 0x20000005 ACC: 2 ALU [a:0 b:2 => 2] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 23 IP: 27 DA: 26} IR: 0x40000004 ACC: 2 ALU [a:0 b:2 => 2] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 24 IP: 27 DA: 4} IR: 0x40000004 ACC: 2 ALU [a:0 b:2 => 2] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 25 IP: 27 DA: 4} IR: 0x40000004 ACC: 3 ALU [a:2 b:1 => 3] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 26 IP: 28 DA: 27} IR: 0x30000005 ACC: 3 ALU [a:2 b:1 => 3] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 27 IP: 28 DA: 5} IR: 0x30000005 ACC: 3 ALU [a:2 b:1 => 3] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 28 IP: 28 DA: 5} IR: 0x30000005 ACC: 3 ALU [a:2 b:1 => 3] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 29 IP: 29 DA: 28} IR: 0x50000004 ACC: 3 ALU [a:2 b:1 => 3] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 30 IP: 29 DA: 4} IR: 0x50000004 ACC: 3 ALU [a:2 b:1 => 3] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 31 IP: 29 DA: 4} IR: 0x50000004 ACC: 2 ALU [a:3 b:1 => 2] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 32 IP: 30 DA: 29} IR: 0x30000004 ACC: 2 ALU [a:3 b:1 => 2] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 33 IP: 30 DA: 4} IR: 0x30000004 ACC: 2 ALU [a:3 b:1 => 2] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 34 IP: 30 DA: 4} IR: 0x30000004 ACC: 2 ALU [a:3 b:1 => 2] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 35 IP: 31 DA: 30} IR: 0x20000005 ACC: 2 ALU [a:3 b:1 => 2] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 36 IP: 31 DA: 5} IR: 0x20000005 ACC: 2 ALU [a:3 b:1 => 2] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 37 IP: 31 DA: 5} IR: 0x20000005 ACC: 3 ALU [a:3 b:1 => 2] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 38 IP: 32 DA: 31} IR: 0x50000007 ACC: 3 ALU [a:3 b:1 => 2] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 39 IP: 32 DA: 7} IR: 0x50000007 ACC: 3 ALU [a:3 b:1 => 2] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 40 IP: 32 DA: 7} IR: 0x50000007 ACC: -3999997 ALU [a:3 b:4000000 => -3999997] FLAGS: [Z:0 N:1]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 41 IP: 33 DA: 32} IR: 0xd0000012 ACC: -3999997 ALU [a:3 b:4000000 => -3999997] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 42 IP: 18 DA: 32} IR: 0xd0000012 ACC: -3999997 ALU [a:3 b:4000000 => -3999997] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 43 IP: 19 DA: 18} IR: 0x20000005 ACC: -3999997 ALU [a:3 b:4000000 => -3999997] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 44 IP: 19 DA: 5} IR: 0x20000005 ACC: -3999997 ALU [a:3 b:4000000 => -3999997] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 45 IP: 19 DA: 5} IR: 0x20000005 ACC: 3 ALU [a:3 b:4000000 => -3999997] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 46 IP: 20 DA: 19} IR: 0x60000006 ACC: 3 ALU [a:3 b:4000000 => -3999997] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 47 IP: 20 DA: 6} IR: 0x60000006 ACC: 3 ALU [a:3 b:4000000 => -3999997] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 48 IP: 20 DA: 6} IR: 0x60000006 ACC: 1 ALU [a:3 b:1 => 1] FLAGS: [Z:0 N:0]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 49 IP: 21 DA: 20} IR: 0xb0000016 ACC: 1 ALU [a:3 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 50 IP: 22 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:3 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 51 IP: 25 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:3 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 52 IP: 26 DA: 25} IR: 0x20000005 ACC: 1 ALU [a:3 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 53 IP: 26 DA: 5} IR: 0x20000005 ACC: 1 ALU [a:3 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 54 IP: 26 DA: 5} IR: 0x20000005 ACC: 3 ALU [a:3 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 55 IP: 27 DA: 26} IR: 0x40000004 ACC: 3 ALU [a:3 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 56 IP: 27 DA: 4} IR: 0x40000004 ACC: 3 ALU [a:3 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 57 IP: 27 DA: 4} IR: 0x40000004 ACC: 5 ALU [a:3 b:2 => 5] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 58 IP: 28 DA: 27} IR: 0x30000005 ACC: 5 ALU [a:3 b:2 => 5] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 59 IP: 28 DA: 5} IR: 0x30000005 ACC: 5 ALU [a:3 b:2 => 5] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 60 IP: 28 DA: 5} IR: 0x30000005 ACC: 5 ALU [a:3 b:2 => 5] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 61 IP: 29 DA: 28} IR: 0x50000004 ACC: 5 ALU [a:3 b:2 => 5] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 62 IP: 29 DA: 4} IR: 0x50000004 ACC: 5 ALU [a:3 b:2 => 5] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 63 IP: 29 DA: 4} IR: 0x50000004 ACC: 3 ALU [a:5 b:2 => 3] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 64 IP: 30 DA: 29} IR: 0x30000004 ACC: 3 ALU [a:5 b:2 => 3] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 65 IP: 30 DA: 4} IR: 0x30000004 ACC: 3 ALU [a:5 b:2 => 3] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 66 IP: 30 DA: 4} IR: 0x30000004 ACC: 3 ALU [a:5 b:2 => 3] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 67 IP: 31 DA: 30} IR: 0x20000005 ACC: 3 ALU [a:5 b:2 => 3] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 68 IP: 31 DA: 5} IR: 0x20000005 ACC: 3 ALU [a:5 b:2 => 3] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 69 IP: 31 DA: 5} IR: 0x20000005 ACC: 5 ALU [a:5 b:2 => 3] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 70 IP: 32 DA: 31} IR: 0x50000007 ACC: 5 ALU [a:5 b:2 => 3] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 71 IP: 32 DA: 7} IR: 0x50000007 ACC: 5 ALU [a:5 b:2 => 3] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 72 IP: 32 DA: 7} IR: 0x50000007 ACC: -3999995 ALU [a:5 b:4000000 => -3999995] FLAGS: [Z:0 N:1]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 73 IP: 33 DA: 32} IR: 0xd0000012 ACC: -3999995 ALU [a:5 b:4000000 => -3999995] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 74 IP: 18 DA: 32} IR: 0xd0000012 ACC: -3999995 ALU [a:5 b:4000000 => -3999995] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 75 IP: 19 DA: 18} IR: 0x20000005 ACC: -3999995 ALU [a:5 b:4000000 => -3999995] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 76 IP: 19 DA: 5} IR: 0x20000005 ACC: -3999995 ALU [a:5 b:4000000 => -3999995] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 77 IP: 19 DA: 5} IR: 0x20000005 ACC: 5 ALU [a:5 b:4000000 => -3999995] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 78 IP: 20 DA: 19} IR: 0x60000006 ACC: 5 ALU [a:5 b:4000000 => -3999995] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 79 IP: 20 DA: 6} IR: 0x60000006 ACC: 5 ALU [a:5 b:4000000 => -3999995] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 80 IP: 20 DA: 6} IR: 0x60000006 ACC: 1 ALU [a:5 b:1 => 1] FLAGS: [Z:0 N:0]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 81 IP: 21 DA: 20} IR: 0xb0000016 ACC: 1 ALU [a:5 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 82 IP: 22 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:5 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 83 IP: 25 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:5 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 84 IP: 26 DA: 25} IR: 0x20000005 ACC: 1 ALU [a:5 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 85 IP: 26 DA: 5} IR: 0x20000005 ACC: 1 ALU [a:5 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 86 IP: 26 DA: 5} IR: 0x20000005 ACC: 5 ALU [a:5 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 87 IP: 27 DA: 26} IR: 0x40000004 ACC: 5 ALU [a:5 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 88 IP: 27 DA: 4} IR: 0x40000004 ACC: 5 ALU [a:5 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 89 IP: 27 DA: 4} IR: 0x40000004 ACC: 8 ALU [a:5 b:3 => 8] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 90 IP: 28 DA: 27} IR: 0x30000005 ACC: 8 ALU [a:5 b:3 => 8] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 91 IP: 28 DA: 5} IR: 0x30000005 ACC: 8 ALU [a:5 b:3 => 8] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 92 IP: 28 DA: 5} IR: 0x30000005 ACC: 8 ALU [a:5 b:3 => 8] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 93 IP: 29 DA: 28} IR: 0x50000004 ACC: 8 ALU [a:5 b:3 => 8] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 94 IP: 29 DA: 4} IR: 0x50000004 ACC: 8 ALU [a:5 b:3 => 8] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 95 IP: 29 DA: 4} IR: 0x50000004 ACC: 5 ALU [a:8 b:3 => 5] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 96 IP: 30 DA: 29} IR: 0x30000004 ACC: 5 ALU [a:8 b:3 => 5] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 97 IP: 30 DA: 4} IR: 0x30000004 ACC: 5 ALU [a:8 b:3 => 5] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 98 IP: 30 DA: 4} IR: 0x30000004 ACC: 5 ALU [a:8 b:3 => 5] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 99 IP: 31 DA: 30} IR: 0x20000005 ACC: 5 ALU [a:8 b:3 => 5] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 100 IP: 31 DA: 5} IR: 0x20000005 ACC: 5 ALU [a:8 b:3 => 5] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 101 IP: 31 DA: 5} IR: 0x20000005 ACC: 8 ALU [a:8 b:3 => 5] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 102 IP: 32 DA: 31} IR: 0x50000007 ACC: 8 ALU [a:8 b:3 => 5] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 103 IP: 32 DA: 7} IR: 0x50000007 ACC: 8 ALU [a:8 b:3 => 5] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 104 IP: 32 DA: 7} IR: 0x50000007 ACC: -3999992 ALU [a:8 b:4000000 => -3999992] FLAGS: [Z:0 N:1]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 105 IP: 33 DA: 32} IR: 0xd0000012 ACC: -3999992 ALU [a:8 b:4000000 => -3999992] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 106 IP: 18 DA: 32} IR: 0xd0000012 ACC: -3999992 ALU [a:8 b:4000000 => -3999992] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 107 IP: 19 DA: 18} IR: 0x20000005 ACC: -3999992 ALU [a:8 b:4000000 => -3999992] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 108 IP: 19 DA: 5} IR: 0x20000005 ACC: -3999992 ALU [a:8 b:4000000 => -3999992] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 109 IP: 19 DA: 5} IR: 0x20000005 ACC: 8 ALU [a:8 b:4000000 => -3999992] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 110 IP: 20 DA: 19} IR: 0x60000006 ACC: 8 ALU [a:8 b:4000000 => -3999992] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 111 IP: 20 DA: 6} IR: 0x60000006 ACC: 8 ALU [a:8 b:4000000 => -3999992] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 112 IP: 20 DA: 6} IR: 0x60000006 ACC: 0 ALU [a:8 b:1 => 0] FLAGS: [Z:1 N:0]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 113 IP: 21 DA: 20} IR: 0xb0000016 ACC: 0 ALU [a:8 b:1 => 0] FLAGS: [Z:1 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 114 IP: 22 DA: 20} IR: 0xb0000016 ACC: 0 ALU [a:8 b:1 => 0] FLAGS: [Z:1 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 115 IP: 23 DA: 22} IR: 0x20000003 ACC: 0 ALU [a:8 b:1 => 0] FLAGS: [Z:1 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 116 IP: 23 DA: 3} IR: 0x20000003 ACC: 0 ALU [a:8 b:1 => 0] FLAGS: [Z:1 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 117 IP: 23 DA: 3} IR: 0x20000003 ACC: 2 ALU [a:8 b:1 => 0] FLAGS: [Z:1 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 118 IP: 24 DA: 23} IR: 0x40000005 ACC: 2 ALU [a:8 b:1 => 0] FLAGS: [Z:1 N:0]  Action: ADD 5 
+  DEBUG machine:new_tick {TICK: 119 IP: 24 DA: 5} IR: 0x40000005 ACC: 2 ALU [a:8 b:1 => 0] FLAGS: [Z:1 N:0]  Action: ADD 5 
+  DEBUG machine:new_tick {TICK: 120 IP: 24 DA: 5} IR: 0x40000005 ACC: 10 ALU [a:2 b:8 => 10] FLAGS: [Z:0 N:0]  Action: ADD 5 
+  DEBUG machine:new_tick {TICK: 121 IP: 25 DA: 24} IR: 0x30000003 ACC: 10 ALU [a:2 b:8 => 10] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 122 IP: 25 DA: 3} IR: 0x30000003 ACC: 10 ALU [a:2 b:8 => 10] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 123 IP: 25 DA: 3} IR: 0x30000003 ACC: 10 ALU [a:2 b:8 => 10] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 124 IP: 26 DA: 25} IR: 0x20000005 ACC: 10 ALU [a:2 b:8 => 10] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 125 IP: 26 DA: 5} IR: 0x20000005 ACC: 10 ALU [a:2 b:8 => 10] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 126 IP: 26 DA: 5} IR: 0x20000005 ACC: 8 ALU [a:2 b:8 => 10] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 127 IP: 27 DA: 26} IR: 0x40000004 ACC: 8 ALU [a:2 b:8 => 10] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 128 IP: 27 DA: 4} IR: 0x40000004 ACC: 8 ALU [a:2 b:8 => 10] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 129 IP: 27 DA: 4} IR: 0x40000004 ACC: 13 ALU [a:8 b:5 => 13] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 130 IP: 28 DA: 27} IR: 0x30000005 ACC: 13 ALU [a:8 b:5 => 13] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 131 IP: 28 DA: 5} IR: 0x30000005 ACC: 13 ALU [a:8 b:5 => 13] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 132 IP: 28 DA: 5} IR: 0x30000005 ACC: 13 ALU [a:8 b:5 => 13] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 133 IP: 29 DA: 28} IR: 0x50000004 ACC: 13 ALU [a:8 b:5 => 13] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 134 IP: 29 DA: 4} IR: 0x50000004 ACC: 13 ALU [a:8 b:5 => 13] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 135 IP: 29 DA: 4} IR: 0x50000004 ACC: 8 ALU [a:13 b:5 => 8] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 136 IP: 30 DA: 29} IR: 0x30000004 ACC: 8 ALU [a:13 b:5 => 8] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 137 IP: 30 DA: 4} IR: 0x30000004 ACC: 8 ALU [a:13 b:5 => 8] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 138 IP: 30 DA: 4} IR: 0x30000004 ACC: 8 ALU [a:13 b:5 => 8] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 139 IP: 31 DA: 30} IR: 0x20000005 ACC: 8 ALU [a:13 b:5 => 8] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 140 IP: 31 DA: 5} IR: 0x20000005 ACC: 8 ALU [a:13 b:5 => 8] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 141 IP: 31 DA: 5} IR: 0x20000005 ACC: 13 ALU [a:13 b:5 => 8] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 142 IP: 32 DA: 31} IR: 0x50000007 ACC: 13 ALU [a:13 b:5 => 8] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 143 IP: 32 DA: 7} IR: 0x50000007 ACC: 13 ALU [a:13 b:5 => 8] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 144 IP: 32 DA: 7} IR: 0x50000007 ACC: -3999987 ALU [a:13 b:4000000 => -3999987] FLAGS: [Z:0 N:1]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 145 IP: 33 DA: 32} IR: 0xd0000012 ACC: -3999987 ALU [a:13 b:4000000 => -3999987] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 146 IP: 18 DA: 32} IR: 0xd0000012 ACC: -3999987 ALU [a:13 b:4000000 => -3999987] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 147 IP: 19 DA: 18} IR: 0x20000005 ACC: -3999987 ALU [a:13 b:4000000 => -3999987] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 148 IP: 19 DA: 5} IR: 0x20000005 ACC: -3999987 ALU [a:13 b:4000000 => -3999987] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 149 IP: 19 DA: 5} IR: 0x20000005 ACC: 13 ALU [a:13 b:4000000 => -3999987] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 150 IP: 20 DA: 19} IR: 0x60000006 ACC: 13 ALU [a:13 b:4000000 => -3999987] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 151 IP: 20 DA: 6} IR: 0x60000006 ACC: 13 ALU [a:13 b:4000000 => -3999987] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 152 IP: 20 DA: 6} IR: 0x60000006 ACC: 1 ALU [a:13 b:1 => 1] FLAGS: [Z:0 N:0]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 153 IP: 21 DA: 20} IR: 0xb0000016 ACC: 1 ALU [a:13 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 154 IP: 22 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:13 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 155 IP: 25 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:13 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 156 IP: 26 DA: 25} IR: 0x20000005 ACC: 1 ALU [a:13 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 157 IP: 26 DA: 5} IR: 0x20000005 ACC: 1 ALU [a:13 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 158 IP: 26 DA: 5} IR: 0x20000005 ACC: 13 ALU [a:13 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 159 IP: 27 DA: 26} IR: 0x40000004 ACC: 13 ALU [a:13 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 160 IP: 27 DA: 4} IR: 0x40000004 ACC: 13 ALU [a:13 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 161 IP: 27 DA: 4} IR: 0x40000004 ACC: 21 ALU [a:13 b:8 => 21] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 162 IP: 28 DA: 27} IR: 0x30000005 ACC: 21 ALU [a:13 b:8 => 21] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 163 IP: 28 DA: 5} IR: 0x30000005 ACC: 21 ALU [a:13 b:8 => 21] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 164 IP: 28 DA: 5} IR: 0x30000005 ACC: 21 ALU [a:13 b:8 => 21] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 165 IP: 29 DA: 28} IR: 0x50000004 ACC: 21 ALU [a:13 b:8 => 21] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 166 IP: 29 DA: 4} IR: 0x50000004 ACC: 21 ALU [a:13 b:8 => 21] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 167 IP: 29 DA: 4} IR: 0x50000004 ACC: 13 ALU [a:21 b:8 => 13] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 168 IP: 30 DA: 29} IR: 0x30000004 ACC: 13 ALU [a:21 b:8 => 13] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 169 IP: 30 DA: 4} IR: 0x30000004 ACC: 13 ALU [a:21 b:8 => 13] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 170 IP: 30 DA: 4} IR: 0x30000004 ACC: 13 ALU [a:21 b:8 => 13] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 171 IP: 31 DA: 30} IR: 0x20000005 ACC: 13 ALU [a:21 b:8 => 13] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 172 IP: 31 DA: 5} IR: 0x20000005 ACC: 13 ALU [a:21 b:8 => 13] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 173 IP: 31 DA: 5} IR: 0x20000005 ACC: 21 ALU [a:21 b:8 => 13] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 174 IP: 32 DA: 31} IR: 0x50000007 ACC: 21 ALU [a:21 b:8 => 13] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 175 IP: 32 DA: 7} IR: 0x50000007 ACC: 21 ALU [a:21 b:8 => 13] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 176 IP: 32 DA: 7} IR: 0x50000007 ACC: -3999979 ALU [a:21 b:4000000 => -3999979] FLAGS: [Z:0 N:1]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 177 IP: 33 DA: 32} IR: 0xd0000012 ACC: -3999979 ALU [a:21 b:4000000 => -3999979] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 178 IP: 18 DA: 32} IR: 0xd0000012 ACC: -3999979 ALU [a:21 b:4000000 => -3999979] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 179 IP: 19 DA: 18} IR: 0x20000005 ACC: -3999979 ALU [a:21 b:4000000 => -3999979] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 180 IP: 19 DA: 5} IR: 0x20000005 ACC: -3999979 ALU [a:21 b:4000000 => -3999979] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 181 IP: 19 DA: 5} IR: 0x20000005 ACC: 21 ALU [a:21 b:4000000 => -3999979] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 182 IP: 20 DA: 19} IR: 0x60000006 ACC: 21 ALU [a:21 b:4000000 => -3999979] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 183 IP: 20 DA: 6} IR: 0x60000006 ACC: 21 ALU [a:21 b:4000000 => -3999979] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 184 IP: 20 DA: 6} IR: 0x60000006 ACC: 1 ALU [a:21 b:1 => 1] FLAGS: [Z:0 N:0]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 185 IP: 21 DA: 20} IR: 0xb0000016 ACC: 1 ALU [a:21 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 186 IP: 22 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:21 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 187 IP: 25 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:21 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 188 IP: 26 DA: 25} IR: 0x20000005 ACC: 1 ALU [a:21 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 189 IP: 26 DA: 5} IR: 0x20000005 ACC: 1 ALU [a:21 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 190 IP: 26 DA: 5} IR: 0x20000005 ACC: 21 ALU [a:21 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 191 IP: 27 DA: 26} IR: 0x40000004 ACC: 21 ALU [a:21 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 192 IP: 27 DA: 4} IR: 0x40000004 ACC: 21 ALU [a:21 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 193 IP: 27 DA: 4} IR: 0x40000004 ACC: 34 ALU [a:21 b:13 => 34] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 194 IP: 28 DA: 27} IR: 0x30000005 ACC: 34 ALU [a:21 b:13 => 34] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 195 IP: 28 DA: 5} IR: 0x30000005 ACC: 34 ALU [a:21 b:13 => 34] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 196 IP: 28 DA: 5} IR: 0x30000005 ACC: 34 ALU [a:21 b:13 => 34] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 197 IP: 29 DA: 28} IR: 0x50000004 ACC: 34 ALU [a:21 b:13 => 34] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 198 IP: 29 DA: 4} IR: 0x50000004 ACC: 34 ALU [a:21 b:13 => 34] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 199 IP: 29 DA: 4} IR: 0x50000004 ACC: 21 ALU [a:34 b:13 => 21] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 200 IP: 30 DA: 29} IR: 0x30000004 ACC: 21 ALU [a:34 b:13 => 21] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 201 IP: 30 DA: 4} IR: 0x30000004 ACC: 21 ALU [a:34 b:13 => 21] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 202 IP: 30 DA: 4} IR: 0x30000004 ACC: 21 ALU [a:34 b:13 => 21] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 203 IP: 31 DA: 30} IR: 0x20000005 ACC: 21 ALU [a:34 b:13 => 21] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 204 IP: 31 DA: 5} IR: 0x20000005 ACC: 21 ALU [a:34 b:13 => 21] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 205 IP: 31 DA: 5} IR: 0x20000005 ACC: 34 ALU [a:34 b:13 => 21] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 206 IP: 32 DA: 31} IR: 0x50000007 ACC: 34 ALU [a:34 b:13 => 21] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 207 IP: 32 DA: 7} IR: 0x50000007 ACC: 34 ALU [a:34 b:13 => 21] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 208 IP: 32 DA: 7} IR: 0x50000007 ACC: -3999966 ALU [a:34 b:4000000 => -3999966] FLAGS: [Z:0 N:1]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 209 IP: 33 DA: 32} IR: 0xd0000012 ACC: -3999966 ALU [a:34 b:4000000 => -3999966] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 210 IP: 18 DA: 32} IR: 0xd0000012 ACC: -3999966 ALU [a:34 b:4000000 => -3999966] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 211 IP: 19 DA: 18} IR: 0x20000005 ACC: -3999966 ALU [a:34 b:4000000 => -3999966] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 212 IP: 19 DA: 5} IR: 0x20000005 ACC: -3999966 ALU [a:34 b:4000000 => -3999966] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 213 IP: 19 DA: 5} IR: 0x20000005 ACC: 34 ALU [a:34 b:4000000 => -3999966] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 214 IP: 20 DA: 19} IR: 0x60000006 ACC: 34 ALU [a:34 b:4000000 => -3999966] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 215 IP: 20 DA: 6} IR: 0x60000006 ACC: 34 ALU [a:34 b:4000000 => -3999966] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 216 IP: 20 DA: 6} IR: 0x60000006 ACC: 0 ALU [a:34 b:1 => 0] FLAGS: [Z:1 N:0]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 217 IP: 21 DA: 20} IR: 0xb0000016 ACC: 0 ALU [a:34 b:1 => 0] FLAGS: [Z:1 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 218 IP: 22 DA: 20} IR: 0xb0000016 ACC: 0 ALU [a:34 b:1 => 0] FLAGS: [Z:1 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 219 IP: 23 DA: 22} IR: 0x20000003 ACC: 0 ALU [a:34 b:1 => 0] FLAGS: [Z:1 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 220 IP: 23 DA: 3} IR: 0x20000003 ACC: 0 ALU [a:34 b:1 => 0] FLAGS: [Z:1 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 221 IP: 23 DA: 3} IR: 0x20000003 ACC: 10 ALU [a:34 b:1 => 0] FLAGS: [Z:1 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 222 IP: 24 DA: 23} IR: 0x40000005 ACC: 10 ALU [a:34 b:1 => 0] FLAGS: [Z:1 N:0]  Action: ADD 5 
+  DEBUG machine:new_tick {TICK: 223 IP: 24 DA: 5} IR: 0x40000005 ACC: 10 ALU [a:34 b:1 => 0] FLAGS: [Z:1 N:0]  Action: ADD 5 
+  DEBUG machine:new_tick {TICK: 224 IP: 24 DA: 5} IR: 0x40000005 ACC: 44 ALU [a:10 b:34 => 44] FLAGS: [Z:0 N:0]  Action: ADD 5 
+  DEBUG machine:new_tick {TICK: 225 IP: 25 DA: 24} IR: 0x30000003 ACC: 44 ALU [a:10 b:34 => 44] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 226 IP: 25 DA: 3} IR: 0x30000003 ACC: 44 ALU [a:10 b:34 => 44] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 227 IP: 25 DA: 3} IR: 0x30000003 ACC: 44 ALU [a:10 b:34 => 44] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 228 IP: 26 DA: 25} IR: 0x20000005 ACC: 44 ALU [a:10 b:34 => 44] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 229 IP: 26 DA: 5} IR: 0x20000005 ACC: 44 ALU [a:10 b:34 => 44] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 230 IP: 26 DA: 5} IR: 0x20000005 ACC: 34 ALU [a:10 b:34 => 44] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 231 IP: 27 DA: 26} IR: 0x40000004 ACC: 34 ALU [a:10 b:34 => 44] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 232 IP: 27 DA: 4} IR: 0x40000004 ACC: 34 ALU [a:10 b:34 => 44] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 233 IP: 27 DA: 4} IR: 0x40000004 ACC: 55 ALU [a:34 b:21 => 55] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 234 IP: 28 DA: 27} IR: 0x30000005 ACC: 55 ALU [a:34 b:21 => 55] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 235 IP: 28 DA: 5} IR: 0x30000005 ACC: 55 ALU [a:34 b:21 => 55] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 236 IP: 28 DA: 5} IR: 0x30000005 ACC: 55 ALU [a:34 b:21 => 55] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 237 IP: 29 DA: 28} IR: 0x50000004 ACC: 55 ALU [a:34 b:21 => 55] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 238 IP: 29 DA: 4} IR: 0x50000004 ACC: 55 ALU [a:34 b:21 => 55] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 239 IP: 29 DA: 4} IR: 0x50000004 ACC: 34 ALU [a:55 b:21 => 34] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 240 IP: 30 DA: 29} IR: 0x30000004 ACC: 34 ALU [a:55 b:21 => 34] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 241 IP: 30 DA: 4} IR: 0x30000004 ACC: 34 ALU [a:55 b:21 => 34] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 242 IP: 30 DA: 4} IR: 0x30000004 ACC: 34 ALU [a:55 b:21 => 34] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 243 IP: 31 DA: 30} IR: 0x20000005 ACC: 34 ALU [a:55 b:21 => 34] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 244 IP: 31 DA: 5} IR: 0x20000005 ACC: 34 ALU [a:55 b:21 => 34] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 245 IP: 31 DA: 5} IR: 0x20000005 ACC: 55 ALU [a:55 b:21 => 34] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 246 IP: 32 DA: 31} IR: 0x50000007 ACC: 55 ALU [a:55 b:21 => 34] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 247 IP: 32 DA: 7} IR: 0x50000007 ACC: 55 ALU [a:55 b:21 => 34] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 248 IP: 32 DA: 7} IR: 0x50000007 ACC: -3999945 ALU [a:55 b:4000000 => -3999945] FLAGS: [Z:0 N:1]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 249 IP: 33 DA: 32} IR: 0xd0000012 ACC: -3999945 ALU [a:55 b:4000000 => -3999945] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 250 IP: 18 DA: 32} IR: 0xd0000012 ACC: -3999945 ALU [a:55 b:4000000 => -3999945] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 251 IP: 19 DA: 18} IR: 0x20000005 ACC: -3999945 ALU [a:55 b:4000000 => -3999945] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 252 IP: 19 DA: 5} IR: 0x20000005 ACC: -3999945 ALU [a:55 b:4000000 => -3999945] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 253 IP: 19 DA: 5} IR: 0x20000005 ACC: 55 ALU [a:55 b:4000000 => -3999945] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 254 IP: 20 DA: 19} IR: 0x60000006 ACC: 55 ALU [a:55 b:4000000 => -3999945] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 255 IP: 20 DA: 6} IR: 0x60000006 ACC: 55 ALU [a:55 b:4000000 => -3999945] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 256 IP: 20 DA: 6} IR: 0x60000006 ACC: 1 ALU [a:55 b:1 => 1] FLAGS: [Z:0 N:0]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 257 IP: 21 DA: 20} IR: 0xb0000016 ACC: 1 ALU [a:55 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 258 IP: 22 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:55 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 259 IP: 25 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:55 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 260 IP: 26 DA: 25} IR: 0x20000005 ACC: 1 ALU [a:55 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 261 IP: 26 DA: 5} IR: 0x20000005 ACC: 1 ALU [a:55 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 262 IP: 26 DA: 5} IR: 0x20000005 ACC: 55 ALU [a:55 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 263 IP: 27 DA: 26} IR: 0x40000004 ACC: 55 ALU [a:55 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 264 IP: 27 DA: 4} IR: 0x40000004 ACC: 55 ALU [a:55 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 265 IP: 27 DA: 4} IR: 0x40000004 ACC: 89 ALU [a:55 b:34 => 89] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 266 IP: 28 DA: 27} IR: 0x30000005 ACC: 89 ALU [a:55 b:34 => 89] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 267 IP: 28 DA: 5} IR: 0x30000005 ACC: 89 ALU [a:55 b:34 => 89] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 268 IP: 28 DA: 5} IR: 0x30000005 ACC: 89 ALU [a:55 b:34 => 89] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 269 IP: 29 DA: 28} IR: 0x50000004 ACC: 89 ALU [a:55 b:34 => 89] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 270 IP: 29 DA: 4} IR: 0x50000004 ACC: 89 ALU [a:55 b:34 => 89] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 271 IP: 29 DA: 4} IR: 0x50000004 ACC: 55 ALU [a:89 b:34 => 55] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 272 IP: 30 DA: 29} IR: 0x30000004 ACC: 55 ALU [a:89 b:34 => 55] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 273 IP: 30 DA: 4} IR: 0x30000004 ACC: 55 ALU [a:89 b:34 => 55] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 274 IP: 30 DA: 4} IR: 0x30000004 ACC: 55 ALU [a:89 b:34 => 55] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 275 IP: 31 DA: 30} IR: 0x20000005 ACC: 55 ALU [a:89 b:34 => 55] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 276 IP: 31 DA: 5} IR: 0x20000005 ACC: 55 ALU [a:89 b:34 => 55] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 277 IP: 31 DA: 5} IR: 0x20000005 ACC: 89 ALU [a:89 b:34 => 55] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 278 IP: 32 DA: 31} IR: 0x50000007 ACC: 89 ALU [a:89 b:34 => 55] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 279 IP: 32 DA: 7} IR: 0x50000007 ACC: 89 ALU [a:89 b:34 => 55] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 280 IP: 32 DA: 7} IR: 0x50000007 ACC: -3999911 ALU [a:89 b:4000000 => -3999911] FLAGS: [Z:0 N:1]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 281 IP: 33 DA: 32} IR: 0xd0000012 ACC: -3999911 ALU [a:89 b:4000000 => -3999911] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 282 IP: 18 DA: 32} IR: 0xd0000012 ACC: -3999911 ALU [a:89 b:4000000 => -3999911] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 283 IP: 19 DA: 18} IR: 0x20000005 ACC: -3999911 ALU [a:89 b:4000000 => -3999911] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 284 IP: 19 DA: 5} IR: 0x20000005 ACC: -3999911 ALU [a:89 b:4000000 => -3999911] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 285 IP: 19 DA: 5} IR: 0x20000005 ACC: 89 ALU [a:89 b:4000000 => -3999911] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 286 IP: 20 DA: 19} IR: 0x60000006 ACC: 89 ALU [a:89 b:4000000 => -3999911] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 287 IP: 20 DA: 6} IR: 0x60000006 ACC: 89 ALU [a:89 b:4000000 => -3999911] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 288 IP: 20 DA: 6} IR: 0x60000006 ACC: 1 ALU [a:89 b:1 => 1] FLAGS: [Z:0 N:0]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 289 IP: 21 DA: 20} IR: 0xb0000016 ACC: 1 ALU [a:89 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 290 IP: 22 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:89 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 291 IP: 25 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:89 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 292 IP: 26 DA: 25} IR: 0x20000005 ACC: 1 ALU [a:89 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 293 IP: 26 DA: 5} IR: 0x20000005 ACC: 1 ALU [a:89 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 294 IP: 26 DA: 5} IR: 0x20000005 ACC: 89 ALU [a:89 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 295 IP: 27 DA: 26} IR: 0x40000004 ACC: 89 ALU [a:89 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 296 IP: 27 DA: 4} IR: 0x40000004 ACC: 89 ALU [a:89 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 297 IP: 27 DA: 4} IR: 0x40000004 ACC: 144 ALU [a:89 b:55 => 144] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 298 IP: 28 DA: 27} IR: 0x30000005 ACC: 144 ALU [a:89 b:55 => 144] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 299 IP: 28 DA: 5} IR: 0x30000005 ACC: 144 ALU [a:89 b:55 => 144] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 300 IP: 28 DA: 5} IR: 0x30000005 ACC: 144 ALU [a:89 b:55 => 144] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 301 IP: 29 DA: 28} IR: 0x50000004 ACC: 144 ALU [a:89 b:55 => 144] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 302 IP: 29 DA: 4} IR: 0x50000004 ACC: 144 ALU [a:89 b:55 => 144] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 303 IP: 29 DA: 4} IR: 0x50000004 ACC: 89 ALU [a:144 b:55 => 89] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 304 IP: 30 DA: 29} IR: 0x30000004 ACC: 89 ALU [a:144 b:55 => 89] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 305 IP: 30 DA: 4} IR: 0x30000004 ACC: 89 ALU [a:144 b:55 => 89] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 306 IP: 30 DA: 4} IR: 0x30000004 ACC: 89 ALU [a:144 b:55 => 89] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 307 IP: 31 DA: 30} IR: 0x20000005 ACC: 89 ALU [a:144 b:55 => 89] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 308 IP: 31 DA: 5} IR: 0x20000005 ACC: 89 ALU [a:144 b:55 => 89] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 309 IP: 31 DA: 5} IR: 0x20000005 ACC: 144 ALU [a:144 b:55 => 89] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 310 IP: 32 DA: 31} IR: 0x50000007 ACC: 144 ALU [a:144 b:55 => 89] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 311 IP: 32 DA: 7} IR: 0x50000007 ACC: 144 ALU [a:144 b:55 => 89] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 312 IP: 32 DA: 7} IR: 0x50000007 ACC: -3999856 ALU [a:144 b:4000000 => -3999856] FLAGS: [Z:0 N:1]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 313 IP: 33 DA: 32} IR: 0xd0000012 ACC: -3999856 ALU [a:144 b:4000000 => -3999856] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 314 IP: 18 DA: 32} IR: 0xd0000012 ACC: -3999856 ALU [a:144 b:4000000 => -3999856] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 315 IP: 19 DA: 18} IR: 0x20000005 ACC: -3999856 ALU [a:144 b:4000000 => -3999856] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 316 IP: 19 DA: 5} IR: 0x20000005 ACC: -3999856 ALU [a:144 b:4000000 => -3999856] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 317 IP: 19 DA: 5} IR: 0x20000005 ACC: 144 ALU [a:144 b:4000000 => -3999856] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 318 IP: 20 DA: 19} IR: 0x60000006 ACC: 144 ALU [a:144 b:4000000 => -3999856] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 319 IP: 20 DA: 6} IR: 0x60000006 ACC: 144 ALU [a:144 b:4000000 => -3999856] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 320 IP: 20 DA: 6} IR: 0x60000006 ACC: 0 ALU [a:144 b:1 => 0] FLAGS: [Z:1 N:0]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 321 IP: 21 DA: 20} IR: 0xb0000016 ACC: 0 ALU [a:144 b:1 => 0] FLAGS: [Z:1 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 322 IP: 22 DA: 20} IR: 0xb0000016 ACC: 0 ALU [a:144 b:1 => 0] FLAGS: [Z:1 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 323 IP: 23 DA: 22} IR: 0x20000003 ACC: 0 ALU [a:144 b:1 => 0] FLAGS: [Z:1 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 324 IP: 23 DA: 3} IR: 0x20000003 ACC: 0 ALU [a:144 b:1 => 0] FLAGS: [Z:1 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 325 IP: 23 DA: 3} IR: 0x20000003 ACC: 44 ALU [a:144 b:1 => 0] FLAGS: [Z:1 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 326 IP: 24 DA: 23} IR: 0x40000005 ACC: 44 ALU [a:144 b:1 => 0] FLAGS: [Z:1 N:0]  Action: ADD 5 
+  DEBUG machine:new_tick {TICK: 327 IP: 24 DA: 5} IR: 0x40000005 ACC: 44 ALU [a:144 b:1 => 0] FLAGS: [Z:1 N:0]  Action: ADD 5 
+  DEBUG machine:new_tick {TICK: 328 IP: 24 DA: 5} IR: 0x40000005 ACC: 188 ALU [a:44 b:144 => 188] FLAGS: [Z:0 N:0]  Action: ADD 5 
+  DEBUG machine:new_tick {TICK: 329 IP: 25 DA: 24} IR: 0x30000003 ACC: 188 ALU [a:44 b:144 => 188] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 330 IP: 25 DA: 3} IR: 0x30000003 ACC: 188 ALU [a:44 b:144 => 188] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 331 IP: 25 DA: 3} IR: 0x30000003 ACC: 188 ALU [a:44 b:144 => 188] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 332 IP: 26 DA: 25} IR: 0x20000005 ACC: 188 ALU [a:44 b:144 => 188] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 333 IP: 26 DA: 5} IR: 0x20000005 ACC: 188 ALU [a:44 b:144 => 188] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 334 IP: 26 DA: 5} IR: 0x20000005 ACC: 144 ALU [a:44 b:144 => 188] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 335 IP: 27 DA: 26} IR: 0x40000004 ACC: 144 ALU [a:44 b:144 => 188] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 336 IP: 27 DA: 4} IR: 0x40000004 ACC: 144 ALU [a:44 b:144 => 188] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 337 IP: 27 DA: 4} IR: 0x40000004 ACC: 233 ALU [a:144 b:89 => 233] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 338 IP: 28 DA: 27} IR: 0x30000005 ACC: 233 ALU [a:144 b:89 => 233] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 339 IP: 28 DA: 5} IR: 0x30000005 ACC: 233 ALU [a:144 b:89 => 233] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 340 IP: 28 DA: 5} IR: 0x30000005 ACC: 233 ALU [a:144 b:89 => 233] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 341 IP: 29 DA: 28} IR: 0x50000004 ACC: 233 ALU [a:144 b:89 => 233] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 342 IP: 29 DA: 4} IR: 0x50000004 ACC: 233 ALU [a:144 b:89 => 233] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 343 IP: 29 DA: 4} IR: 0x50000004 ACC: 144 ALU [a:233 b:89 => 144] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 344 IP: 30 DA: 29} IR: 0x30000004 ACC: 144 ALU [a:233 b:89 => 144] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 345 IP: 30 DA: 4} IR: 0x30000004 ACC: 144 ALU [a:233 b:89 => 144] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 346 IP: 30 DA: 4} IR: 0x30000004 ACC: 144 ALU [a:233 b:89 => 144] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 347 IP: 31 DA: 30} IR: 0x20000005 ACC: 144 ALU [a:233 b:89 => 144] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 348 IP: 31 DA: 5} IR: 0x20000005 ACC: 144 ALU [a:233 b:89 => 144] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 349 IP: 31 DA: 5} IR: 0x20000005 ACC: 233 ALU [a:233 b:89 => 144] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 350 IP: 32 DA: 31} IR: 0x50000007 ACC: 233 ALU [a:233 b:89 => 144] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 351 IP: 32 DA: 7} IR: 0x50000007 ACC: 233 ALU [a:233 b:89 => 144] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 352 IP: 32 DA: 7} IR: 0x50000007 ACC: -3999767 ALU [a:233 b:4000000 => -3999767] FLAGS: [Z:0 N:1]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 353 IP: 33 DA: 32} IR: 0xd0000012 ACC: -3999767 ALU [a:233 b:4000000 => -3999767] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 354 IP: 18 DA: 32} IR: 0xd0000012 ACC: -3999767 ALU [a:233 b:4000000 => -3999767] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 355 IP: 19 DA: 18} IR: 0x20000005 ACC: -3999767 ALU [a:233 b:4000000 => -3999767] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 356 IP: 19 DA: 5} IR: 0x20000005 ACC: -3999767 ALU [a:233 b:4000000 => -3999767] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 357 IP: 19 DA: 5} IR: 0x20000005 ACC: 233 ALU [a:233 b:4000000 => -3999767] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 358 IP: 20 DA: 19} IR: 0x60000006 ACC: 233 ALU [a:233 b:4000000 => -3999767] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 359 IP: 20 DA: 6} IR: 0x60000006 ACC: 233 ALU [a:233 b:4000000 => -3999767] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 360 IP: 20 DA: 6} IR: 0x60000006 ACC: 1 ALU [a:233 b:1 => 1] FLAGS: [Z:0 N:0]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 361 IP: 21 DA: 20} IR: 0xb0000016 ACC: 1 ALU [a:233 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 362 IP: 22 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:233 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 363 IP: 25 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:233 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 364 IP: 26 DA: 25} IR: 0x20000005 ACC: 1 ALU [a:233 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 365 IP: 26 DA: 5} IR: 0x20000005 ACC: 1 ALU [a:233 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 366 IP: 26 DA: 5} IR: 0x20000005 ACC: 233 ALU [a:233 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 367 IP: 27 DA: 26} IR: 0x40000004 ACC: 233 ALU [a:233 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 368 IP: 27 DA: 4} IR: 0x40000004 ACC: 233 ALU [a:233 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 369 IP: 27 DA: 4} IR: 0x40000004 ACC: 377 ALU [a:233 b:144 => 377] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 370 IP: 28 DA: 27} IR: 0x30000005 ACC: 377 ALU [a:233 b:144 => 377] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 371 IP: 28 DA: 5} IR: 0x30000005 ACC: 377 ALU [a:233 b:144 => 377] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 372 IP: 28 DA: 5} IR: 0x30000005 ACC: 377 ALU [a:233 b:144 => 377] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 373 IP: 29 DA: 28} IR: 0x50000004 ACC: 377 ALU [a:233 b:144 => 377] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 374 IP: 29 DA: 4} IR: 0x50000004 ACC: 377 ALU [a:233 b:144 => 377] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 375 IP: 29 DA: 4} IR: 0x50000004 ACC: 233 ALU [a:377 b:144 => 233] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 376 IP: 30 DA: 29} IR: 0x30000004 ACC: 233 ALU [a:377 b:144 => 233] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 377 IP: 30 DA: 4} IR: 0x30000004 ACC: 233 ALU [a:377 b:144 => 233] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 378 IP: 30 DA: 4} IR: 0x30000004 ACC: 233 ALU [a:377 b:144 => 233] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 379 IP: 31 DA: 30} IR: 0x20000005 ACC: 233 ALU [a:377 b:144 => 233] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 380 IP: 31 DA: 5} IR: 0x20000005 ACC: 233 ALU [a:377 b:144 => 233] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 381 IP: 31 DA: 5} IR: 0x20000005 ACC: 377 ALU [a:377 b:144 => 233] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 382 IP: 32 DA: 31} IR: 0x50000007 ACC: 377 ALU [a:377 b:144 => 233] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 383 IP: 32 DA: 7} IR: 0x50000007 ACC: 377 ALU [a:377 b:144 => 233] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 384 IP: 32 DA: 7} IR: 0x50000007 ACC: -3999623 ALU [a:377 b:4000000 => -3999623] FLAGS: [Z:0 N:1]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 385 IP: 33 DA: 32} IR: 0xd0000012 ACC: -3999623 ALU [a:377 b:4000000 => -3999623] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 386 IP: 18 DA: 32} IR: 0xd0000012 ACC: -3999623 ALU [a:377 b:4000000 => -3999623] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 387 IP: 19 DA: 18} IR: 0x20000005 ACC: -3999623 ALU [a:377 b:4000000 => -3999623] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 388 IP: 19 DA: 5} IR: 0x20000005 ACC: -3999623 ALU [a:377 b:4000000 => -3999623] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 389 IP: 19 DA: 5} IR: 0x20000005 ACC: 377 ALU [a:377 b:4000000 => -3999623] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 390 IP: 20 DA: 19} IR: 0x60000006 ACC: 377 ALU [a:377 b:4000000 => -3999623] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 391 IP: 20 DA: 6} IR: 0x60000006 ACC: 377 ALU [a:377 b:4000000 => -3999623] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 392 IP: 20 DA: 6} IR: 0x60000006 ACC: 1 ALU [a:377 b:1 => 1] FLAGS: [Z:0 N:0]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 393 IP: 21 DA: 20} IR: 0xb0000016 ACC: 1 ALU [a:377 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 394 IP: 22 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:377 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 395 IP: 25 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:377 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 396 IP: 26 DA: 25} IR: 0x20000005 ACC: 1 ALU [a:377 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 397 IP: 26 DA: 5} IR: 0x20000005 ACC: 1 ALU [a:377 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 398 IP: 26 DA: 5} IR: 0x20000005 ACC: 377 ALU [a:377 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 399 IP: 27 DA: 26} IR: 0x40000004 ACC: 377 ALU [a:377 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 400 IP: 27 DA: 4} IR: 0x40000004 ACC: 377 ALU [a:377 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 401 IP: 27 DA: 4} IR: 0x40000004 ACC: 610 ALU [a:377 b:233 => 610] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 402 IP: 28 DA: 27} IR: 0x30000005 ACC: 610 ALU [a:377 b:233 => 610] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 403 IP: 28 DA: 5} IR: 0x30000005 ACC: 610 ALU [a:377 b:233 => 610] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 404 IP: 28 DA: 5} IR: 0x30000005 ACC: 610 ALU [a:377 b:233 => 610] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 405 IP: 29 DA: 28} IR: 0x50000004 ACC: 610 ALU [a:377 b:233 => 610] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 406 IP: 29 DA: 4} IR: 0x50000004 ACC: 610 ALU [a:377 b:233 => 610] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 407 IP: 29 DA: 4} IR: 0x50000004 ACC: 377 ALU [a:610 b:233 => 377] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 408 IP: 30 DA: 29} IR: 0x30000004 ACC: 377 ALU [a:610 b:233 => 377] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 409 IP: 30 DA: 4} IR: 0x30000004 ACC: 377 ALU [a:610 b:233 => 377] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 410 IP: 30 DA: 4} IR: 0x30000004 ACC: 377 ALU [a:610 b:233 => 377] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 411 IP: 31 DA: 30} IR: 0x20000005 ACC: 377 ALU [a:610 b:233 => 377] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 412 IP: 31 DA: 5} IR: 0x20000005 ACC: 377 ALU [a:610 b:233 => 377] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 413 IP: 31 DA: 5} IR: 0x20000005 ACC: 610 ALU [a:610 b:233 => 377] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 414 IP: 32 DA: 31} IR: 0x50000007 ACC: 610 ALU [a:610 b:233 => 377] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 415 IP: 32 DA: 7} IR: 0x50000007 ACC: 610 ALU [a:610 b:233 => 377] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 416 IP: 32 DA: 7} IR: 0x50000007 ACC: -3999390 ALU [a:610 b:4000000 => -3999390] FLAGS: [Z:0 N:1]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 417 IP: 33 DA: 32} IR: 0xd0000012 ACC: -3999390 ALU [a:610 b:4000000 => -3999390] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 418 IP: 18 DA: 32} IR: 0xd0000012 ACC: -3999390 ALU [a:610 b:4000000 => -3999390] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 419 IP: 19 DA: 18} IR: 0x20000005 ACC: -3999390 ALU [a:610 b:4000000 => -3999390] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 420 IP: 19 DA: 5} IR: 0x20000005 ACC: -3999390 ALU [a:610 b:4000000 => -3999390] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 421 IP: 19 DA: 5} IR: 0x20000005 ACC: 610 ALU [a:610 b:4000000 => -3999390] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 422 IP: 20 DA: 19} IR: 0x60000006 ACC: 610 ALU [a:610 b:4000000 => -3999390] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 423 IP: 20 DA: 6} IR: 0x60000006 ACC: 610 ALU [a:610 b:4000000 => -3999390] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 424 IP: 20 DA: 6} IR: 0x60000006 ACC: 0 ALU [a:610 b:1 => 0] FLAGS: [Z:1 N:0]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 425 IP: 21 DA: 20} IR: 0xb0000016 ACC: 0 ALU [a:610 b:1 => 0] FLAGS: [Z:1 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 426 IP: 22 DA: 20} IR: 0xb0000016 ACC: 0 ALU [a:610 b:1 => 0] FLAGS: [Z:1 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 427 IP: 23 DA: 22} IR: 0x20000003 ACC: 0 ALU [a:610 b:1 => 0] FLAGS: [Z:1 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 428 IP: 23 DA: 3} IR: 0x20000003 ACC: 0 ALU [a:610 b:1 => 0] FLAGS: [Z:1 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 429 IP: 23 DA: 3} IR: 0x20000003 ACC: 188 ALU [a:610 b:1 => 0] FLAGS: [Z:1 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 430 IP: 24 DA: 23} IR: 0x40000005 ACC: 188 ALU [a:610 b:1 => 0] FLAGS: [Z:1 N:0]  Action: ADD 5 
+  DEBUG machine:new_tick {TICK: 431 IP: 24 DA: 5} IR: 0x40000005 ACC: 188 ALU [a:610 b:1 => 0] FLAGS: [Z:1 N:0]  Action: ADD 5 
+  DEBUG machine:new_tick {TICK: 432 IP: 24 DA: 5} IR: 0x40000005 ACC: 798 ALU [a:188 b:610 => 798] FLAGS: [Z:0 N:0]  Action: ADD 5 
+  DEBUG machine:new_tick {TICK: 433 IP: 25 DA: 24} IR: 0x30000003 ACC: 798 ALU [a:188 b:610 => 798] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 434 IP: 25 DA: 3} IR: 0x30000003 ACC: 798 ALU [a:188 b:610 => 798] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 435 IP: 25 DA: 3} IR: 0x30000003 ACC: 798 ALU [a:188 b:610 => 798] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 436 IP: 26 DA: 25} IR: 0x20000005 ACC: 798 ALU [a:188 b:610 => 798] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 437 IP: 26 DA: 5} IR: 0x20000005 ACC: 798 ALU [a:188 b:610 => 798] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 438 IP: 26 DA: 5} IR: 0x20000005 ACC: 610 ALU [a:188 b:610 => 798] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 439 IP: 27 DA: 26} IR: 0x40000004 ACC: 610 ALU [a:188 b:610 => 798] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 440 IP: 27 DA: 4} IR: 0x40000004 ACC: 610 ALU [a:188 b:610 => 798] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 441 IP: 27 DA: 4} IR: 0x40000004 ACC: 987 ALU [a:610 b:377 => 987] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 442 IP: 28 DA: 27} IR: 0x30000005 ACC: 987 ALU [a:610 b:377 => 987] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 443 IP: 28 DA: 5} IR: 0x30000005 ACC: 987 ALU [a:610 b:377 => 987] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 444 IP: 28 DA: 5} IR: 0x30000005 ACC: 987 ALU [a:610 b:377 => 987] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 445 IP: 29 DA: 28} IR: 0x50000004 ACC: 987 ALU [a:610 b:377 => 987] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 446 IP: 29 DA: 4} IR: 0x50000004 ACC: 987 ALU [a:610 b:377 => 987] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 447 IP: 29 DA: 4} IR: 0x50000004 ACC: 610 ALU [a:987 b:377 => 610] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 448 IP: 30 DA: 29} IR: 0x30000004 ACC: 610 ALU [a:987 b:377 => 610] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 449 IP: 30 DA: 4} IR: 0x30000004 ACC: 610 ALU [a:987 b:377 => 610] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 450 IP: 30 DA: 4} IR: 0x30000004 ACC: 610 ALU [a:987 b:377 => 610] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 451 IP: 31 DA: 30} IR: 0x20000005 ACC: 610 ALU [a:987 b:377 => 610] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 452 IP: 31 DA: 5} IR: 0x20000005 ACC: 610 ALU [a:987 b:377 => 610] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 453 IP: 31 DA: 5} IR: 0x20000005 ACC: 987 ALU [a:987 b:377 => 610] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 454 IP: 32 DA: 31} IR: 0x50000007 ACC: 987 ALU [a:987 b:377 => 610] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 455 IP: 32 DA: 7} IR: 0x50000007 ACC: 987 ALU [a:987 b:377 => 610] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 456 IP: 32 DA: 7} IR: 0x50000007 ACC: -3999013 ALU [a:987 b:4000000 => -3999013] FLAGS: [Z:0 N:1]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 457 IP: 33 DA: 32} IR: 0xd0000012 ACC: -3999013 ALU [a:987 b:4000000 => -3999013] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 458 IP: 18 DA: 32} IR: 0xd0000012 ACC: -3999013 ALU [a:987 b:4000000 => -3999013] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 459 IP: 19 DA: 18} IR: 0x20000005 ACC: -3999013 ALU [a:987 b:4000000 => -3999013] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 460 IP: 19 DA: 5} IR: 0x20000005 ACC: -3999013 ALU [a:987 b:4000000 => -3999013] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 461 IP: 19 DA: 5} IR: 0x20000005 ACC: 987 ALU [a:987 b:4000000 => -3999013] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 462 IP: 20 DA: 19} IR: 0x60000006 ACC: 987 ALU [a:987 b:4000000 => -3999013] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 463 IP: 20 DA: 6} IR: 0x60000006 ACC: 987 ALU [a:987 b:4000000 => -3999013] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 464 IP: 20 DA: 6} IR: 0x60000006 ACC: 1 ALU [a:987 b:1 => 1] FLAGS: [Z:0 N:0]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 465 IP: 21 DA: 20} IR: 0xb0000016 ACC: 1 ALU [a:987 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 466 IP: 22 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:987 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 467 IP: 25 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:987 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 468 IP: 26 DA: 25} IR: 0x20000005 ACC: 1 ALU [a:987 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 469 IP: 26 DA: 5} IR: 0x20000005 ACC: 1 ALU [a:987 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 470 IP: 26 DA: 5} IR: 0x20000005 ACC: 987 ALU [a:987 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 471 IP: 27 DA: 26} IR: 0x40000004 ACC: 987 ALU [a:987 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 472 IP: 27 DA: 4} IR: 0x40000004 ACC: 987 ALU [a:987 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 473 IP: 27 DA: 4} IR: 0x40000004 ACC: 1597 ALU [a:987 b:610 => 1597] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 474 IP: 28 DA: 27} IR: 0x30000005 ACC: 1597 ALU [a:987 b:610 => 1597] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 475 IP: 28 DA: 5} IR: 0x30000005 ACC: 1597 ALU [a:987 b:610 => 1597] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 476 IP: 28 DA: 5} IR: 0x30000005 ACC: 1597 ALU [a:987 b:610 => 1597] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 477 IP: 29 DA: 28} IR: 0x50000004 ACC: 1597 ALU [a:987 b:610 => 1597] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 478 IP: 29 DA: 4} IR: 0x50000004 ACC: 1597 ALU [a:987 b:610 => 1597] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 479 IP: 29 DA: 4} IR: 0x50000004 ACC: 987 ALU [a:1597 b:610 => 987] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 480 IP: 30 DA: 29} IR: 0x30000004 ACC: 987 ALU [a:1597 b:610 => 987] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 481 IP: 30 DA: 4} IR: 0x30000004 ACC: 987 ALU [a:1597 b:610 => 987] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 482 IP: 30 DA: 4} IR: 0x30000004 ACC: 987 ALU [a:1597 b:610 => 987] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 483 IP: 31 DA: 30} IR: 0x20000005 ACC: 987 ALU [a:1597 b:610 => 987] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 484 IP: 31 DA: 5} IR: 0x20000005 ACC: 987 ALU [a:1597 b:610 => 987] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 485 IP: 31 DA: 5} IR: 0x20000005 ACC: 1597 ALU [a:1597 b:610 => 987] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 486 IP: 32 DA: 31} IR: 0x50000007 ACC: 1597 ALU [a:1597 b:610 => 987] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 487 IP: 32 DA: 7} IR: 0x50000007 ACC: 1597 ALU [a:1597 b:610 => 987] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 488 IP: 32 DA: 7} IR: 0x50000007 ACC: -3998403 ALU [a:1597 b:4000000 => -3998403] FLAGS: [Z:0 N:1]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 489 IP: 33 DA: 32} IR: 0xd0000012 ACC: -3998403 ALU [a:1597 b:4000000 => -3998403] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 490 IP: 18 DA: 32} IR: 0xd0000012 ACC: -3998403 ALU [a:1597 b:4000000 => -3998403] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 491 IP: 19 DA: 18} IR: 0x20000005 ACC: -3998403 ALU [a:1597 b:4000000 => -3998403] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 492 IP: 19 DA: 5} IR: 0x20000005 ACC: -3998403 ALU [a:1597 b:4000000 => -3998403] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 493 IP: 19 DA: 5} IR: 0x20000005 ACC: 1597 ALU [a:1597 b:4000000 => -3998403] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 494 IP: 20 DA: 19} IR: 0x60000006 ACC: 1597 ALU [a:1597 b:4000000 => -3998403] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 495 IP: 20 DA: 6} IR: 0x60000006 ACC: 1597 ALU [a:1597 b:4000000 => -3998403] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 496 IP: 20 DA: 6} IR: 0x60000006 ACC: 1 ALU [a:1597 b:1 => 1] FLAGS: [Z:0 N:0]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 497 IP: 21 DA: 20} IR: 0xb0000016 ACC: 1 ALU [a:1597 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 498 IP: 22 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:1597 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 499 IP: 25 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:1597 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 500 IP: 26 DA: 25} IR: 0x20000005 ACC: 1 ALU [a:1597 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 501 IP: 26 DA: 5} IR: 0x20000005 ACC: 1 ALU [a:1597 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 502 IP: 26 DA: 5} IR: 0x20000005 ACC: 1597 ALU [a:1597 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 503 IP: 27 DA: 26} IR: 0x40000004 ACC: 1597 ALU [a:1597 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 504 IP: 27 DA: 4} IR: 0x40000004 ACC: 1597 ALU [a:1597 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 505 IP: 27 DA: 4} IR: 0x40000004 ACC: 2584 ALU [a:1597 b:987 => 2584] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 506 IP: 28 DA: 27} IR: 0x30000005 ACC: 2584 ALU [a:1597 b:987 => 2584] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 507 IP: 28 DA: 5} IR: 0x30000005 ACC: 2584 ALU [a:1597 b:987 => 2584] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 508 IP: 28 DA: 5} IR: 0x30000005 ACC: 2584 ALU [a:1597 b:987 => 2584] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 509 IP: 29 DA: 28} IR: 0x50000004 ACC: 2584 ALU [a:1597 b:987 => 2584] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 510 IP: 29 DA: 4} IR: 0x50000004 ACC: 2584 ALU [a:1597 b:987 => 2584] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 511 IP: 29 DA: 4} IR: 0x50000004 ACC: 1597 ALU [a:2584 b:987 => 1597] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 512 IP: 30 DA: 29} IR: 0x30000004 ACC: 1597 ALU [a:2584 b:987 => 1597] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 513 IP: 30 DA: 4} IR: 0x30000004 ACC: 1597 ALU [a:2584 b:987 => 1597] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 514 IP: 30 DA: 4} IR: 0x30000004 ACC: 1597 ALU [a:2584 b:987 => 1597] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 515 IP: 31 DA: 30} IR: 0x20000005 ACC: 1597 ALU [a:2584 b:987 => 1597] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 516 IP: 31 DA: 5} IR: 0x20000005 ACC: 1597 ALU [a:2584 b:987 => 1597] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 517 IP: 31 DA: 5} IR: 0x20000005 ACC: 2584 ALU [a:2584 b:987 => 1597] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 518 IP: 32 DA: 31} IR: 0x50000007 ACC: 2584 ALU [a:2584 b:987 => 1597] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 519 IP: 32 DA: 7} IR: 0x50000007 ACC: 2584 ALU [a:2584 b:987 => 1597] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 520 IP: 32 DA: 7} IR: 0x50000007 ACC: -3997416 ALU [a:2584 b:4000000 => -3997416] FLAGS: [Z:0 N:1]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 521 IP: 33 DA: 32} IR: 0xd0000012 ACC: -3997416 ALU [a:2584 b:4000000 => -3997416] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 522 IP: 18 DA: 32} IR: 0xd0000012 ACC: -3997416 ALU [a:2584 b:4000000 => -3997416] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 523 IP: 19 DA: 18} IR: 0x20000005 ACC: -3997416 ALU [a:2584 b:4000000 => -3997416] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 524 IP: 19 DA: 5} IR: 0x20000005 ACC: -3997416 ALU [a:2584 b:4000000 => -3997416] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 525 IP: 19 DA: 5} IR: 0x20000005 ACC: 2584 ALU [a:2584 b:4000000 => -3997416] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 526 IP: 20 DA: 19} IR: 0x60000006 ACC: 2584 ALU [a:2584 b:4000000 => -3997416] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 527 IP: 20 DA: 6} IR: 0x60000006 ACC: 2584 ALU [a:2584 b:4000000 => -3997416] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 528 IP: 20 DA: 6} IR: 0x60000006 ACC: 0 ALU [a:2584 b:1 => 0] FLAGS: [Z:1 N:0]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 529 IP: 21 DA: 20} IR: 0xb0000016 ACC: 0 ALU [a:2584 b:1 => 0] FLAGS: [Z:1 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 530 IP: 22 DA: 20} IR: 0xb0000016 ACC: 0 ALU [a:2584 b:1 => 0] FLAGS: [Z:1 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 531 IP: 23 DA: 22} IR: 0x20000003 ACC: 0 ALU [a:2584 b:1 => 0] FLAGS: [Z:1 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 532 IP: 23 DA: 3} IR: 0x20000003 ACC: 0 ALU [a:2584 b:1 => 0] FLAGS: [Z:1 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 533 IP: 23 DA: 3} IR: 0x20000003 ACC: 798 ALU [a:2584 b:1 => 0] FLAGS: [Z:1 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 534 IP: 24 DA: 23} IR: 0x40000005 ACC: 798 ALU [a:2584 b:1 => 0] FLAGS: [Z:1 N:0]  Action: ADD 5 
+  DEBUG machine:new_tick {TICK: 535 IP: 24 DA: 5} IR: 0x40000005 ACC: 798 ALU [a:2584 b:1 => 0] FLAGS: [Z:1 N:0]  Action: ADD 5 
+  DEBUG machine:new_tick {TICK: 536 IP: 24 DA: 5} IR: 0x40000005 ACC: 3382 ALU [a:798 b:2584 => 3382] FLAGS: [Z:0 N:0]  Action: ADD 5 
+  DEBUG machine:new_tick {TICK: 537 IP: 25 DA: 24} IR: 0x30000003 ACC: 3382 ALU [a:798 b:2584 => 3382] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 538 IP: 25 DA: 3} IR: 0x30000003 ACC: 3382 ALU [a:798 b:2584 => 3382] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 539 IP: 25 DA: 3} IR: 0x30000003 ACC: 3382 ALU [a:798 b:2584 => 3382] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 540 IP: 26 DA: 25} IR: 0x20000005 ACC: 3382 ALU [a:798 b:2584 => 3382] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 541 IP: 26 DA: 5} IR: 0x20000005 ACC: 3382 ALU [a:798 b:2584 => 3382] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 542 IP: 26 DA: 5} IR: 0x20000005 ACC: 2584 ALU [a:798 b:2584 => 3382] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 543 IP: 27 DA: 26} IR: 0x40000004 ACC: 2584 ALU [a:798 b:2584 => 3382] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 544 IP: 27 DA: 4} IR: 0x40000004 ACC: 2584 ALU [a:798 b:2584 => 3382] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 545 IP: 27 DA: 4} IR: 0x40000004 ACC: 4181 ALU [a:2584 b:1597 => 4181] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 546 IP: 28 DA: 27} IR: 0x30000005 ACC: 4181 ALU [a:2584 b:1597 => 4181] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 547 IP: 28 DA: 5} IR: 0x30000005 ACC: 4181 ALU [a:2584 b:1597 => 4181] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 548 IP: 28 DA: 5} IR: 0x30000005 ACC: 4181 ALU [a:2584 b:1597 => 4181] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 549 IP: 29 DA: 28} IR: 0x50000004 ACC: 4181 ALU [a:2584 b:1597 => 4181] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 550 IP: 29 DA: 4} IR: 0x50000004 ACC: 4181 ALU [a:2584 b:1597 => 4181] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 551 IP: 29 DA: 4} IR: 0x50000004 ACC: 2584 ALU [a:4181 b:1597 => 2584] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 552 IP: 30 DA: 29} IR: 0x30000004 ACC: 2584 ALU [a:4181 b:1597 => 2584] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 553 IP: 30 DA: 4} IR: 0x30000004 ACC: 2584 ALU [a:4181 b:1597 => 2584] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 554 IP: 30 DA: 4} IR: 0x30000004 ACC: 2584 ALU [a:4181 b:1597 => 2584] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 555 IP: 31 DA: 30} IR: 0x20000005 ACC: 2584 ALU [a:4181 b:1597 => 2584] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 556 IP: 31 DA: 5} IR: 0x20000005 ACC: 2584 ALU [a:4181 b:1597 => 2584] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 557 IP: 31 DA: 5} IR: 0x20000005 ACC: 4181 ALU [a:4181 b:1597 => 2584] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 558 IP: 32 DA: 31} IR: 0x50000007 ACC: 4181 ALU [a:4181 b:1597 => 2584] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 559 IP: 32 DA: 7} IR: 0x50000007 ACC: 4181 ALU [a:4181 b:1597 => 2584] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 560 IP: 32 DA: 7} IR: 0x50000007 ACC: -3995819 ALU [a:4181 b:4000000 => -3995819] FLAGS: [Z:0 N:1]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 561 IP: 33 DA: 32} IR: 0xd0000012 ACC: -3995819 ALU [a:4181 b:4000000 => -3995819] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 562 IP: 18 DA: 32} IR: 0xd0000012 ACC: -3995819 ALU [a:4181 b:4000000 => -3995819] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 563 IP: 19 DA: 18} IR: 0x20000005 ACC: -3995819 ALU [a:4181 b:4000000 => -3995819] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 564 IP: 19 DA: 5} IR: 0x20000005 ACC: -3995819 ALU [a:4181 b:4000000 => -3995819] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 565 IP: 19 DA: 5} IR: 0x20000005 ACC: 4181 ALU [a:4181 b:4000000 => -3995819] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 566 IP: 20 DA: 19} IR: 0x60000006 ACC: 4181 ALU [a:4181 b:4000000 => -3995819] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 567 IP: 20 DA: 6} IR: 0x60000006 ACC: 4181 ALU [a:4181 b:4000000 => -3995819] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 568 IP: 20 DA: 6} IR: 0x60000006 ACC: 1 ALU [a:4181 b:1 => 1] FLAGS: [Z:0 N:0]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 569 IP: 21 DA: 20} IR: 0xb0000016 ACC: 1 ALU [a:4181 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 570 IP: 22 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:4181 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 571 IP: 25 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:4181 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 572 IP: 26 DA: 25} IR: 0x20000005 ACC: 1 ALU [a:4181 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 573 IP: 26 DA: 5} IR: 0x20000005 ACC: 1 ALU [a:4181 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 574 IP: 26 DA: 5} IR: 0x20000005 ACC: 4181 ALU [a:4181 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 575 IP: 27 DA: 26} IR: 0x40000004 ACC: 4181 ALU [a:4181 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 576 IP: 27 DA: 4} IR: 0x40000004 ACC: 4181 ALU [a:4181 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 577 IP: 27 DA: 4} IR: 0x40000004 ACC: 6765 ALU [a:4181 b:2584 => 6765] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 578 IP: 28 DA: 27} IR: 0x30000005 ACC: 6765 ALU [a:4181 b:2584 => 6765] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 579 IP: 28 DA: 5} IR: 0x30000005 ACC: 6765 ALU [a:4181 b:2584 => 6765] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 580 IP: 28 DA: 5} IR: 0x30000005 ACC: 6765 ALU [a:4181 b:2584 => 6765] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 581 IP: 29 DA: 28} IR: 0x50000004 ACC: 6765 ALU [a:4181 b:2584 => 6765] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 582 IP: 29 DA: 4} IR: 0x50000004 ACC: 6765 ALU [a:4181 b:2584 => 6765] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 583 IP: 29 DA: 4} IR: 0x50000004 ACC: 4181 ALU [a:6765 b:2584 => 4181] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 584 IP: 30 DA: 29} IR: 0x30000004 ACC: 4181 ALU [a:6765 b:2584 => 4181] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 585 IP: 30 DA: 4} IR: 0x30000004 ACC: 4181 ALU [a:6765 b:2584 => 4181] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 586 IP: 30 DA: 4} IR: 0x30000004 ACC: 4181 ALU [a:6765 b:2584 => 4181] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 587 IP: 31 DA: 30} IR: 0x20000005 ACC: 4181 ALU [a:6765 b:2584 => 4181] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 588 IP: 31 DA: 5} IR: 0x20000005 ACC: 4181 ALU [a:6765 b:2584 => 4181] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 589 IP: 31 DA: 5} IR: 0x20000005 ACC: 6765 ALU [a:6765 b:2584 => 4181] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 590 IP: 32 DA: 31} IR: 0x50000007 ACC: 6765 ALU [a:6765 b:2584 => 4181] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 591 IP: 32 DA: 7} IR: 0x50000007 ACC: 6765 ALU [a:6765 b:2584 => 4181] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 592 IP: 32 DA: 7} IR: 0x50000007 ACC: -3993235 ALU [a:6765 b:4000000 => -3993235] FLAGS: [Z:0 N:1]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 593 IP: 33 DA: 32} IR: 0xd0000012 ACC: -3993235 ALU [a:6765 b:4000000 => -3993235] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 594 IP: 18 DA: 32} IR: 0xd0000012 ACC: -3993235 ALU [a:6765 b:4000000 => -3993235] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 595 IP: 19 DA: 18} IR: 0x20000005 ACC: -3993235 ALU [a:6765 b:4000000 => -3993235] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 596 IP: 19 DA: 5} IR: 0x20000005 ACC: -3993235 ALU [a:6765 b:4000000 => -3993235] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 597 IP: 19 DA: 5} IR: 0x20000005 ACC: 6765 ALU [a:6765 b:4000000 => -3993235] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 598 IP: 20 DA: 19} IR: 0x60000006 ACC: 6765 ALU [a:6765 b:4000000 => -3993235] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 599 IP: 20 DA: 6} IR: 0x60000006 ACC: 6765 ALU [a:6765 b:4000000 => -3993235] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 600 IP: 20 DA: 6} IR: 0x60000006 ACC: 1 ALU [a:6765 b:1 => 1] FLAGS: [Z:0 N:0]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 601 IP: 21 DA: 20} IR: 0xb0000016 ACC: 1 ALU [a:6765 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 602 IP: 22 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:6765 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 603 IP: 25 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:6765 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 604 IP: 26 DA: 25} IR: 0x20000005 ACC: 1 ALU [a:6765 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 605 IP: 26 DA: 5} IR: 0x20000005 ACC: 1 ALU [a:6765 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 606 IP: 26 DA: 5} IR: 0x20000005 ACC: 6765 ALU [a:6765 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 607 IP: 27 DA: 26} IR: 0x40000004 ACC: 6765 ALU [a:6765 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 608 IP: 27 DA: 4} IR: 0x40000004 ACC: 6765 ALU [a:6765 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 609 IP: 27 DA: 4} IR: 0x40000004 ACC: 10946 ALU [a:6765 b:4181 => 10946] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 610 IP: 28 DA: 27} IR: 0x30000005 ACC: 10946 ALU [a:6765 b:4181 => 10946] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 611 IP: 28 DA: 5} IR: 0x30000005 ACC: 10946 ALU [a:6765 b:4181 => 10946] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 612 IP: 28 DA: 5} IR: 0x30000005 ACC: 10946 ALU [a:6765 b:4181 => 10946] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 613 IP: 29 DA: 28} IR: 0x50000004 ACC: 10946 ALU [a:6765 b:4181 => 10946] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 614 IP: 29 DA: 4} IR: 0x50000004 ACC: 10946 ALU [a:6765 b:4181 => 10946] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 615 IP: 29 DA: 4} IR: 0x50000004 ACC: 6765 ALU [a:10946 b:4181 => 6765] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 616 IP: 30 DA: 29} IR: 0x30000004 ACC: 6765 ALU [a:10946 b:4181 => 6765] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 617 IP: 30 DA: 4} IR: 0x30000004 ACC: 6765 ALU [a:10946 b:4181 => 6765] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 618 IP: 30 DA: 4} IR: 0x30000004 ACC: 6765 ALU [a:10946 b:4181 => 6765] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 619 IP: 31 DA: 30} IR: 0x20000005 ACC: 6765 ALU [a:10946 b:4181 => 6765] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 620 IP: 31 DA: 5} IR: 0x20000005 ACC: 6765 ALU [a:10946 b:4181 => 6765] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 621 IP: 31 DA: 5} IR: 0x20000005 ACC: 10946 ALU [a:10946 b:4181 => 6765] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 622 IP: 32 DA: 31} IR: 0x50000007 ACC: 10946 ALU [a:10946 b:4181 => 6765] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 623 IP: 32 DA: 7} IR: 0x50000007 ACC: 10946 ALU [a:10946 b:4181 => 6765] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 624 IP: 32 DA: 7} IR: 0x50000007 ACC: -3989054 ALU [a:10946 b:4000000 => -3989054] FLAGS: [Z:0 N:1]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 625 IP: 33 DA: 32} IR: 0xd0000012 ACC: -3989054 ALU [a:10946 b:4000000 => -3989054] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 626 IP: 18 DA: 32} IR: 0xd0000012 ACC: -3989054 ALU [a:10946 b:4000000 => -3989054] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 627 IP: 19 DA: 18} IR: 0x20000005 ACC: -3989054 ALU [a:10946 b:4000000 => -3989054] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 628 IP: 19 DA: 5} IR: 0x20000005 ACC: -3989054 ALU [a:10946 b:4000000 => -3989054] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 629 IP: 19 DA: 5} IR: 0x20000005 ACC: 10946 ALU [a:10946 b:4000000 => -3989054] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 630 IP: 20 DA: 19} IR: 0x60000006 ACC: 10946 ALU [a:10946 b:4000000 => -3989054] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 631 IP: 20 DA: 6} IR: 0x60000006 ACC: 10946 ALU [a:10946 b:4000000 => -3989054] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 632 IP: 20 DA: 6} IR: 0x60000006 ACC: 0 ALU [a:10946 b:1 => 0] FLAGS: [Z:1 N:0]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 633 IP: 21 DA: 20} IR: 0xb0000016 ACC: 0 ALU [a:10946 b:1 => 0] FLAGS: [Z:1 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 634 IP: 22 DA: 20} IR: 0xb0000016 ACC: 0 ALU [a:10946 b:1 => 0] FLAGS: [Z:1 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 635 IP: 23 DA: 22} IR: 0x20000003 ACC: 0 ALU [a:10946 b:1 => 0] FLAGS: [Z:1 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 636 IP: 23 DA: 3} IR: 0x20000003 ACC: 0 ALU [a:10946 b:1 => 0] FLAGS: [Z:1 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 637 IP: 23 DA: 3} IR: 0x20000003 ACC: 3382 ALU [a:10946 b:1 => 0] FLAGS: [Z:1 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 638 IP: 24 DA: 23} IR: 0x40000005 ACC: 3382 ALU [a:10946 b:1 => 0] FLAGS: [Z:1 N:0]  Action: ADD 5 
+  DEBUG machine:new_tick {TICK: 639 IP: 24 DA: 5} IR: 0x40000005 ACC: 3382 ALU [a:10946 b:1 => 0] FLAGS: [Z:1 N:0]  Action: ADD 5 
+  DEBUG machine:new_tick {TICK: 640 IP: 24 DA: 5} IR: 0x40000005 ACC: 14328 ALU [a:3382 b:10946 => 14328] FLAGS: [Z:0 N:0]  Action: ADD 5 
+  DEBUG machine:new_tick {TICK: 641 IP: 25 DA: 24} IR: 0x30000003 ACC: 14328 ALU [a:3382 b:10946 => 14328] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 642 IP: 25 DA: 3} IR: 0x30000003 ACC: 14328 ALU [a:3382 b:10946 => 14328] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 643 IP: 25 DA: 3} IR: 0x30000003 ACC: 14328 ALU [a:3382 b:10946 => 14328] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 644 IP: 26 DA: 25} IR: 0x20000005 ACC: 14328 ALU [a:3382 b:10946 => 14328] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 645 IP: 26 DA: 5} IR: 0x20000005 ACC: 14328 ALU [a:3382 b:10946 => 14328] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 646 IP: 26 DA: 5} IR: 0x20000005 ACC: 10946 ALU [a:3382 b:10946 => 14328] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 647 IP: 27 DA: 26} IR: 0x40000004 ACC: 10946 ALU [a:3382 b:10946 => 14328] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 648 IP: 27 DA: 4} IR: 0x40000004 ACC: 10946 ALU [a:3382 b:10946 => 14328] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 649 IP: 27 DA: 4} IR: 0x40000004 ACC: 17711 ALU [a:10946 b:6765 => 17711] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 650 IP: 28 DA: 27} IR: 0x30000005 ACC: 17711 ALU [a:10946 b:6765 => 17711] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 651 IP: 28 DA: 5} IR: 0x30000005 ACC: 17711 ALU [a:10946 b:6765 => 17711] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 652 IP: 28 DA: 5} IR: 0x30000005 ACC: 17711 ALU [a:10946 b:6765 => 17711] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 653 IP: 29 DA: 28} IR: 0x50000004 ACC: 17711 ALU [a:10946 b:6765 => 17711] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 654 IP: 29 DA: 4} IR: 0x50000004 ACC: 17711 ALU [a:10946 b:6765 => 17711] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 655 IP: 29 DA: 4} IR: 0x50000004 ACC: 10946 ALU [a:17711 b:6765 => 10946] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 656 IP: 30 DA: 29} IR: 0x30000004 ACC: 10946 ALU [a:17711 b:6765 => 10946] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 657 IP: 30 DA: 4} IR: 0x30000004 ACC: 10946 ALU [a:17711 b:6765 => 10946] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 658 IP: 30 DA: 4} IR: 0x30000004 ACC: 10946 ALU [a:17711 b:6765 => 10946] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 659 IP: 31 DA: 30} IR: 0x20000005 ACC: 10946 ALU [a:17711 b:6765 => 10946] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 660 IP: 31 DA: 5} IR: 0x20000005 ACC: 10946 ALU [a:17711 b:6765 => 10946] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 661 IP: 31 DA: 5} IR: 0x20000005 ACC: 17711 ALU [a:17711 b:6765 => 10946] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 662 IP: 32 DA: 31} IR: 0x50000007 ACC: 17711 ALU [a:17711 b:6765 => 10946] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 663 IP: 32 DA: 7} IR: 0x50000007 ACC: 17711 ALU [a:17711 b:6765 => 10946] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 664 IP: 32 DA: 7} IR: 0x50000007 ACC: -3982289 ALU [a:17711 b:4000000 => -3982289] FLAGS: [Z:0 N:1]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 665 IP: 33 DA: 32} IR: 0xd0000012 ACC: -3982289 ALU [a:17711 b:4000000 => -3982289] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 666 IP: 18 DA: 32} IR: 0xd0000012 ACC: -3982289 ALU [a:17711 b:4000000 => -3982289] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 667 IP: 19 DA: 18} IR: 0x20000005 ACC: -3982289 ALU [a:17711 b:4000000 => -3982289] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 668 IP: 19 DA: 5} IR: 0x20000005 ACC: -3982289 ALU [a:17711 b:4000000 => -3982289] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 669 IP: 19 DA: 5} IR: 0x20000005 ACC: 17711 ALU [a:17711 b:4000000 => -3982289] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 670 IP: 20 DA: 19} IR: 0x60000006 ACC: 17711 ALU [a:17711 b:4000000 => -3982289] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 671 IP: 20 DA: 6} IR: 0x60000006 ACC: 17711 ALU [a:17711 b:4000000 => -3982289] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 672 IP: 20 DA: 6} IR: 0x60000006 ACC: 1 ALU [a:17711 b:1 => 1] FLAGS: [Z:0 N:0]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 673 IP: 21 DA: 20} IR: 0xb0000016 ACC: 1 ALU [a:17711 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 674 IP: 22 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:17711 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 675 IP: 25 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:17711 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 676 IP: 26 DA: 25} IR: 0x20000005 ACC: 1 ALU [a:17711 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 677 IP: 26 DA: 5} IR: 0x20000005 ACC: 1 ALU [a:17711 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 678 IP: 26 DA: 5} IR: 0x20000005 ACC: 17711 ALU [a:17711 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 679 IP: 27 DA: 26} IR: 0x40000004 ACC: 17711 ALU [a:17711 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 680 IP: 27 DA: 4} IR: 0x40000004 ACC: 17711 ALU [a:17711 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 681 IP: 27 DA: 4} IR: 0x40000004 ACC: 28657 ALU [a:17711 b:10946 => 28657] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 682 IP: 28 DA: 27} IR: 0x30000005 ACC: 28657 ALU [a:17711 b:10946 => 28657] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 683 IP: 28 DA: 5} IR: 0x30000005 ACC: 28657 ALU [a:17711 b:10946 => 28657] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 684 IP: 28 DA: 5} IR: 0x30000005 ACC: 28657 ALU [a:17711 b:10946 => 28657] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 685 IP: 29 DA: 28} IR: 0x50000004 ACC: 28657 ALU [a:17711 b:10946 => 28657] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 686 IP: 29 DA: 4} IR: 0x50000004 ACC: 28657 ALU [a:17711 b:10946 => 28657] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 687 IP: 29 DA: 4} IR: 0x50000004 ACC: 17711 ALU [a:28657 b:10946 => 17711] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 688 IP: 30 DA: 29} IR: 0x30000004 ACC: 17711 ALU [a:28657 b:10946 => 17711] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 689 IP: 30 DA: 4} IR: 0x30000004 ACC: 17711 ALU [a:28657 b:10946 => 17711] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 690 IP: 30 DA: 4} IR: 0x30000004 ACC: 17711 ALU [a:28657 b:10946 => 17711] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 691 IP: 31 DA: 30} IR: 0x20000005 ACC: 17711 ALU [a:28657 b:10946 => 17711] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 692 IP: 31 DA: 5} IR: 0x20000005 ACC: 17711 ALU [a:28657 b:10946 => 17711] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 693 IP: 31 DA: 5} IR: 0x20000005 ACC: 28657 ALU [a:28657 b:10946 => 17711] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 694 IP: 32 DA: 31} IR: 0x50000007 ACC: 28657 ALU [a:28657 b:10946 => 17711] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 695 IP: 32 DA: 7} IR: 0x50000007 ACC: 28657 ALU [a:28657 b:10946 => 17711] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 696 IP: 32 DA: 7} IR: 0x50000007 ACC: -3971343 ALU [a:28657 b:4000000 => -3971343] FLAGS: [Z:0 N:1]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 697 IP: 33 DA: 32} IR: 0xd0000012 ACC: -3971343 ALU [a:28657 b:4000000 => -3971343] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 698 IP: 18 DA: 32} IR: 0xd0000012 ACC: -3971343 ALU [a:28657 b:4000000 => -3971343] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 699 IP: 19 DA: 18} IR: 0x20000005 ACC: -3971343 ALU [a:28657 b:4000000 => -3971343] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 700 IP: 19 DA: 5} IR: 0x20000005 ACC: -3971343 ALU [a:28657 b:4000000 => -3971343] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 701 IP: 19 DA: 5} IR: 0x20000005 ACC: 28657 ALU [a:28657 b:4000000 => -3971343] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 702 IP: 20 DA: 19} IR: 0x60000006 ACC: 28657 ALU [a:28657 b:4000000 => -3971343] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 703 IP: 20 DA: 6} IR: 0x60000006 ACC: 28657 ALU [a:28657 b:4000000 => -3971343] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 704 IP: 20 DA: 6} IR: 0x60000006 ACC: 1 ALU [a:28657 b:1 => 1] FLAGS: [Z:0 N:0]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 705 IP: 21 DA: 20} IR: 0xb0000016 ACC: 1 ALU [a:28657 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 706 IP: 22 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:28657 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 707 IP: 25 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:28657 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 708 IP: 26 DA: 25} IR: 0x20000005 ACC: 1 ALU [a:28657 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 709 IP: 26 DA: 5} IR: 0x20000005 ACC: 1 ALU [a:28657 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 710 IP: 26 DA: 5} IR: 0x20000005 ACC: 28657 ALU [a:28657 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 711 IP: 27 DA: 26} IR: 0x40000004 ACC: 28657 ALU [a:28657 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 712 IP: 27 DA: 4} IR: 0x40000004 ACC: 28657 ALU [a:28657 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 713 IP: 27 DA: 4} IR: 0x40000004 ACC: 46368 ALU [a:28657 b:17711 => 46368] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 714 IP: 28 DA: 27} IR: 0x30000005 ACC: 46368 ALU [a:28657 b:17711 => 46368] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 715 IP: 28 DA: 5} IR: 0x30000005 ACC: 46368 ALU [a:28657 b:17711 => 46368] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 716 IP: 28 DA: 5} IR: 0x30000005 ACC: 46368 ALU [a:28657 b:17711 => 46368] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 717 IP: 29 DA: 28} IR: 0x50000004 ACC: 46368 ALU [a:28657 b:17711 => 46368] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 718 IP: 29 DA: 4} IR: 0x50000004 ACC: 46368 ALU [a:28657 b:17711 => 46368] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 719 IP: 29 DA: 4} IR: 0x50000004 ACC: 28657 ALU [a:46368 b:17711 => 28657] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 720 IP: 30 DA: 29} IR: 0x30000004 ACC: 28657 ALU [a:46368 b:17711 => 28657] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 721 IP: 30 DA: 4} IR: 0x30000004 ACC: 28657 ALU [a:46368 b:17711 => 28657] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 722 IP: 30 DA: 4} IR: 0x30000004 ACC: 28657 ALU [a:46368 b:17711 => 28657] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 723 IP: 31 DA: 30} IR: 0x20000005 ACC: 28657 ALU [a:46368 b:17711 => 28657] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 724 IP: 31 DA: 5} IR: 0x20000005 ACC: 28657 ALU [a:46368 b:17711 => 28657] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 725 IP: 31 DA: 5} IR: 0x20000005 ACC: 46368 ALU [a:46368 b:17711 => 28657] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 726 IP: 32 DA: 31} IR: 0x50000007 ACC: 46368 ALU [a:46368 b:17711 => 28657] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 727 IP: 32 DA: 7} IR: 0x50000007 ACC: 46368 ALU [a:46368 b:17711 => 28657] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 728 IP: 32 DA: 7} IR: 0x50000007 ACC: -3953632 ALU [a:46368 b:4000000 => -3953632] FLAGS: [Z:0 N:1]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 729 IP: 33 DA: 32} IR: 0xd0000012 ACC: -3953632 ALU [a:46368 b:4000000 => -3953632] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 730 IP: 18 DA: 32} IR: 0xd0000012 ACC: -3953632 ALU [a:46368 b:4000000 => -3953632] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 731 IP: 19 DA: 18} IR: 0x20000005 ACC: -3953632 ALU [a:46368 b:4000000 => -3953632] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 732 IP: 19 DA: 5} IR: 0x20000005 ACC: -3953632 ALU [a:46368 b:4000000 => -3953632] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 733 IP: 19 DA: 5} IR: 0x20000005 ACC: 46368 ALU [a:46368 b:4000000 => -3953632] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 734 IP: 20 DA: 19} IR: 0x60000006 ACC: 46368 ALU [a:46368 b:4000000 => -3953632] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 735 IP: 20 DA: 6} IR: 0x60000006 ACC: 46368 ALU [a:46368 b:4000000 => -3953632] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 736 IP: 20 DA: 6} IR: 0x60000006 ACC: 0 ALU [a:46368 b:1 => 0] FLAGS: [Z:1 N:0]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 737 IP: 21 DA: 20} IR: 0xb0000016 ACC: 0 ALU [a:46368 b:1 => 0] FLAGS: [Z:1 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 738 IP: 22 DA: 20} IR: 0xb0000016 ACC: 0 ALU [a:46368 b:1 => 0] FLAGS: [Z:1 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 739 IP: 23 DA: 22} IR: 0x20000003 ACC: 0 ALU [a:46368 b:1 => 0] FLAGS: [Z:1 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 740 IP: 23 DA: 3} IR: 0x20000003 ACC: 0 ALU [a:46368 b:1 => 0] FLAGS: [Z:1 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 741 IP: 23 DA: 3} IR: 0x20000003 ACC: 14328 ALU [a:46368 b:1 => 0] FLAGS: [Z:1 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 742 IP: 24 DA: 23} IR: 0x40000005 ACC: 14328 ALU [a:46368 b:1 => 0] FLAGS: [Z:1 N:0]  Action: ADD 5 
+  DEBUG machine:new_tick {TICK: 743 IP: 24 DA: 5} IR: 0x40000005 ACC: 14328 ALU [a:46368 b:1 => 0] FLAGS: [Z:1 N:0]  Action: ADD 5 
+  DEBUG machine:new_tick {TICK: 744 IP: 24 DA: 5} IR: 0x40000005 ACC: 60696 ALU [a:14328 b:46368 => 60696] FLAGS: [Z:0 N:0]  Action: ADD 5 
+  DEBUG machine:new_tick {TICK: 745 IP: 25 DA: 24} IR: 0x30000003 ACC: 60696 ALU [a:14328 b:46368 => 60696] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 746 IP: 25 DA: 3} IR: 0x30000003 ACC: 60696 ALU [a:14328 b:46368 => 60696] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 747 IP: 25 DA: 3} IR: 0x30000003 ACC: 60696 ALU [a:14328 b:46368 => 60696] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 748 IP: 26 DA: 25} IR: 0x20000005 ACC: 60696 ALU [a:14328 b:46368 => 60696] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 749 IP: 26 DA: 5} IR: 0x20000005 ACC: 60696 ALU [a:14328 b:46368 => 60696] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 750 IP: 26 DA: 5} IR: 0x20000005 ACC: 46368 ALU [a:14328 b:46368 => 60696] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 751 IP: 27 DA: 26} IR: 0x40000004 ACC: 46368 ALU [a:14328 b:46368 => 60696] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 752 IP: 27 DA: 4} IR: 0x40000004 ACC: 46368 ALU [a:14328 b:46368 => 60696] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 753 IP: 27 DA: 4} IR: 0x40000004 ACC: 75025 ALU [a:46368 b:28657 => 75025] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 754 IP: 28 DA: 27} IR: 0x30000005 ACC: 75025 ALU [a:46368 b:28657 => 75025] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 755 IP: 28 DA: 5} IR: 0x30000005 ACC: 75025 ALU [a:46368 b:28657 => 75025] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 756 IP: 28 DA: 5} IR: 0x30000005 ACC: 75025 ALU [a:46368 b:28657 => 75025] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 757 IP: 29 DA: 28} IR: 0x50000004 ACC: 75025 ALU [a:46368 b:28657 => 75025] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 758 IP: 29 DA: 4} IR: 0x50000004 ACC: 75025 ALU [a:46368 b:28657 => 75025] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 759 IP: 29 DA: 4} IR: 0x50000004 ACC: 46368 ALU [a:75025 b:28657 => 46368] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 760 IP: 30 DA: 29} IR: 0x30000004 ACC: 46368 ALU [a:75025 b:28657 => 46368] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 761 IP: 30 DA: 4} IR: 0x30000004 ACC: 46368 ALU [a:75025 b:28657 => 46368] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 762 IP: 30 DA: 4} IR: 0x30000004 ACC: 46368 ALU [a:75025 b:28657 => 46368] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 763 IP: 31 DA: 30} IR: 0x20000005 ACC: 46368 ALU [a:75025 b:28657 => 46368] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 764 IP: 31 DA: 5} IR: 0x20000005 ACC: 46368 ALU [a:75025 b:28657 => 46368] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 765 IP: 31 DA: 5} IR: 0x20000005 ACC: 75025 ALU [a:75025 b:28657 => 46368] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 766 IP: 32 DA: 31} IR: 0x50000007 ACC: 75025 ALU [a:75025 b:28657 => 46368] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 767 IP: 32 DA: 7} IR: 0x50000007 ACC: 75025 ALU [a:75025 b:28657 => 46368] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 768 IP: 32 DA: 7} IR: 0x50000007 ACC: -3924975 ALU [a:75025 b:4000000 => -3924975] FLAGS: [Z:0 N:1]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 769 IP: 33 DA: 32} IR: 0xd0000012 ACC: -3924975 ALU [a:75025 b:4000000 => -3924975] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 770 IP: 18 DA: 32} IR: 0xd0000012 ACC: -3924975 ALU [a:75025 b:4000000 => -3924975] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 771 IP: 19 DA: 18} IR: 0x20000005 ACC: -3924975 ALU [a:75025 b:4000000 => -3924975] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 772 IP: 19 DA: 5} IR: 0x20000005 ACC: -3924975 ALU [a:75025 b:4000000 => -3924975] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 773 IP: 19 DA: 5} IR: 0x20000005 ACC: 75025 ALU [a:75025 b:4000000 => -3924975] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 774 IP: 20 DA: 19} IR: 0x60000006 ACC: 75025 ALU [a:75025 b:4000000 => -3924975] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 775 IP: 20 DA: 6} IR: 0x60000006 ACC: 75025 ALU [a:75025 b:4000000 => -3924975] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 776 IP: 20 DA: 6} IR: 0x60000006 ACC: 1 ALU [a:75025 b:1 => 1] FLAGS: [Z:0 N:0]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 777 IP: 21 DA: 20} IR: 0xb0000016 ACC: 1 ALU [a:75025 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 778 IP: 22 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:75025 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 779 IP: 25 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:75025 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 780 IP: 26 DA: 25} IR: 0x20000005 ACC: 1 ALU [a:75025 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 781 IP: 26 DA: 5} IR: 0x20000005 ACC: 1 ALU [a:75025 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 782 IP: 26 DA: 5} IR: 0x20000005 ACC: 75025 ALU [a:75025 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 783 IP: 27 DA: 26} IR: 0x40000004 ACC: 75025 ALU [a:75025 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 784 IP: 27 DA: 4} IR: 0x40000004 ACC: 75025 ALU [a:75025 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 785 IP: 27 DA: 4} IR: 0x40000004 ACC: 121393 ALU [a:75025 b:46368 => 121393] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 786 IP: 28 DA: 27} IR: 0x30000005 ACC: 121393 ALU [a:75025 b:46368 => 121393] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 787 IP: 28 DA: 5} IR: 0x30000005 ACC: 121393 ALU [a:75025 b:46368 => 121393] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 788 IP: 28 DA: 5} IR: 0x30000005 ACC: 121393 ALU [a:75025 b:46368 => 121393] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 789 IP: 29 DA: 28} IR: 0x50000004 ACC: 121393 ALU [a:75025 b:46368 => 121393] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 790 IP: 29 DA: 4} IR: 0x50000004 ACC: 121393 ALU [a:75025 b:46368 => 121393] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 791 IP: 29 DA: 4} IR: 0x50000004 ACC: 75025 ALU [a:121393 b:46368 => 75025] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 792 IP: 30 DA: 29} IR: 0x30000004 ACC: 75025 ALU [a:121393 b:46368 => 75025] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 793 IP: 30 DA: 4} IR: 0x30000004 ACC: 75025 ALU [a:121393 b:46368 => 75025] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 794 IP: 30 DA: 4} IR: 0x30000004 ACC: 75025 ALU [a:121393 b:46368 => 75025] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 795 IP: 31 DA: 30} IR: 0x20000005 ACC: 75025 ALU [a:121393 b:46368 => 75025] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 796 IP: 31 DA: 5} IR: 0x20000005 ACC: 75025 ALU [a:121393 b:46368 => 75025] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 797 IP: 31 DA: 5} IR: 0x20000005 ACC: 121393 ALU [a:121393 b:46368 => 75025] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 798 IP: 32 DA: 31} IR: 0x50000007 ACC: 121393 ALU [a:121393 b:46368 => 75025] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 799 IP: 32 DA: 7} IR: 0x50000007 ACC: 121393 ALU [a:121393 b:46368 => 75025] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 800 IP: 32 DA: 7} IR: 0x50000007 ACC: -3878607 ALU [a:121393 b:4000000 => -3878607] FLAGS: [Z:0 N:1]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 801 IP: 33 DA: 32} IR: 0xd0000012 ACC: -3878607 ALU [a:121393 b:4000000 => -3878607] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 802 IP: 18 DA: 32} IR: 0xd0000012 ACC: -3878607 ALU [a:121393 b:4000000 => -3878607] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 803 IP: 19 DA: 18} IR: 0x20000005 ACC: -3878607 ALU [a:121393 b:4000000 => -3878607] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 804 IP: 19 DA: 5} IR: 0x20000005 ACC: -3878607 ALU [a:121393 b:4000000 => -3878607] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 805 IP: 19 DA: 5} IR: 0x20000005 ACC: 121393 ALU [a:121393 b:4000000 => -3878607] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 806 IP: 20 DA: 19} IR: 0x60000006 ACC: 121393 ALU [a:121393 b:4000000 => -3878607] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 807 IP: 20 DA: 6} IR: 0x60000006 ACC: 121393 ALU [a:121393 b:4000000 => -3878607] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 808 IP: 20 DA: 6} IR: 0x60000006 ACC: 1 ALU [a:121393 b:1 => 1] FLAGS: [Z:0 N:0]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 809 IP: 21 DA: 20} IR: 0xb0000016 ACC: 1 ALU [a:121393 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 810 IP: 22 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:121393 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 811 IP: 25 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:121393 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 812 IP: 26 DA: 25} IR: 0x20000005 ACC: 1 ALU [a:121393 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 813 IP: 26 DA: 5} IR: 0x20000005 ACC: 1 ALU [a:121393 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 814 IP: 26 DA: 5} IR: 0x20000005 ACC: 121393 ALU [a:121393 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 815 IP: 27 DA: 26} IR: 0x40000004 ACC: 121393 ALU [a:121393 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 816 IP: 27 DA: 4} IR: 0x40000004 ACC: 121393 ALU [a:121393 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 817 IP: 27 DA: 4} IR: 0x40000004 ACC: 196418 ALU [a:121393 b:75025 => 196418] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 818 IP: 28 DA: 27} IR: 0x30000005 ACC: 196418 ALU [a:121393 b:75025 => 196418] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 819 IP: 28 DA: 5} IR: 0x30000005 ACC: 196418 ALU [a:121393 b:75025 => 196418] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 820 IP: 28 DA: 5} IR: 0x30000005 ACC: 196418 ALU [a:121393 b:75025 => 196418] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 821 IP: 29 DA: 28} IR: 0x50000004 ACC: 196418 ALU [a:121393 b:75025 => 196418] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 822 IP: 29 DA: 4} IR: 0x50000004 ACC: 196418 ALU [a:121393 b:75025 => 196418] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 823 IP: 29 DA: 4} IR: 0x50000004 ACC: 121393 ALU [a:196418 b:75025 => 121393] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 824 IP: 30 DA: 29} IR: 0x30000004 ACC: 121393 ALU [a:196418 b:75025 => 121393] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 825 IP: 30 DA: 4} IR: 0x30000004 ACC: 121393 ALU [a:196418 b:75025 => 121393] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 826 IP: 30 DA: 4} IR: 0x30000004 ACC: 121393 ALU [a:196418 b:75025 => 121393] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 827 IP: 31 DA: 30} IR: 0x20000005 ACC: 121393 ALU [a:196418 b:75025 => 121393] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 828 IP: 31 DA: 5} IR: 0x20000005 ACC: 121393 ALU [a:196418 b:75025 => 121393] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 829 IP: 31 DA: 5} IR: 0x20000005 ACC: 196418 ALU [a:196418 b:75025 => 121393] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 830 IP: 32 DA: 31} IR: 0x50000007 ACC: 196418 ALU [a:196418 b:75025 => 121393] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 831 IP: 32 DA: 7} IR: 0x50000007 ACC: 196418 ALU [a:196418 b:75025 => 121393] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 832 IP: 32 DA: 7} IR: 0x50000007 ACC: -3803582 ALU [a:196418 b:4000000 => -3803582] FLAGS: [Z:0 N:1]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 833 IP: 33 DA: 32} IR: 0xd0000012 ACC: -3803582 ALU [a:196418 b:4000000 => -3803582] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 834 IP: 18 DA: 32} IR: 0xd0000012 ACC: -3803582 ALU [a:196418 b:4000000 => -3803582] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 835 IP: 19 DA: 18} IR: 0x20000005 ACC: -3803582 ALU [a:196418 b:4000000 => -3803582] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 836 IP: 19 DA: 5} IR: 0x20000005 ACC: -3803582 ALU [a:196418 b:4000000 => -3803582] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 837 IP: 19 DA: 5} IR: 0x20000005 ACC: 196418 ALU [a:196418 b:4000000 => -3803582] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 838 IP: 20 DA: 19} IR: 0x60000006 ACC: 196418 ALU [a:196418 b:4000000 => -3803582] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 839 IP: 20 DA: 6} IR: 0x60000006 ACC: 196418 ALU [a:196418 b:4000000 => -3803582] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 840 IP: 20 DA: 6} IR: 0x60000006 ACC: 0 ALU [a:196418 b:1 => 0] FLAGS: [Z:1 N:0]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 841 IP: 21 DA: 20} IR: 0xb0000016 ACC: 0 ALU [a:196418 b:1 => 0] FLAGS: [Z:1 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 842 IP: 22 DA: 20} IR: 0xb0000016 ACC: 0 ALU [a:196418 b:1 => 0] FLAGS: [Z:1 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 843 IP: 23 DA: 22} IR: 0x20000003 ACC: 0 ALU [a:196418 b:1 => 0] FLAGS: [Z:1 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 844 IP: 23 DA: 3} IR: 0x20000003 ACC: 0 ALU [a:196418 b:1 => 0] FLAGS: [Z:1 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 845 IP: 23 DA: 3} IR: 0x20000003 ACC: 60696 ALU [a:196418 b:1 => 0] FLAGS: [Z:1 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 846 IP: 24 DA: 23} IR: 0x40000005 ACC: 60696 ALU [a:196418 b:1 => 0] FLAGS: [Z:1 N:0]  Action: ADD 5 
+  DEBUG machine:new_tick {TICK: 847 IP: 24 DA: 5} IR: 0x40000005 ACC: 60696 ALU [a:196418 b:1 => 0] FLAGS: [Z:1 N:0]  Action: ADD 5 
+  DEBUG machine:new_tick {TICK: 848 IP: 24 DA: 5} IR: 0x40000005 ACC: 257114 ALU [a:60696 b:196418 => 257114] FLAGS: [Z:0 N:0]  Action: ADD 5 
+  DEBUG machine:new_tick {TICK: 849 IP: 25 DA: 24} IR: 0x30000003 ACC: 257114 ALU [a:60696 b:196418 => 257114] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 850 IP: 25 DA: 3} IR: 0x30000003 ACC: 257114 ALU [a:60696 b:196418 => 257114] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 851 IP: 25 DA: 3} IR: 0x30000003 ACC: 257114 ALU [a:60696 b:196418 => 257114] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 852 IP: 26 DA: 25} IR: 0x20000005 ACC: 257114 ALU [a:60696 b:196418 => 257114] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 853 IP: 26 DA: 5} IR: 0x20000005 ACC: 257114 ALU [a:60696 b:196418 => 257114] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 854 IP: 26 DA: 5} IR: 0x20000005 ACC: 196418 ALU [a:60696 b:196418 => 257114] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 855 IP: 27 DA: 26} IR: 0x40000004 ACC: 196418 ALU [a:60696 b:196418 => 257114] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 856 IP: 27 DA: 4} IR: 0x40000004 ACC: 196418 ALU [a:60696 b:196418 => 257114] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 857 IP: 27 DA: 4} IR: 0x40000004 ACC: 317811 ALU [a:196418 b:121393 => 317811] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 858 IP: 28 DA: 27} IR: 0x30000005 ACC: 317811 ALU [a:196418 b:121393 => 317811] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 859 IP: 28 DA: 5} IR: 0x30000005 ACC: 317811 ALU [a:196418 b:121393 => 317811] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 860 IP: 28 DA: 5} IR: 0x30000005 ACC: 317811 ALU [a:196418 b:121393 => 317811] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 861 IP: 29 DA: 28} IR: 0x50000004 ACC: 317811 ALU [a:196418 b:121393 => 317811] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 862 IP: 29 DA: 4} IR: 0x50000004 ACC: 317811 ALU [a:196418 b:121393 => 317811] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 863 IP: 29 DA: 4} IR: 0x50000004 ACC: 196418 ALU [a:317811 b:121393 => 196418] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 864 IP: 30 DA: 29} IR: 0x30000004 ACC: 196418 ALU [a:317811 b:121393 => 196418] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 865 IP: 30 DA: 4} IR: 0x30000004 ACC: 196418 ALU [a:317811 b:121393 => 196418] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 866 IP: 30 DA: 4} IR: 0x30000004 ACC: 196418 ALU [a:317811 b:121393 => 196418] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 867 IP: 31 DA: 30} IR: 0x20000005 ACC: 196418 ALU [a:317811 b:121393 => 196418] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 868 IP: 31 DA: 5} IR: 0x20000005 ACC: 196418 ALU [a:317811 b:121393 => 196418] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 869 IP: 31 DA: 5} IR: 0x20000005 ACC: 317811 ALU [a:317811 b:121393 => 196418] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 870 IP: 32 DA: 31} IR: 0x50000007 ACC: 317811 ALU [a:317811 b:121393 => 196418] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 871 IP: 32 DA: 7} IR: 0x50000007 ACC: 317811 ALU [a:317811 b:121393 => 196418] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 872 IP: 32 DA: 7} IR: 0x50000007 ACC: -3682189 ALU [a:317811 b:4000000 => -3682189] FLAGS: [Z:0 N:1]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 873 IP: 33 DA: 32} IR: 0xd0000012 ACC: -3682189 ALU [a:317811 b:4000000 => -3682189] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 874 IP: 18 DA: 32} IR: 0xd0000012 ACC: -3682189 ALU [a:317811 b:4000000 => -3682189] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 875 IP: 19 DA: 18} IR: 0x20000005 ACC: -3682189 ALU [a:317811 b:4000000 => -3682189] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 876 IP: 19 DA: 5} IR: 0x20000005 ACC: -3682189 ALU [a:317811 b:4000000 => -3682189] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 877 IP: 19 DA: 5} IR: 0x20000005 ACC: 317811 ALU [a:317811 b:4000000 => -3682189] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 878 IP: 20 DA: 19} IR: 0x60000006 ACC: 317811 ALU [a:317811 b:4000000 => -3682189] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 879 IP: 20 DA: 6} IR: 0x60000006 ACC: 317811 ALU [a:317811 b:4000000 => -3682189] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 880 IP: 20 DA: 6} IR: 0x60000006 ACC: 1 ALU [a:317811 b:1 => 1] FLAGS: [Z:0 N:0]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 881 IP: 21 DA: 20} IR: 0xb0000016 ACC: 1 ALU [a:317811 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 882 IP: 22 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:317811 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 883 IP: 25 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:317811 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 884 IP: 26 DA: 25} IR: 0x20000005 ACC: 1 ALU [a:317811 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 885 IP: 26 DA: 5} IR: 0x20000005 ACC: 1 ALU [a:317811 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 886 IP: 26 DA: 5} IR: 0x20000005 ACC: 317811 ALU [a:317811 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 887 IP: 27 DA: 26} IR: 0x40000004 ACC: 317811 ALU [a:317811 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 888 IP: 27 DA: 4} IR: 0x40000004 ACC: 317811 ALU [a:317811 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 889 IP: 27 DA: 4} IR: 0x40000004 ACC: 514229 ALU [a:317811 b:196418 => 514229] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 890 IP: 28 DA: 27} IR: 0x30000005 ACC: 514229 ALU [a:317811 b:196418 => 514229] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 891 IP: 28 DA: 5} IR: 0x30000005 ACC: 514229 ALU [a:317811 b:196418 => 514229] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 892 IP: 28 DA: 5} IR: 0x30000005 ACC: 514229 ALU [a:317811 b:196418 => 514229] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 893 IP: 29 DA: 28} IR: 0x50000004 ACC: 514229 ALU [a:317811 b:196418 => 514229] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 894 IP: 29 DA: 4} IR: 0x50000004 ACC: 514229 ALU [a:317811 b:196418 => 514229] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 895 IP: 29 DA: 4} IR: 0x50000004 ACC: 317811 ALU [a:514229 b:196418 => 317811] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 896 IP: 30 DA: 29} IR: 0x30000004 ACC: 317811 ALU [a:514229 b:196418 => 317811] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 897 IP: 30 DA: 4} IR: 0x30000004 ACC: 317811 ALU [a:514229 b:196418 => 317811] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 898 IP: 30 DA: 4} IR: 0x30000004 ACC: 317811 ALU [a:514229 b:196418 => 317811] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 899 IP: 31 DA: 30} IR: 0x20000005 ACC: 317811 ALU [a:514229 b:196418 => 317811] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 900 IP: 31 DA: 5} IR: 0x20000005 ACC: 317811 ALU [a:514229 b:196418 => 317811] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 901 IP: 31 DA: 5} IR: 0x20000005 ACC: 514229 ALU [a:514229 b:196418 => 317811] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 902 IP: 32 DA: 31} IR: 0x50000007 ACC: 514229 ALU [a:514229 b:196418 => 317811] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 903 IP: 32 DA: 7} IR: 0x50000007 ACC: 514229 ALU [a:514229 b:196418 => 317811] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 904 IP: 32 DA: 7} IR: 0x50000007 ACC: -3485771 ALU [a:514229 b:4000000 => -3485771] FLAGS: [Z:0 N:1]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 905 IP: 33 DA: 32} IR: 0xd0000012 ACC: -3485771 ALU [a:514229 b:4000000 => -3485771] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 906 IP: 18 DA: 32} IR: 0xd0000012 ACC: -3485771 ALU [a:514229 b:4000000 => -3485771] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 907 IP: 19 DA: 18} IR: 0x20000005 ACC: -3485771 ALU [a:514229 b:4000000 => -3485771] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 908 IP: 19 DA: 5} IR: 0x20000005 ACC: -3485771 ALU [a:514229 b:4000000 => -3485771] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 909 IP: 19 DA: 5} IR: 0x20000005 ACC: 514229 ALU [a:514229 b:4000000 => -3485771] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 910 IP: 20 DA: 19} IR: 0x60000006 ACC: 514229 ALU [a:514229 b:4000000 => -3485771] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 911 IP: 20 DA: 6} IR: 0x60000006 ACC: 514229 ALU [a:514229 b:4000000 => -3485771] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 912 IP: 20 DA: 6} IR: 0x60000006 ACC: 1 ALU [a:514229 b:1 => 1] FLAGS: [Z:0 N:0]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 913 IP: 21 DA: 20} IR: 0xb0000016 ACC: 1 ALU [a:514229 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 914 IP: 22 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:514229 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 915 IP: 25 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:514229 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 916 IP: 26 DA: 25} IR: 0x20000005 ACC: 1 ALU [a:514229 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 917 IP: 26 DA: 5} IR: 0x20000005 ACC: 1 ALU [a:514229 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 918 IP: 26 DA: 5} IR: 0x20000005 ACC: 514229 ALU [a:514229 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 919 IP: 27 DA: 26} IR: 0x40000004 ACC: 514229 ALU [a:514229 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 920 IP: 27 DA: 4} IR: 0x40000004 ACC: 514229 ALU [a:514229 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 921 IP: 27 DA: 4} IR: 0x40000004 ACC: 832040 ALU [a:514229 b:317811 => 832040] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 922 IP: 28 DA: 27} IR: 0x30000005 ACC: 832040 ALU [a:514229 b:317811 => 832040] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 923 IP: 28 DA: 5} IR: 0x30000005 ACC: 832040 ALU [a:514229 b:317811 => 832040] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 924 IP: 28 DA: 5} IR: 0x30000005 ACC: 832040 ALU [a:514229 b:317811 => 832040] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 925 IP: 29 DA: 28} IR: 0x50000004 ACC: 832040 ALU [a:514229 b:317811 => 832040] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 926 IP: 29 DA: 4} IR: 0x50000004 ACC: 832040 ALU [a:514229 b:317811 => 832040] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 927 IP: 29 DA: 4} IR: 0x50000004 ACC: 514229 ALU [a:832040 b:317811 => 514229] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 928 IP: 30 DA: 29} IR: 0x30000004 ACC: 514229 ALU [a:832040 b:317811 => 514229] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 929 IP: 30 DA: 4} IR: 0x30000004 ACC: 514229 ALU [a:832040 b:317811 => 514229] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 930 IP: 30 DA: 4} IR: 0x30000004 ACC: 514229 ALU [a:832040 b:317811 => 514229] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 931 IP: 31 DA: 30} IR: 0x20000005 ACC: 514229 ALU [a:832040 b:317811 => 514229] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 932 IP: 31 DA: 5} IR: 0x20000005 ACC: 514229 ALU [a:832040 b:317811 => 514229] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 933 IP: 31 DA: 5} IR: 0x20000005 ACC: 832040 ALU [a:832040 b:317811 => 514229] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 934 IP: 32 DA: 31} IR: 0x50000007 ACC: 832040 ALU [a:832040 b:317811 => 514229] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 935 IP: 32 DA: 7} IR: 0x50000007 ACC: 832040 ALU [a:832040 b:317811 => 514229] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 936 IP: 32 DA: 7} IR: 0x50000007 ACC: -3167960 ALU [a:832040 b:4000000 => -3167960] FLAGS: [Z:0 N:1]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 937 IP: 33 DA: 32} IR: 0xd0000012 ACC: -3167960 ALU [a:832040 b:4000000 => -3167960] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 938 IP: 18 DA: 32} IR: 0xd0000012 ACC: -3167960 ALU [a:832040 b:4000000 => -3167960] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 939 IP: 19 DA: 18} IR: 0x20000005 ACC: -3167960 ALU [a:832040 b:4000000 => -3167960] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 940 IP: 19 DA: 5} IR: 0x20000005 ACC: -3167960 ALU [a:832040 b:4000000 => -3167960] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 941 IP: 19 DA: 5} IR: 0x20000005 ACC: 832040 ALU [a:832040 b:4000000 => -3167960] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 942 IP: 20 DA: 19} IR: 0x60000006 ACC: 832040 ALU [a:832040 b:4000000 => -3167960] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 943 IP: 20 DA: 6} IR: 0x60000006 ACC: 832040 ALU [a:832040 b:4000000 => -3167960] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 944 IP: 20 DA: 6} IR: 0x60000006 ACC: 0 ALU [a:832040 b:1 => 0] FLAGS: [Z:1 N:0]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 945 IP: 21 DA: 20} IR: 0xb0000016 ACC: 0 ALU [a:832040 b:1 => 0] FLAGS: [Z:1 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 946 IP: 22 DA: 20} IR: 0xb0000016 ACC: 0 ALU [a:832040 b:1 => 0] FLAGS: [Z:1 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 947 IP: 23 DA: 22} IR: 0x20000003 ACC: 0 ALU [a:832040 b:1 => 0] FLAGS: [Z:1 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 948 IP: 23 DA: 3} IR: 0x20000003 ACC: 0 ALU [a:832040 b:1 => 0] FLAGS: [Z:1 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 949 IP: 23 DA: 3} IR: 0x20000003 ACC: 257114 ALU [a:832040 b:1 => 0] FLAGS: [Z:1 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 950 IP: 24 DA: 23} IR: 0x40000005 ACC: 257114 ALU [a:832040 b:1 => 0] FLAGS: [Z:1 N:0]  Action: ADD 5 
+  DEBUG machine:new_tick {TICK: 951 IP: 24 DA: 5} IR: 0x40000005 ACC: 257114 ALU [a:832040 b:1 => 0] FLAGS: [Z:1 N:0]  Action: ADD 5 
+  DEBUG machine:new_tick {TICK: 952 IP: 24 DA: 5} IR: 0x40000005 ACC: 1089154 ALU [a:257114 b:832040 => 1089154] FLAGS: [Z:0 N:0]  Action: ADD 5 
+  DEBUG machine:new_tick {TICK: 953 IP: 25 DA: 24} IR: 0x30000003 ACC: 1089154 ALU [a:257114 b:832040 => 1089154] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 954 IP: 25 DA: 3} IR: 0x30000003 ACC: 1089154 ALU [a:257114 b:832040 => 1089154] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 955 IP: 25 DA: 3} IR: 0x30000003 ACC: 1089154 ALU [a:257114 b:832040 => 1089154] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 956 IP: 26 DA: 25} IR: 0x20000005 ACC: 1089154 ALU [a:257114 b:832040 => 1089154] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 957 IP: 26 DA: 5} IR: 0x20000005 ACC: 1089154 ALU [a:257114 b:832040 => 1089154] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 958 IP: 26 DA: 5} IR: 0x20000005 ACC: 832040 ALU [a:257114 b:832040 => 1089154] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 959 IP: 27 DA: 26} IR: 0x40000004 ACC: 832040 ALU [a:257114 b:832040 => 1089154] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 960 IP: 27 DA: 4} IR: 0x40000004 ACC: 832040 ALU [a:257114 b:832040 => 1089154] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 961 IP: 27 DA: 4} IR: 0x40000004 ACC: 1346269 ALU [a:832040 b:514229 => 1346269] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 962 IP: 28 DA: 27} IR: 0x30000005 ACC: 1346269 ALU [a:832040 b:514229 => 1346269] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 963 IP: 28 DA: 5} IR: 0x30000005 ACC: 1346269 ALU [a:832040 b:514229 => 1346269] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 964 IP: 28 DA: 5} IR: 0x30000005 ACC: 1346269 ALU [a:832040 b:514229 => 1346269] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 965 IP: 29 DA: 28} IR: 0x50000004 ACC: 1346269 ALU [a:832040 b:514229 => 1346269] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 966 IP: 29 DA: 4} IR: 0x50000004 ACC: 1346269 ALU [a:832040 b:514229 => 1346269] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 967 IP: 29 DA: 4} IR: 0x50000004 ACC: 832040 ALU [a:1346269 b:514229 => 832040] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 968 IP: 30 DA: 29} IR: 0x30000004 ACC: 832040 ALU [a:1346269 b:514229 => 832040] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 969 IP: 30 DA: 4} IR: 0x30000004 ACC: 832040 ALU [a:1346269 b:514229 => 832040] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 970 IP: 30 DA: 4} IR: 0x30000004 ACC: 832040 ALU [a:1346269 b:514229 => 832040] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 971 IP: 31 DA: 30} IR: 0x20000005 ACC: 832040 ALU [a:1346269 b:514229 => 832040] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 972 IP: 31 DA: 5} IR: 0x20000005 ACC: 832040 ALU [a:1346269 b:514229 => 832040] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 973 IP: 31 DA: 5} IR: 0x20000005 ACC: 1346269 ALU [a:1346269 b:514229 => 832040] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 974 IP: 32 DA: 31} IR: 0x50000007 ACC: 1346269 ALU [a:1346269 b:514229 => 832040] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 975 IP: 32 DA: 7} IR: 0x50000007 ACC: 1346269 ALU [a:1346269 b:514229 => 832040] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 976 IP: 32 DA: 7} IR: 0x50000007 ACC: -2653731 ALU [a:1346269 b:4000000 => -2653731] FLAGS: [Z:0 N:1]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 977 IP: 33 DA: 32} IR: 0xd0000012 ACC: -2653731 ALU [a:1346269 b:4000000 => -2653731] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 978 IP: 18 DA: 32} IR: 0xd0000012 ACC: -2653731 ALU [a:1346269 b:4000000 => -2653731] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 979 IP: 19 DA: 18} IR: 0x20000005 ACC: -2653731 ALU [a:1346269 b:4000000 => -2653731] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 980 IP: 19 DA: 5} IR: 0x20000005 ACC: -2653731 ALU [a:1346269 b:4000000 => -2653731] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 981 IP: 19 DA: 5} IR: 0x20000005 ACC: 1346269 ALU [a:1346269 b:4000000 => -2653731] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 982 IP: 20 DA: 19} IR: 0x60000006 ACC: 1346269 ALU [a:1346269 b:4000000 => -2653731] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 983 IP: 20 DA: 6} IR: 0x60000006 ACC: 1346269 ALU [a:1346269 b:4000000 => -2653731] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 984 IP: 20 DA: 6} IR: 0x60000006 ACC: 1 ALU [a:1346269 b:1 => 1] FLAGS: [Z:0 N:0]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 985 IP: 21 DA: 20} IR: 0xb0000016 ACC: 1 ALU [a:1346269 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 986 IP: 22 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:1346269 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 987 IP: 25 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:1346269 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 988 IP: 26 DA: 25} IR: 0x20000005 ACC: 1 ALU [a:1346269 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 989 IP: 26 DA: 5} IR: 0x20000005 ACC: 1 ALU [a:1346269 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 990 IP: 26 DA: 5} IR: 0x20000005 ACC: 1346269 ALU [a:1346269 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 991 IP: 27 DA: 26} IR: 0x40000004 ACC: 1346269 ALU [a:1346269 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 992 IP: 27 DA: 4} IR: 0x40000004 ACC: 1346269 ALU [a:1346269 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 993 IP: 27 DA: 4} IR: 0x40000004 ACC: 2178309 ALU [a:1346269 b:832040 => 2178309] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 994 IP: 28 DA: 27} IR: 0x30000005 ACC: 2178309 ALU [a:1346269 b:832040 => 2178309] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 995 IP: 28 DA: 5} IR: 0x30000005 ACC: 2178309 ALU [a:1346269 b:832040 => 2178309] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 996 IP: 28 DA: 5} IR: 0x30000005 ACC: 2178309 ALU [a:1346269 b:832040 => 2178309] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 997 IP: 29 DA: 28} IR: 0x50000004 ACC: 2178309 ALU [a:1346269 b:832040 => 2178309] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 998 IP: 29 DA: 4} IR: 0x50000004 ACC: 2178309 ALU [a:1346269 b:832040 => 2178309] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 999 IP: 29 DA: 4} IR: 0x50000004 ACC: 1346269 ALU [a:2178309 b:832040 => 1346269] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 1000 IP: 30 DA: 29} IR: 0x30000004 ACC: 1346269 ALU [a:2178309 b:832040 => 1346269] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 1001 IP: 30 DA: 4} IR: 0x30000004 ACC: 1346269 ALU [a:2178309 b:832040 => 1346269] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 1002 IP: 30 DA: 4} IR: 0x30000004 ACC: 1346269 ALU [a:2178309 b:832040 => 1346269] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 1003 IP: 31 DA: 30} IR: 0x20000005 ACC: 1346269 ALU [a:2178309 b:832040 => 1346269] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 1004 IP: 31 DA: 5} IR: 0x20000005 ACC: 1346269 ALU [a:2178309 b:832040 => 1346269] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 1005 IP: 31 DA: 5} IR: 0x20000005 ACC: 2178309 ALU [a:2178309 b:832040 => 1346269] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 1006 IP: 32 DA: 31} IR: 0x50000007 ACC: 2178309 ALU [a:2178309 b:832040 => 1346269] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 1007 IP: 32 DA: 7} IR: 0x50000007 ACC: 2178309 ALU [a:2178309 b:832040 => 1346269] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 1008 IP: 32 DA: 7} IR: 0x50000007 ACC: -1821691 ALU [a:2178309 b:4000000 => -1821691] FLAGS: [Z:0 N:1]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 1009 IP: 33 DA: 32} IR: 0xd0000012 ACC: -1821691 ALU [a:2178309 b:4000000 => -1821691] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 1010 IP: 18 DA: 32} IR: 0xd0000012 ACC: -1821691 ALU [a:2178309 b:4000000 => -1821691] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 1011 IP: 19 DA: 18} IR: 0x20000005 ACC: -1821691 ALU [a:2178309 b:4000000 => -1821691] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 1012 IP: 19 DA: 5} IR: 0x20000005 ACC: -1821691 ALU [a:2178309 b:4000000 => -1821691] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 1013 IP: 19 DA: 5} IR: 0x20000005 ACC: 2178309 ALU [a:2178309 b:4000000 => -1821691] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 1014 IP: 20 DA: 19} IR: 0x60000006 ACC: 2178309 ALU [a:2178309 b:4000000 => -1821691] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 1015 IP: 20 DA: 6} IR: 0x60000006 ACC: 2178309 ALU [a:2178309 b:4000000 => -1821691] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 1016 IP: 20 DA: 6} IR: 0x60000006 ACC: 1 ALU [a:2178309 b:1 => 1] FLAGS: [Z:0 N:0]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 1017 IP: 21 DA: 20} IR: 0xb0000016 ACC: 1 ALU [a:2178309 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 1018 IP: 22 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:2178309 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 1019 IP: 25 DA: 21} IR: 0xf0000019 ACC: 1 ALU [a:2178309 b:1 => 1] FLAGS: [Z:0 N:0]  Action: JMP 25 
+  DEBUG machine:new_tick {TICK: 1020 IP: 26 DA: 25} IR: 0x20000005 ACC: 1 ALU [a:2178309 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 1021 IP: 26 DA: 5} IR: 0x20000005 ACC: 1 ALU [a:2178309 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 1022 IP: 26 DA: 5} IR: 0x20000005 ACC: 2178309 ALU [a:2178309 b:1 => 1] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 1023 IP: 27 DA: 26} IR: 0x40000004 ACC: 2178309 ALU [a:2178309 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 1024 IP: 27 DA: 4} IR: 0x40000004 ACC: 2178309 ALU [a:2178309 b:1 => 1] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 1025 IP: 27 DA: 4} IR: 0x40000004 ACC: 3524578 ALU [a:2178309 b:1346269 => 3524578] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 1026 IP: 28 DA: 27} IR: 0x30000005 ACC: 3524578 ALU [a:2178309 b:1346269 => 3524578] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 1027 IP: 28 DA: 5} IR: 0x30000005 ACC: 3524578 ALU [a:2178309 b:1346269 => 3524578] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 1028 IP: 28 DA: 5} IR: 0x30000005 ACC: 3524578 ALU [a:2178309 b:1346269 => 3524578] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 1029 IP: 29 DA: 28} IR: 0x50000004 ACC: 3524578 ALU [a:2178309 b:1346269 => 3524578] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 1030 IP: 29 DA: 4} IR: 0x50000004 ACC: 3524578 ALU [a:2178309 b:1346269 => 3524578] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 1031 IP: 29 DA: 4} IR: 0x50000004 ACC: 2178309 ALU [a:3524578 b:1346269 => 2178309] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 1032 IP: 30 DA: 29} IR: 0x30000004 ACC: 2178309 ALU [a:3524578 b:1346269 => 2178309] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 1033 IP: 30 DA: 4} IR: 0x30000004 ACC: 2178309 ALU [a:3524578 b:1346269 => 2178309] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 1034 IP: 30 DA: 4} IR: 0x30000004 ACC: 2178309 ALU [a:3524578 b:1346269 => 2178309] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 1035 IP: 31 DA: 30} IR: 0x20000005 ACC: 2178309 ALU [a:3524578 b:1346269 => 2178309] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 1036 IP: 31 DA: 5} IR: 0x20000005 ACC: 2178309 ALU [a:3524578 b:1346269 => 2178309] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 1037 IP: 31 DA: 5} IR: 0x20000005 ACC: 3524578 ALU [a:3524578 b:1346269 => 2178309] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 1038 IP: 32 DA: 31} IR: 0x50000007 ACC: 3524578 ALU [a:3524578 b:1346269 => 2178309] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 1039 IP: 32 DA: 7} IR: 0x50000007 ACC: 3524578 ALU [a:3524578 b:1346269 => 2178309] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 1040 IP: 32 DA: 7} IR: 0x50000007 ACC: -475422 ALU [a:3524578 b:4000000 => -475422] FLAGS: [Z:0 N:1]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 1041 IP: 33 DA: 32} IR: 0xd0000012 ACC: -475422 ALU [a:3524578 b:4000000 => -475422] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 1042 IP: 18 DA: 32} IR: 0xd0000012 ACC: -475422 ALU [a:3524578 b:4000000 => -475422] FLAGS: [Z:0 N:1]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 1043 IP: 19 DA: 18} IR: 0x20000005 ACC: -475422 ALU [a:3524578 b:4000000 => -475422] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 1044 IP: 19 DA: 5} IR: 0x20000005 ACC: -475422 ALU [a:3524578 b:4000000 => -475422] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 1045 IP: 19 DA: 5} IR: 0x20000005 ACC: 3524578 ALU [a:3524578 b:4000000 => -475422] FLAGS: [Z:0 N:1]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 1046 IP: 20 DA: 19} IR: 0x60000006 ACC: 3524578 ALU [a:3524578 b:4000000 => -475422] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 1047 IP: 20 DA: 6} IR: 0x60000006 ACC: 3524578 ALU [a:3524578 b:4000000 => -475422] FLAGS: [Z:0 N:1]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 1048 IP: 20 DA: 6} IR: 0x60000006 ACC: 0 ALU [a:3524578 b:1 => 0] FLAGS: [Z:1 N:0]  Action: AND 6 
+  DEBUG machine:new_tick {TICK: 1049 IP: 21 DA: 20} IR: 0xb0000016 ACC: 0 ALU [a:3524578 b:1 => 0] FLAGS: [Z:1 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 1050 IP: 22 DA: 20} IR: 0xb0000016 ACC: 0 ALU [a:3524578 b:1 => 0] FLAGS: [Z:1 N:0]  Action: JE 22 
+  DEBUG machine:new_tick {TICK: 1051 IP: 23 DA: 22} IR: 0x20000003 ACC: 0 ALU [a:3524578 b:1 => 0] FLAGS: [Z:1 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1052 IP: 23 DA: 3} IR: 0x20000003 ACC: 0 ALU [a:3524578 b:1 => 0] FLAGS: [Z:1 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1053 IP: 23 DA: 3} IR: 0x20000003 ACC: 1089154 ALU [a:3524578 b:1 => 0] FLAGS: [Z:1 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1054 IP: 24 DA: 23} IR: 0x40000005 ACC: 1089154 ALU [a:3524578 b:1 => 0] FLAGS: [Z:1 N:0]  Action: ADD 5 
+  DEBUG machine:new_tick {TICK: 1055 IP: 24 DA: 5} IR: 0x40000005 ACC: 1089154 ALU [a:3524578 b:1 => 0] FLAGS: [Z:1 N:0]  Action: ADD 5 
+  DEBUG machine:new_tick {TICK: 1056 IP: 24 DA: 5} IR: 0x40000005 ACC: 4613732 ALU [a:1089154 b:3524578 => 4613732] FLAGS: [Z:0 N:0]  Action: ADD 5 
+  DEBUG machine:new_tick {TICK: 1057 IP: 25 DA: 24} IR: 0x30000003 ACC: 4613732 ALU [a:1089154 b:3524578 => 4613732] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 1058 IP: 25 DA: 3} IR: 0x30000003 ACC: 4613732 ALU [a:1089154 b:3524578 => 4613732] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 1059 IP: 25 DA: 3} IR: 0x30000003 ACC: 4613732 ALU [a:1089154 b:3524578 => 4613732] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 1060 IP: 26 DA: 25} IR: 0x20000005 ACC: 4613732 ALU [a:1089154 b:3524578 => 4613732] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 1061 IP: 26 DA: 5} IR: 0x20000005 ACC: 4613732 ALU [a:1089154 b:3524578 => 4613732] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 1062 IP: 26 DA: 5} IR: 0x20000005 ACC: 3524578 ALU [a:1089154 b:3524578 => 4613732] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 1063 IP: 27 DA: 26} IR: 0x40000004 ACC: 3524578 ALU [a:1089154 b:3524578 => 4613732] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 1064 IP: 27 DA: 4} IR: 0x40000004 ACC: 3524578 ALU [a:1089154 b:3524578 => 4613732] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 1065 IP: 27 DA: 4} IR: 0x40000004 ACC: 5702887 ALU [a:3524578 b:2178309 => 5702887] FLAGS: [Z:0 N:0]  Action: ADD 4 
+  DEBUG machine:new_tick {TICK: 1066 IP: 28 DA: 27} IR: 0x30000005 ACC: 5702887 ALU [a:3524578 b:2178309 => 5702887] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 1067 IP: 28 DA: 5} IR: 0x30000005 ACC: 5702887 ALU [a:3524578 b:2178309 => 5702887] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 1068 IP: 28 DA: 5} IR: 0x30000005 ACC: 5702887 ALU [a:3524578 b:2178309 => 5702887] FLAGS: [Z:0 N:0]  Action: ST 5 
+  DEBUG machine:new_tick {TICK: 1069 IP: 29 DA: 28} IR: 0x50000004 ACC: 5702887 ALU [a:3524578 b:2178309 => 5702887] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 1070 IP: 29 DA: 4} IR: 0x50000004 ACC: 5702887 ALU [a:3524578 b:2178309 => 5702887] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 1071 IP: 29 DA: 4} IR: 0x50000004 ACC: 3524578 ALU [a:5702887 b:2178309 => 3524578] FLAGS: [Z:0 N:0]  Action: SUB 4 
+  DEBUG machine:new_tick {TICK: 1072 IP: 30 DA: 29} IR: 0x30000004 ACC: 3524578 ALU [a:5702887 b:2178309 => 3524578] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 1073 IP: 30 DA: 4} IR: 0x30000004 ACC: 3524578 ALU [a:5702887 b:2178309 => 3524578] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 1074 IP: 30 DA: 4} IR: 0x30000004 ACC: 3524578 ALU [a:5702887 b:2178309 => 3524578] FLAGS: [Z:0 N:0]  Action: ST 4 
+  DEBUG machine:new_tick {TICK: 1075 IP: 31 DA: 30} IR: 0x20000005 ACC: 3524578 ALU [a:5702887 b:2178309 => 3524578] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 1076 IP: 31 DA: 5} IR: 0x20000005 ACC: 3524578 ALU [a:5702887 b:2178309 => 3524578] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 1077 IP: 31 DA: 5} IR: 0x20000005 ACC: 5702887 ALU [a:5702887 b:2178309 => 3524578] FLAGS: [Z:0 N:0]  Action: LD 5 
+  DEBUG machine:new_tick {TICK: 1078 IP: 32 DA: 31} IR: 0x50000007 ACC: 5702887 ALU [a:5702887 b:2178309 => 3524578] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 1079 IP: 32 DA: 7} IR: 0x50000007 ACC: 5702887 ALU [a:5702887 b:2178309 => 3524578] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 1080 IP: 32 DA: 7} IR: 0x50000007 ACC: 1702887 ALU [a:5702887 b:4000000 => 1702887] FLAGS: [Z:0 N:0]  Action: SUB 7 
+  DEBUG machine:new_tick {TICK: 1081 IP: 33 DA: 32} IR: 0xd0000012 ACC: 1702887 ALU [a:5702887 b:4000000 => 1702887] FLAGS: [Z:0 N:0]  Action: JL 18 
+  DEBUG machine:new_tick {TICK: 1082 IP: 34 DA: 33} IR: 0x20000011 ACC: 1702887 ALU [a:5702887 b:4000000 => 1702887] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1083 IP: 34 DA: 17} IR: 0x20000011 ACC: 1702887 ALU [a:5702887 b:4000000 => 1702887] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1084 IP: 34 DA: 17} IR: 0x20000011 ACC: 8 ALU [a:5702887 b:4000000 => 1702887] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1085 IP: 35 DA: 34} IR: 0x48000001 ACC: 8 ALU [a:5702887 b:4000000 => 1702887] FLAGS: [Z:0 N:0]  Action: ADD #1 
+  DEBUG machine:new_tick {TICK: 1086 IP: 35 DA: 34} IR: 0x48000001 ACC: 9 ALU [a:8 b:1 => 9] FLAGS: [Z:0 N:0]  Action: ADD #1 
+  DEBUG machine:new_tick {TICK: 1087 IP: 36 DA: 35} IR: 0x30000011 ACC: 9 ALU [a:8 b:1 => 9] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1088 IP: 36 DA: 17} IR: 0x30000011 ACC: 9 ALU [a:8 b:1 => 9] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1089 IP: 36 DA: 17} IR: 0x30000011 ACC: 9 ALU [a:8 b:1 => 9] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1090 IP: 37 DA: 36} IR: 0x20000003 ACC: 9 ALU [a:8 b:1 => 9] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1091 IP: 37 DA: 3} IR: 0x20000003 ACC: 9 ALU [a:8 b:1 => 9] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1092 IP: 37 DA: 3} IR: 0x20000003 ACC: 4613732 ALU [a:8 b:1 => 9] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1093 IP: 38 DA: 37} IR: 0x9800000a ACC: 4613732 ALU [a:8 b:1 => 9] FLAGS: [Z:0 N:0]  Action: MOD #10 
+  DEBUG machine:new_tick {TICK: 1094 IP: 38 DA: 37} IR: 0x9800000a ACC: 2 ALU [a:4613732 b:10 => 2] FLAGS: [Z:0 N:0]  Action: MOD #10 
+  DEBUG machine:new_tick {TICK: 1095 IP: 39 DA: 38} IR: 0x48000030 ACC: 2 ALU [a:4613732 b:10 => 2] FLAGS: [Z:0 N:0]  Action: ADD #48 
+  DEBUG machine:new_tick {TICK: 1096 IP: 39 DA: 38} IR: 0x48000030 ACC: 50 ALU [a:2 b:48 => 50] FLAGS: [Z:0 N:0]  Action: ADD #48 
+  DEBUG machine:new_tick {TICK: 1097 IP: 40 DA: 39} IR: 0x34000011 ACC: 50 ALU [a:2 b:48 => 50] FLAGS: [Z:0 N:0]  Action: ST $17 
+  DEBUG machine:new_tick {TICK: 1098 IP: 40 DA: 17} IR: 0x34000011 ACC: 50 ALU [a:2 b:48 => 50] FLAGS: [Z:0 N:0]  Action: ST $17 
+  DEBUG machine:new_tick {TICK: 1099 IP: 40 DA: 9} IR: 0x34000011 ACC: 50 ALU [a:2 b:48 => 50] FLAGS: [Z:0 N:0]  Action: ST $17 
+  DEBUG machine:new_tick {TICK: 1100 IP: 40 DA: 9} IR: 0x34000011 ACC: 50 ALU [a:2 b:48 => 50] FLAGS: [Z:0 N:0]  Action: ST $17 
+  DEBUG machine:new_tick {TICK: 1101 IP: 41 DA: 40} IR: 0x20000003 ACC: 50 ALU [a:2 b:48 => 50] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1102 IP: 41 DA: 3} IR: 0x20000003 ACC: 50 ALU [a:2 b:48 => 50] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1103 IP: 41 DA: 3} IR: 0x20000003 ACC: 4613732 ALU [a:2 b:48 => 50] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1104 IP: 42 DA: 41} IR: 0x8800000a ACC: 4613732 ALU [a:2 b:48 => 50] FLAGS: [Z:0 N:0]  Action: DIV #10 
+  DEBUG machine:new_tick {TICK: 1105 IP: 42 DA: 41} IR: 0x8800000a ACC: 461373 ALU [a:4613732 b:10 => 461373] FLAGS: [Z:0 N:0]  Action: DIV #10 
+  DEBUG machine:new_tick {TICK: 1106 IP: 43 DA: 42} IR: 0xa8000000 ACC: 461373 ALU [a:4613732 b:10 => 461373] FLAGS: [Z:0 N:0]  Action: CMP #0 
+  DEBUG machine:new_tick {TICK: 1107 IP: 43 DA: 42} IR: 0xa8000000 ACC: 461373 ALU [a:461373 b:0 => 461373] FLAGS: [Z:0 N:0]  Action: CMP #0 
+  DEBUG machine:new_tick {TICK: 1108 IP: 44 DA: 43} IR: 0xb0000031 ACC: 461373 ALU [a:461373 b:0 => 461373] FLAGS: [Z:0 N:0]  Action: JE 49 
+  DEBUG machine:new_tick {TICK: 1109 IP: 45 DA: 44} IR: 0x30000003 ACC: 461373 ALU [a:461373 b:0 => 461373] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 1110 IP: 45 DA: 3} IR: 0x30000003 ACC: 461373 ALU [a:461373 b:0 => 461373] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 1111 IP: 45 DA: 3} IR: 0x30000003 ACC: 461373 ALU [a:461373 b:0 => 461373] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 1112 IP: 46 DA: 45} IR: 0x20000011 ACC: 461373 ALU [a:461373 b:0 => 461373] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1113 IP: 46 DA: 17} IR: 0x20000011 ACC: 461373 ALU [a:461373 b:0 => 461373] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1114 IP: 46 DA: 17} IR: 0x20000011 ACC: 9 ALU [a:461373 b:0 => 461373] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1115 IP: 47 DA: 46} IR: 0x48000001 ACC: 9 ALU [a:461373 b:0 => 461373] FLAGS: [Z:0 N:0]  Action: ADD #1 
+  DEBUG machine:new_tick {TICK: 1116 IP: 47 DA: 46} IR: 0x48000001 ACC: 10 ALU [a:9 b:1 => 10] FLAGS: [Z:0 N:0]  Action: ADD #1 
+  DEBUG machine:new_tick {TICK: 1117 IP: 48 DA: 47} IR: 0x30000011 ACC: 10 ALU [a:9 b:1 => 10] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1118 IP: 48 DA: 17} IR: 0x30000011 ACC: 10 ALU [a:9 b:1 => 10] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1119 IP: 48 DA: 17} IR: 0x30000011 ACC: 10 ALU [a:9 b:1 => 10] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1120 IP: 49 DA: 48} IR: 0xf0000024 ACC: 10 ALU [a:9 b:1 => 10] FLAGS: [Z:0 N:0]  Action: JMP 36 
+  DEBUG machine:new_tick {TICK: 1121 IP: 36 DA: 48} IR: 0xf0000024 ACC: 10 ALU [a:9 b:1 => 10] FLAGS: [Z:0 N:0]  Action: JMP 36 
+  DEBUG machine:new_tick {TICK: 1122 IP: 37 DA: 36} IR: 0x20000003 ACC: 10 ALU [a:9 b:1 => 10] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1123 IP: 37 DA: 3} IR: 0x20000003 ACC: 10 ALU [a:9 b:1 => 10] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1124 IP: 37 DA: 3} IR: 0x20000003 ACC: 461373 ALU [a:9 b:1 => 10] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1125 IP: 38 DA: 37} IR: 0x9800000a ACC: 461373 ALU [a:9 b:1 => 10] FLAGS: [Z:0 N:0]  Action: MOD #10 
+  DEBUG machine:new_tick {TICK: 1126 IP: 38 DA: 37} IR: 0x9800000a ACC: 3 ALU [a:461373 b:10 => 3] FLAGS: [Z:0 N:0]  Action: MOD #10 
+  DEBUG machine:new_tick {TICK: 1127 IP: 39 DA: 38} IR: 0x48000030 ACC: 3 ALU [a:461373 b:10 => 3] FLAGS: [Z:0 N:0]  Action: ADD #48 
+  DEBUG machine:new_tick {TICK: 1128 IP: 39 DA: 38} IR: 0x48000030 ACC: 51 ALU [a:3 b:48 => 51] FLAGS: [Z:0 N:0]  Action: ADD #48 
+  DEBUG machine:new_tick {TICK: 1129 IP: 40 DA: 39} IR: 0x34000011 ACC: 51 ALU [a:3 b:48 => 51] FLAGS: [Z:0 N:0]  Action: ST $17 
+  DEBUG machine:new_tick {TICK: 1130 IP: 40 DA: 17} IR: 0x34000011 ACC: 51 ALU [a:3 b:48 => 51] FLAGS: [Z:0 N:0]  Action: ST $17 
+  DEBUG machine:new_tick {TICK: 1131 IP: 40 DA: 10} IR: 0x34000011 ACC: 51 ALU [a:3 b:48 => 51] FLAGS: [Z:0 N:0]  Action: ST $17 
+  DEBUG machine:new_tick {TICK: 1132 IP: 40 DA: 10} IR: 0x34000011 ACC: 51 ALU [a:3 b:48 => 51] FLAGS: [Z:0 N:0]  Action: ST $17 
+  DEBUG machine:new_tick {TICK: 1133 IP: 41 DA: 40} IR: 0x20000003 ACC: 51 ALU [a:3 b:48 => 51] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1134 IP: 41 DA: 3} IR: 0x20000003 ACC: 51 ALU [a:3 b:48 => 51] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1135 IP: 41 DA: 3} IR: 0x20000003 ACC: 461373 ALU [a:3 b:48 => 51] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1136 IP: 42 DA: 41} IR: 0x8800000a ACC: 461373 ALU [a:3 b:48 => 51] FLAGS: [Z:0 N:0]  Action: DIV #10 
+  DEBUG machine:new_tick {TICK: 1137 IP: 42 DA: 41} IR: 0x8800000a ACC: 46137 ALU [a:461373 b:10 => 46137] FLAGS: [Z:0 N:0]  Action: DIV #10 
+  DEBUG machine:new_tick {TICK: 1138 IP: 43 DA: 42} IR: 0xa8000000 ACC: 46137 ALU [a:461373 b:10 => 46137] FLAGS: [Z:0 N:0]  Action: CMP #0 
+  DEBUG machine:new_tick {TICK: 1139 IP: 43 DA: 42} IR: 0xa8000000 ACC: 46137 ALU [a:46137 b:0 => 46137] FLAGS: [Z:0 N:0]  Action: CMP #0 
+  DEBUG machine:new_tick {TICK: 1140 IP: 44 DA: 43} IR: 0xb0000031 ACC: 46137 ALU [a:46137 b:0 => 46137] FLAGS: [Z:0 N:0]  Action: JE 49 
+  DEBUG machine:new_tick {TICK: 1141 IP: 45 DA: 44} IR: 0x30000003 ACC: 46137 ALU [a:46137 b:0 => 46137] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 1142 IP: 45 DA: 3} IR: 0x30000003 ACC: 46137 ALU [a:46137 b:0 => 46137] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 1143 IP: 45 DA: 3} IR: 0x30000003 ACC: 46137 ALU [a:46137 b:0 => 46137] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 1144 IP: 46 DA: 45} IR: 0x20000011 ACC: 46137 ALU [a:46137 b:0 => 46137] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1145 IP: 46 DA: 17} IR: 0x20000011 ACC: 46137 ALU [a:46137 b:0 => 46137] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1146 IP: 46 DA: 17} IR: 0x20000011 ACC: 10 ALU [a:46137 b:0 => 46137] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1147 IP: 47 DA: 46} IR: 0x48000001 ACC: 10 ALU [a:46137 b:0 => 46137] FLAGS: [Z:0 N:0]  Action: ADD #1 
+  DEBUG machine:new_tick {TICK: 1148 IP: 47 DA: 46} IR: 0x48000001 ACC: 11 ALU [a:10 b:1 => 11] FLAGS: [Z:0 N:0]  Action: ADD #1 
+  DEBUG machine:new_tick {TICK: 1149 IP: 48 DA: 47} IR: 0x30000011 ACC: 11 ALU [a:10 b:1 => 11] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1150 IP: 48 DA: 17} IR: 0x30000011 ACC: 11 ALU [a:10 b:1 => 11] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1151 IP: 48 DA: 17} IR: 0x30000011 ACC: 11 ALU [a:10 b:1 => 11] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1152 IP: 49 DA: 48} IR: 0xf0000024 ACC: 11 ALU [a:10 b:1 => 11] FLAGS: [Z:0 N:0]  Action: JMP 36 
+  DEBUG machine:new_tick {TICK: 1153 IP: 36 DA: 48} IR: 0xf0000024 ACC: 11 ALU [a:10 b:1 => 11] FLAGS: [Z:0 N:0]  Action: JMP 36 
+  DEBUG machine:new_tick {TICK: 1154 IP: 37 DA: 36} IR: 0x20000003 ACC: 11 ALU [a:10 b:1 => 11] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1155 IP: 37 DA: 3} IR: 0x20000003 ACC: 11 ALU [a:10 b:1 => 11] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1156 IP: 37 DA: 3} IR: 0x20000003 ACC: 46137 ALU [a:10 b:1 => 11] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1157 IP: 38 DA: 37} IR: 0x9800000a ACC: 46137 ALU [a:10 b:1 => 11] FLAGS: [Z:0 N:0]  Action: MOD #10 
+  DEBUG machine:new_tick {TICK: 1158 IP: 38 DA: 37} IR: 0x9800000a ACC: 7 ALU [a:46137 b:10 => 7] FLAGS: [Z:0 N:0]  Action: MOD #10 
+  DEBUG machine:new_tick {TICK: 1159 IP: 39 DA: 38} IR: 0x48000030 ACC: 7 ALU [a:46137 b:10 => 7] FLAGS: [Z:0 N:0]  Action: ADD #48 
+  DEBUG machine:new_tick {TICK: 1160 IP: 39 DA: 38} IR: 0x48000030 ACC: 55 ALU [a:7 b:48 => 55] FLAGS: [Z:0 N:0]  Action: ADD #48 
+  DEBUG machine:new_tick {TICK: 1161 IP: 40 DA: 39} IR: 0x34000011 ACC: 55 ALU [a:7 b:48 => 55] FLAGS: [Z:0 N:0]  Action: ST $17 
+  DEBUG machine:new_tick {TICK: 1162 IP: 40 DA: 17} IR: 0x34000011 ACC: 55 ALU [a:7 b:48 => 55] FLAGS: [Z:0 N:0]  Action: ST $17 
+  DEBUG machine:new_tick {TICK: 1163 IP: 40 DA: 11} IR: 0x34000011 ACC: 55 ALU [a:7 b:48 => 55] FLAGS: [Z:0 N:0]  Action: ST $17 
+  DEBUG machine:new_tick {TICK: 1164 IP: 40 DA: 11} IR: 0x34000011 ACC: 55 ALU [a:7 b:48 => 55] FLAGS: [Z:0 N:0]  Action: ST $17 
+  DEBUG machine:new_tick {TICK: 1165 IP: 41 DA: 40} IR: 0x20000003 ACC: 55 ALU [a:7 b:48 => 55] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1166 IP: 41 DA: 3} IR: 0x20000003 ACC: 55 ALU [a:7 b:48 => 55] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1167 IP: 41 DA: 3} IR: 0x20000003 ACC: 46137 ALU [a:7 b:48 => 55] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1168 IP: 42 DA: 41} IR: 0x8800000a ACC: 46137 ALU [a:7 b:48 => 55] FLAGS: [Z:0 N:0]  Action: DIV #10 
+  DEBUG machine:new_tick {TICK: 1169 IP: 42 DA: 41} IR: 0x8800000a ACC: 4613 ALU [a:46137 b:10 => 4613] FLAGS: [Z:0 N:0]  Action: DIV #10 
+  DEBUG machine:new_tick {TICK: 1170 IP: 43 DA: 42} IR: 0xa8000000 ACC: 4613 ALU [a:46137 b:10 => 4613] FLAGS: [Z:0 N:0]  Action: CMP #0 
+  DEBUG machine:new_tick {TICK: 1171 IP: 43 DA: 42} IR: 0xa8000000 ACC: 4613 ALU [a:4613 b:0 => 4613] FLAGS: [Z:0 N:0]  Action: CMP #0 
+  DEBUG machine:new_tick {TICK: 1172 IP: 44 DA: 43} IR: 0xb0000031 ACC: 4613 ALU [a:4613 b:0 => 4613] FLAGS: [Z:0 N:0]  Action: JE 49 
+  DEBUG machine:new_tick {TICK: 1173 IP: 45 DA: 44} IR: 0x30000003 ACC: 4613 ALU [a:4613 b:0 => 4613] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 1174 IP: 45 DA: 3} IR: 0x30000003 ACC: 4613 ALU [a:4613 b:0 => 4613] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 1175 IP: 45 DA: 3} IR: 0x30000003 ACC: 4613 ALU [a:4613 b:0 => 4613] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 1176 IP: 46 DA: 45} IR: 0x20000011 ACC: 4613 ALU [a:4613 b:0 => 4613] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1177 IP: 46 DA: 17} IR: 0x20000011 ACC: 4613 ALU [a:4613 b:0 => 4613] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1178 IP: 46 DA: 17} IR: 0x20000011 ACC: 11 ALU [a:4613 b:0 => 4613] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1179 IP: 47 DA: 46} IR: 0x48000001 ACC: 11 ALU [a:4613 b:0 => 4613] FLAGS: [Z:0 N:0]  Action: ADD #1 
+  DEBUG machine:new_tick {TICK: 1180 IP: 47 DA: 46} IR: 0x48000001 ACC: 12 ALU [a:11 b:1 => 12] FLAGS: [Z:0 N:0]  Action: ADD #1 
+  DEBUG machine:new_tick {TICK: 1181 IP: 48 DA: 47} IR: 0x30000011 ACC: 12 ALU [a:11 b:1 => 12] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1182 IP: 48 DA: 17} IR: 0x30000011 ACC: 12 ALU [a:11 b:1 => 12] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1183 IP: 48 DA: 17} IR: 0x30000011 ACC: 12 ALU [a:11 b:1 => 12] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1184 IP: 49 DA: 48} IR: 0xf0000024 ACC: 12 ALU [a:11 b:1 => 12] FLAGS: [Z:0 N:0]  Action: JMP 36 
+  DEBUG machine:new_tick {TICK: 1185 IP: 36 DA: 48} IR: 0xf0000024 ACC: 12 ALU [a:11 b:1 => 12] FLAGS: [Z:0 N:0]  Action: JMP 36 
+  DEBUG machine:new_tick {TICK: 1186 IP: 37 DA: 36} IR: 0x20000003 ACC: 12 ALU [a:11 b:1 => 12] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1187 IP: 37 DA: 3} IR: 0x20000003 ACC: 12 ALU [a:11 b:1 => 12] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1188 IP: 37 DA: 3} IR: 0x20000003 ACC: 4613 ALU [a:11 b:1 => 12] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1189 IP: 38 DA: 37} IR: 0x9800000a ACC: 4613 ALU [a:11 b:1 => 12] FLAGS: [Z:0 N:0]  Action: MOD #10 
+  DEBUG machine:new_tick {TICK: 1190 IP: 38 DA: 37} IR: 0x9800000a ACC: 3 ALU [a:4613 b:10 => 3] FLAGS: [Z:0 N:0]  Action: MOD #10 
+  DEBUG machine:new_tick {TICK: 1191 IP: 39 DA: 38} IR: 0x48000030 ACC: 3 ALU [a:4613 b:10 => 3] FLAGS: [Z:0 N:0]  Action: ADD #48 
+  DEBUG machine:new_tick {TICK: 1192 IP: 39 DA: 38} IR: 0x48000030 ACC: 51 ALU [a:3 b:48 => 51] FLAGS: [Z:0 N:0]  Action: ADD #48 
+  DEBUG machine:new_tick {TICK: 1193 IP: 40 DA: 39} IR: 0x34000011 ACC: 51 ALU [a:3 b:48 => 51] FLAGS: [Z:0 N:0]  Action: ST $17 
+  DEBUG machine:new_tick {TICK: 1194 IP: 40 DA: 17} IR: 0x34000011 ACC: 51 ALU [a:3 b:48 => 51] FLAGS: [Z:0 N:0]  Action: ST $17 
+  DEBUG machine:new_tick {TICK: 1195 IP: 40 DA: 12} IR: 0x34000011 ACC: 51 ALU [a:3 b:48 => 51] FLAGS: [Z:0 N:0]  Action: ST $17 
+  DEBUG machine:new_tick {TICK: 1196 IP: 40 DA: 12} IR: 0x34000011 ACC: 51 ALU [a:3 b:48 => 51] FLAGS: [Z:0 N:0]  Action: ST $17 
+  DEBUG machine:new_tick {TICK: 1197 IP: 41 DA: 40} IR: 0x20000003 ACC: 51 ALU [a:3 b:48 => 51] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1198 IP: 41 DA: 3} IR: 0x20000003 ACC: 51 ALU [a:3 b:48 => 51] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1199 IP: 41 DA: 3} IR: 0x20000003 ACC: 4613 ALU [a:3 b:48 => 51] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1200 IP: 42 DA: 41} IR: 0x8800000a ACC: 4613 ALU [a:3 b:48 => 51] FLAGS: [Z:0 N:0]  Action: DIV #10 
+  DEBUG machine:new_tick {TICK: 1201 IP: 42 DA: 41} IR: 0x8800000a ACC: 461 ALU [a:4613 b:10 => 461] FLAGS: [Z:0 N:0]  Action: DIV #10 
+  DEBUG machine:new_tick {TICK: 1202 IP: 43 DA: 42} IR: 0xa8000000 ACC: 461 ALU [a:4613 b:10 => 461] FLAGS: [Z:0 N:0]  Action: CMP #0 
+  DEBUG machine:new_tick {TICK: 1203 IP: 43 DA: 42} IR: 0xa8000000 ACC: 461 ALU [a:461 b:0 => 461] FLAGS: [Z:0 N:0]  Action: CMP #0 
+  DEBUG machine:new_tick {TICK: 1204 IP: 44 DA: 43} IR: 0xb0000031 ACC: 461 ALU [a:461 b:0 => 461] FLAGS: [Z:0 N:0]  Action: JE 49 
+  DEBUG machine:new_tick {TICK: 1205 IP: 45 DA: 44} IR: 0x30000003 ACC: 461 ALU [a:461 b:0 => 461] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 1206 IP: 45 DA: 3} IR: 0x30000003 ACC: 461 ALU [a:461 b:0 => 461] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 1207 IP: 45 DA: 3} IR: 0x30000003 ACC: 461 ALU [a:461 b:0 => 461] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 1208 IP: 46 DA: 45} IR: 0x20000011 ACC: 461 ALU [a:461 b:0 => 461] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1209 IP: 46 DA: 17} IR: 0x20000011 ACC: 461 ALU [a:461 b:0 => 461] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1210 IP: 46 DA: 17} IR: 0x20000011 ACC: 12 ALU [a:461 b:0 => 461] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1211 IP: 47 DA: 46} IR: 0x48000001 ACC: 12 ALU [a:461 b:0 => 461] FLAGS: [Z:0 N:0]  Action: ADD #1 
+  DEBUG machine:new_tick {TICK: 1212 IP: 47 DA: 46} IR: 0x48000001 ACC: 13 ALU [a:12 b:1 => 13] FLAGS: [Z:0 N:0]  Action: ADD #1 
+  DEBUG machine:new_tick {TICK: 1213 IP: 48 DA: 47} IR: 0x30000011 ACC: 13 ALU [a:12 b:1 => 13] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1214 IP: 48 DA: 17} IR: 0x30000011 ACC: 13 ALU [a:12 b:1 => 13] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1215 IP: 48 DA: 17} IR: 0x30000011 ACC: 13 ALU [a:12 b:1 => 13] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1216 IP: 49 DA: 48} IR: 0xf0000024 ACC: 13 ALU [a:12 b:1 => 13] FLAGS: [Z:0 N:0]  Action: JMP 36 
+  DEBUG machine:new_tick {TICK: 1217 IP: 36 DA: 48} IR: 0xf0000024 ACC: 13 ALU [a:12 b:1 => 13] FLAGS: [Z:0 N:0]  Action: JMP 36 
+  DEBUG machine:new_tick {TICK: 1218 IP: 37 DA: 36} IR: 0x20000003 ACC: 13 ALU [a:12 b:1 => 13] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1219 IP: 37 DA: 3} IR: 0x20000003 ACC: 13 ALU [a:12 b:1 => 13] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1220 IP: 37 DA: 3} IR: 0x20000003 ACC: 461 ALU [a:12 b:1 => 13] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1221 IP: 38 DA: 37} IR: 0x9800000a ACC: 461 ALU [a:12 b:1 => 13] FLAGS: [Z:0 N:0]  Action: MOD #10 
+  DEBUG machine:new_tick {TICK: 1222 IP: 38 DA: 37} IR: 0x9800000a ACC: 1 ALU [a:461 b:10 => 1] FLAGS: [Z:0 N:0]  Action: MOD #10 
+  DEBUG machine:new_tick {TICK: 1223 IP: 39 DA: 38} IR: 0x48000030 ACC: 1 ALU [a:461 b:10 => 1] FLAGS: [Z:0 N:0]  Action: ADD #48 
+  DEBUG machine:new_tick {TICK: 1224 IP: 39 DA: 38} IR: 0x48000030 ACC: 49 ALU [a:1 b:48 => 49] FLAGS: [Z:0 N:0]  Action: ADD #48 
+  DEBUG machine:new_tick {TICK: 1225 IP: 40 DA: 39} IR: 0x34000011 ACC: 49 ALU [a:1 b:48 => 49] FLAGS: [Z:0 N:0]  Action: ST $17 
+  DEBUG machine:new_tick {TICK: 1226 IP: 40 DA: 17} IR: 0x34000011 ACC: 49 ALU [a:1 b:48 => 49] FLAGS: [Z:0 N:0]  Action: ST $17 
+  DEBUG machine:new_tick {TICK: 1227 IP: 40 DA: 13} IR: 0x34000011 ACC: 49 ALU [a:1 b:48 => 49] FLAGS: [Z:0 N:0]  Action: ST $17 
+  DEBUG machine:new_tick {TICK: 1228 IP: 40 DA: 13} IR: 0x34000011 ACC: 49 ALU [a:1 b:48 => 49] FLAGS: [Z:0 N:0]  Action: ST $17 
+  DEBUG machine:new_tick {TICK: 1229 IP: 41 DA: 40} IR: 0x20000003 ACC: 49 ALU [a:1 b:48 => 49] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1230 IP: 41 DA: 3} IR: 0x20000003 ACC: 49 ALU [a:1 b:48 => 49] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1231 IP: 41 DA: 3} IR: 0x20000003 ACC: 461 ALU [a:1 b:48 => 49] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1232 IP: 42 DA: 41} IR: 0x8800000a ACC: 461 ALU [a:1 b:48 => 49] FLAGS: [Z:0 N:0]  Action: DIV #10 
+  DEBUG machine:new_tick {TICK: 1233 IP: 42 DA: 41} IR: 0x8800000a ACC: 46 ALU [a:461 b:10 => 46] FLAGS: [Z:0 N:0]  Action: DIV #10 
+  DEBUG machine:new_tick {TICK: 1234 IP: 43 DA: 42} IR: 0xa8000000 ACC: 46 ALU [a:461 b:10 => 46] FLAGS: [Z:0 N:0]  Action: CMP #0 
+  DEBUG machine:new_tick {TICK: 1235 IP: 43 DA: 42} IR: 0xa8000000 ACC: 46 ALU [a:46 b:0 => 46] FLAGS: [Z:0 N:0]  Action: CMP #0 
+  DEBUG machine:new_tick {TICK: 1236 IP: 44 DA: 43} IR: 0xb0000031 ACC: 46 ALU [a:46 b:0 => 46] FLAGS: [Z:0 N:0]  Action: JE 49 
+  DEBUG machine:new_tick {TICK: 1237 IP: 45 DA: 44} IR: 0x30000003 ACC: 46 ALU [a:46 b:0 => 46] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 1238 IP: 45 DA: 3} IR: 0x30000003 ACC: 46 ALU [a:46 b:0 => 46] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 1239 IP: 45 DA: 3} IR: 0x30000003 ACC: 46 ALU [a:46 b:0 => 46] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 1240 IP: 46 DA: 45} IR: 0x20000011 ACC: 46 ALU [a:46 b:0 => 46] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1241 IP: 46 DA: 17} IR: 0x20000011 ACC: 46 ALU [a:46 b:0 => 46] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1242 IP: 46 DA: 17} IR: 0x20000011 ACC: 13 ALU [a:46 b:0 => 46] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1243 IP: 47 DA: 46} IR: 0x48000001 ACC: 13 ALU [a:46 b:0 => 46] FLAGS: [Z:0 N:0]  Action: ADD #1 
+  DEBUG machine:new_tick {TICK: 1244 IP: 47 DA: 46} IR: 0x48000001 ACC: 14 ALU [a:13 b:1 => 14] FLAGS: [Z:0 N:0]  Action: ADD #1 
+  DEBUG machine:new_tick {TICK: 1245 IP: 48 DA: 47} IR: 0x30000011 ACC: 14 ALU [a:13 b:1 => 14] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1246 IP: 48 DA: 17} IR: 0x30000011 ACC: 14 ALU [a:13 b:1 => 14] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1247 IP: 48 DA: 17} IR: 0x30000011 ACC: 14 ALU [a:13 b:1 => 14] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1248 IP: 49 DA: 48} IR: 0xf0000024 ACC: 14 ALU [a:13 b:1 => 14] FLAGS: [Z:0 N:0]  Action: JMP 36 
+  DEBUG machine:new_tick {TICK: 1249 IP: 36 DA: 48} IR: 0xf0000024 ACC: 14 ALU [a:13 b:1 => 14] FLAGS: [Z:0 N:0]  Action: JMP 36 
+  DEBUG machine:new_tick {TICK: 1250 IP: 37 DA: 36} IR: 0x20000003 ACC: 14 ALU [a:13 b:1 => 14] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1251 IP: 37 DA: 3} IR: 0x20000003 ACC: 14 ALU [a:13 b:1 => 14] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1252 IP: 37 DA: 3} IR: 0x20000003 ACC: 46 ALU [a:13 b:1 => 14] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1253 IP: 38 DA: 37} IR: 0x9800000a ACC: 46 ALU [a:13 b:1 => 14] FLAGS: [Z:0 N:0]  Action: MOD #10 
+  DEBUG machine:new_tick {TICK: 1254 IP: 38 DA: 37} IR: 0x9800000a ACC: 6 ALU [a:46 b:10 => 6] FLAGS: [Z:0 N:0]  Action: MOD #10 
+  DEBUG machine:new_tick {TICK: 1255 IP: 39 DA: 38} IR: 0x48000030 ACC: 6 ALU [a:46 b:10 => 6] FLAGS: [Z:0 N:0]  Action: ADD #48 
+  DEBUG machine:new_tick {TICK: 1256 IP: 39 DA: 38} IR: 0x48000030 ACC: 54 ALU [a:6 b:48 => 54] FLAGS: [Z:0 N:0]  Action: ADD #48 
+  DEBUG machine:new_tick {TICK: 1257 IP: 40 DA: 39} IR: 0x34000011 ACC: 54 ALU [a:6 b:48 => 54] FLAGS: [Z:0 N:0]  Action: ST $17 
+  DEBUG machine:new_tick {TICK: 1258 IP: 40 DA: 17} IR: 0x34000011 ACC: 54 ALU [a:6 b:48 => 54] FLAGS: [Z:0 N:0]  Action: ST $17 
+  DEBUG machine:new_tick {TICK: 1259 IP: 40 DA: 14} IR: 0x34000011 ACC: 54 ALU [a:6 b:48 => 54] FLAGS: [Z:0 N:0]  Action: ST $17 
+  DEBUG machine:new_tick {TICK: 1260 IP: 40 DA: 14} IR: 0x34000011 ACC: 54 ALU [a:6 b:48 => 54] FLAGS: [Z:0 N:0]  Action: ST $17 
+  DEBUG machine:new_tick {TICK: 1261 IP: 41 DA: 40} IR: 0x20000003 ACC: 54 ALU [a:6 b:48 => 54] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1262 IP: 41 DA: 3} IR: 0x20000003 ACC: 54 ALU [a:6 b:48 => 54] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1263 IP: 41 DA: 3} IR: 0x20000003 ACC: 46 ALU [a:6 b:48 => 54] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1264 IP: 42 DA: 41} IR: 0x8800000a ACC: 46 ALU [a:6 b:48 => 54] FLAGS: [Z:0 N:0]  Action: DIV #10 
+  DEBUG machine:new_tick {TICK: 1265 IP: 42 DA: 41} IR: 0x8800000a ACC: 4 ALU [a:46 b:10 => 4] FLAGS: [Z:0 N:0]  Action: DIV #10 
+  DEBUG machine:new_tick {TICK: 1266 IP: 43 DA: 42} IR: 0xa8000000 ACC: 4 ALU [a:46 b:10 => 4] FLAGS: [Z:0 N:0]  Action: CMP #0 
+  DEBUG machine:new_tick {TICK: 1267 IP: 43 DA: 42} IR: 0xa8000000 ACC: 4 ALU [a:4 b:0 => 4] FLAGS: [Z:0 N:0]  Action: CMP #0 
+  DEBUG machine:new_tick {TICK: 1268 IP: 44 DA: 43} IR: 0xb0000031 ACC: 4 ALU [a:4 b:0 => 4] FLAGS: [Z:0 N:0]  Action: JE 49 
+  DEBUG machine:new_tick {TICK: 1269 IP: 45 DA: 44} IR: 0x30000003 ACC: 4 ALU [a:4 b:0 => 4] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 1270 IP: 45 DA: 3} IR: 0x30000003 ACC: 4 ALU [a:4 b:0 => 4] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 1271 IP: 45 DA: 3} IR: 0x30000003 ACC: 4 ALU [a:4 b:0 => 4] FLAGS: [Z:0 N:0]  Action: ST 3 
+  DEBUG machine:new_tick {TICK: 1272 IP: 46 DA: 45} IR: 0x20000011 ACC: 4 ALU [a:4 b:0 => 4] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1273 IP: 46 DA: 17} IR: 0x20000011 ACC: 4 ALU [a:4 b:0 => 4] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1274 IP: 46 DA: 17} IR: 0x20000011 ACC: 14 ALU [a:4 b:0 => 4] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1275 IP: 47 DA: 46} IR: 0x48000001 ACC: 14 ALU [a:4 b:0 => 4] FLAGS: [Z:0 N:0]  Action: ADD #1 
+  DEBUG machine:new_tick {TICK: 1276 IP: 47 DA: 46} IR: 0x48000001 ACC: 15 ALU [a:14 b:1 => 15] FLAGS: [Z:0 N:0]  Action: ADD #1 
+  DEBUG machine:new_tick {TICK: 1277 IP: 48 DA: 47} IR: 0x30000011 ACC: 15 ALU [a:14 b:1 => 15] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1278 IP: 48 DA: 17} IR: 0x30000011 ACC: 15 ALU [a:14 b:1 => 15] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1279 IP: 48 DA: 17} IR: 0x30000011 ACC: 15 ALU [a:14 b:1 => 15] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1280 IP: 49 DA: 48} IR: 0xf0000024 ACC: 15 ALU [a:14 b:1 => 15] FLAGS: [Z:0 N:0]  Action: JMP 36 
+  DEBUG machine:new_tick {TICK: 1281 IP: 36 DA: 48} IR: 0xf0000024 ACC: 15 ALU [a:14 b:1 => 15] FLAGS: [Z:0 N:0]  Action: JMP 36 
+  DEBUG machine:new_tick {TICK: 1282 IP: 37 DA: 36} IR: 0x20000003 ACC: 15 ALU [a:14 b:1 => 15] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1283 IP: 37 DA: 3} IR: 0x20000003 ACC: 15 ALU [a:14 b:1 => 15] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1284 IP: 37 DA: 3} IR: 0x20000003 ACC: 4 ALU [a:14 b:1 => 15] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1285 IP: 38 DA: 37} IR: 0x9800000a ACC: 4 ALU [a:14 b:1 => 15] FLAGS: [Z:0 N:0]  Action: MOD #10 
+  DEBUG machine:new_tick {TICK: 1286 IP: 38 DA: 37} IR: 0x9800000a ACC: 4 ALU [a:4 b:10 => 4] FLAGS: [Z:0 N:0]  Action: MOD #10 
+  DEBUG machine:new_tick {TICK: 1287 IP: 39 DA: 38} IR: 0x48000030 ACC: 4 ALU [a:4 b:10 => 4] FLAGS: [Z:0 N:0]  Action: ADD #48 
+  DEBUG machine:new_tick {TICK: 1288 IP: 39 DA: 38} IR: 0x48000030 ACC: 52 ALU [a:4 b:48 => 52] FLAGS: [Z:0 N:0]  Action: ADD #48 
+  DEBUG machine:new_tick {TICK: 1289 IP: 40 DA: 39} IR: 0x34000011 ACC: 52 ALU [a:4 b:48 => 52] FLAGS: [Z:0 N:0]  Action: ST $17 
+  DEBUG machine:new_tick {TICK: 1290 IP: 40 DA: 17} IR: 0x34000011 ACC: 52 ALU [a:4 b:48 => 52] FLAGS: [Z:0 N:0]  Action: ST $17 
+  DEBUG machine:new_tick {TICK: 1291 IP: 40 DA: 15} IR: 0x34000011 ACC: 52 ALU [a:4 b:48 => 52] FLAGS: [Z:0 N:0]  Action: ST $17 
+  DEBUG machine:new_tick {TICK: 1292 IP: 40 DA: 15} IR: 0x34000011 ACC: 52 ALU [a:4 b:48 => 52] FLAGS: [Z:0 N:0]  Action: ST $17 
+  DEBUG machine:new_tick {TICK: 1293 IP: 41 DA: 40} IR: 0x20000003 ACC: 52 ALU [a:4 b:48 => 52] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1294 IP: 41 DA: 3} IR: 0x20000003 ACC: 52 ALU [a:4 b:48 => 52] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1295 IP: 41 DA: 3} IR: 0x20000003 ACC: 4 ALU [a:4 b:48 => 52] FLAGS: [Z:0 N:0]  Action: LD 3 
+  DEBUG machine:new_tick {TICK: 1296 IP: 42 DA: 41} IR: 0x8800000a ACC: 4 ALU [a:4 b:48 => 52] FLAGS: [Z:0 N:0]  Action: DIV #10 
+  DEBUG machine:new_tick {TICK: 1297 IP: 42 DA: 41} IR: 0x8800000a ACC: 0 ALU [a:4 b:10 => 0] FLAGS: [Z:1 N:0]  Action: DIV #10 
+  DEBUG machine:new_tick {TICK: 1298 IP: 43 DA: 42} IR: 0xa8000000 ACC: 0 ALU [a:4 b:10 => 0] FLAGS: [Z:1 N:0]  Action: CMP #0 
+  DEBUG machine:new_tick {TICK: 1299 IP: 43 DA: 42} IR: 0xa8000000 ACC: 0 ALU [a:0 b:0 => 0] FLAGS: [Z:1 N:0]  Action: CMP #0 
+  DEBUG machine:new_tick {TICK: 1300 IP: 44 DA: 43} IR: 0xb0000031 ACC: 0 ALU [a:0 b:0 => 0] FLAGS: [Z:1 N:0]  Action: JE 49 
+  DEBUG machine:new_tick {TICK: 1301 IP: 49 DA: 43} IR: 0xb0000031 ACC: 0 ALU [a:0 b:0 => 0] FLAGS: [Z:1 N:0]  Action: JE 49 
+  DEBUG machine:new_tick {TICK: 1302 IP: 50 DA: 49} IR: 0x24000011 ACC: 0 ALU [a:0 b:0 => 0] FLAGS: [Z:1 N:0]  Action: LD $17 
+  DEBUG machine:new_tick {TICK: 1303 IP: 50 DA: 17} IR: 0x24000011 ACC: 0 ALU [a:0 b:0 => 0] FLAGS: [Z:1 N:0]  Action: LD $17 
+  DEBUG machine:new_tick {TICK: 1304 IP: 50 DA: 15} IR: 0x24000011 ACC: 0 ALU [a:0 b:0 => 0] FLAGS: [Z:1 N:0]  Action: LD $17 
+  DEBUG machine:new_tick {TICK: 1305 IP: 50 DA: 15} IR: 0x24000011 ACC: 52 ALU [a:0 b:0 => 0] FLAGS: [Z:1 N:0]  Action: LD $17 
+  DEBUG machine:new_tick {TICK: 1306 IP: 51 DA: 50} IR: 0xa8000000 ACC: 52 ALU [a:0 b:0 => 0] FLAGS: [Z:1 N:0]  Action: CMP #0 
+  DEBUG machine:new_tick {TICK: 1307 IP: 51 DA: 50} IR: 0xa8000000 ACC: 52 ALU [a:52 b:0 => 52] FLAGS: [Z:0 N:0]  Action: CMP #0 
+  DEBUG machine:new_tick {TICK: 1308 IP: 52 DA: 51} IR: 0xb0000039 ACC: 52 ALU [a:52 b:0 => 52] FLAGS: [Z:0 N:0]  Action: JE 57 
+  DEBUG machine:new_tick {TICK: 1309 IP: 53 DA: 52} IR: 0x30000002 ACC: 52 ALU [a:52 b:0 => 52] FLAGS: [Z:0 N:0]  Action: ST 2 
+  DEBUG machine:new_tick {TICK: 1310 IP: 53 DA: 2} IR: 0x30000002 ACC: 52 ALU [a:52 b:0 => 52] FLAGS: [Z:0 N:0]  Action: ST 2 
+  DEBUG machine:new_tick {TICK: 1311 IP: 53 DA: 2} IR: 0x30000002 ACC: 52 ALU [a:52 b:0 => 52] FLAGS: [Z:0 N:0]  Action: ST 2 
+  DEBUG machine:new_tick {TICK: 1312 IP: 54 DA: 53} IR: 0x20000011 ACC: 52 ALU [a:52 b:0 => 52] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1313 IP: 54 DA: 17} IR: 0x20000011 ACC: 52 ALU [a:52 b:0 => 52] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1314 IP: 54 DA: 17} IR: 0x20000011 ACC: 15 ALU [a:52 b:0 => 52] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1315 IP: 55 DA: 54} IR: 0x58000001 ACC: 15 ALU [a:52 b:0 => 52] FLAGS: [Z:0 N:0]  Action: SUB #1 
+  DEBUG machine:new_tick {TICK: 1316 IP: 55 DA: 54} IR: 0x58000001 ACC: 14 ALU [a:15 b:1 => 14] FLAGS: [Z:0 N:0]  Action: SUB #1 
+  DEBUG machine:new_tick {TICK: 1317 IP: 56 DA: 55} IR: 0x30000011 ACC: 14 ALU [a:15 b:1 => 14] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1318 IP: 56 DA: 17} IR: 0x30000011 ACC: 14 ALU [a:15 b:1 => 14] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1319 IP: 56 DA: 17} IR: 0x30000011 ACC: 14 ALU [a:15 b:1 => 14] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1320 IP: 57 DA: 56} IR: 0xf0000031 ACC: 14 ALU [a:15 b:1 => 14] FLAGS: [Z:0 N:0]  Action: JMP 49 
+  DEBUG machine:new_tick {TICK: 1321 IP: 49 DA: 56} IR: 0xf0000031 ACC: 14 ALU [a:15 b:1 => 14] FLAGS: [Z:0 N:0]  Action: JMP 49 
+  DEBUG machine:new_tick {TICK: 1322 IP: 50 DA: 49} IR: 0x24000011 ACC: 14 ALU [a:15 b:1 => 14] FLAGS: [Z:0 N:0]  Action: LD $17 
+  DEBUG machine:new_tick {TICK: 1323 IP: 50 DA: 17} IR: 0x24000011 ACC: 14 ALU [a:15 b:1 => 14] FLAGS: [Z:0 N:0]  Action: LD $17 
+  DEBUG machine:new_tick {TICK: 1324 IP: 50 DA: 14} IR: 0x24000011 ACC: 14 ALU [a:15 b:1 => 14] FLAGS: [Z:0 N:0]  Action: LD $17 
+  DEBUG machine:new_tick {TICK: 1325 IP: 50 DA: 14} IR: 0x24000011 ACC: 54 ALU [a:15 b:1 => 14] FLAGS: [Z:0 N:0]  Action: LD $17 
+  DEBUG machine:new_tick {TICK: 1326 IP: 51 DA: 50} IR: 0xa8000000 ACC: 54 ALU [a:15 b:1 => 14] FLAGS: [Z:0 N:0]  Action: CMP #0 
+  DEBUG machine:new_tick {TICK: 1327 IP: 51 DA: 50} IR: 0xa8000000 ACC: 54 ALU [a:54 b:0 => 54] FLAGS: [Z:0 N:0]  Action: CMP #0 
+  DEBUG machine:new_tick {TICK: 1328 IP: 52 DA: 51} IR: 0xb0000039 ACC: 54 ALU [a:54 b:0 => 54] FLAGS: [Z:0 N:0]  Action: JE 57 
+  DEBUG machine:new_tick {TICK: 1329 IP: 53 DA: 52} IR: 0x30000002 ACC: 54 ALU [a:54 b:0 => 54] FLAGS: [Z:0 N:0]  Action: ST 2 
+  DEBUG machine:new_tick {TICK: 1330 IP: 53 DA: 2} IR: 0x30000002 ACC: 54 ALU [a:54 b:0 => 54] FLAGS: [Z:0 N:0]  Action: ST 2 
+  DEBUG machine:new_tick {TICK: 1331 IP: 53 DA: 2} IR: 0x30000002 ACC: 54 ALU [a:54 b:0 => 54] FLAGS: [Z:0 N:0]  Action: ST 2 
+  DEBUG machine:new_tick {TICK: 1332 IP: 54 DA: 53} IR: 0x20000011 ACC: 54 ALU [a:54 b:0 => 54] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1333 IP: 54 DA: 17} IR: 0x20000011 ACC: 54 ALU [a:54 b:0 => 54] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1334 IP: 54 DA: 17} IR: 0x20000011 ACC: 14 ALU [a:54 b:0 => 54] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1335 IP: 55 DA: 54} IR: 0x58000001 ACC: 14 ALU [a:54 b:0 => 54] FLAGS: [Z:0 N:0]  Action: SUB #1 
+  DEBUG machine:new_tick {TICK: 1336 IP: 55 DA: 54} IR: 0x58000001 ACC: 13 ALU [a:14 b:1 => 13] FLAGS: [Z:0 N:0]  Action: SUB #1 
+  DEBUG machine:new_tick {TICK: 1337 IP: 56 DA: 55} IR: 0x30000011 ACC: 13 ALU [a:14 b:1 => 13] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1338 IP: 56 DA: 17} IR: 0x30000011 ACC: 13 ALU [a:14 b:1 => 13] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1339 IP: 56 DA: 17} IR: 0x30000011 ACC: 13 ALU [a:14 b:1 => 13] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1340 IP: 57 DA: 56} IR: 0xf0000031 ACC: 13 ALU [a:14 b:1 => 13] FLAGS: [Z:0 N:0]  Action: JMP 49 
+  DEBUG machine:new_tick {TICK: 1341 IP: 49 DA: 56} IR: 0xf0000031 ACC: 13 ALU [a:14 b:1 => 13] FLAGS: [Z:0 N:0]  Action: JMP 49 
+  DEBUG machine:new_tick {TICK: 1342 IP: 50 DA: 49} IR: 0x24000011 ACC: 13 ALU [a:14 b:1 => 13] FLAGS: [Z:0 N:0]  Action: LD $17 
+  DEBUG machine:new_tick {TICK: 1343 IP: 50 DA: 17} IR: 0x24000011 ACC: 13 ALU [a:14 b:1 => 13] FLAGS: [Z:0 N:0]  Action: LD $17 
+  DEBUG machine:new_tick {TICK: 1344 IP: 50 DA: 13} IR: 0x24000011 ACC: 13 ALU [a:14 b:1 => 13] FLAGS: [Z:0 N:0]  Action: LD $17 
+  DEBUG machine:new_tick {TICK: 1345 IP: 50 DA: 13} IR: 0x24000011 ACC: 49 ALU [a:14 b:1 => 13] FLAGS: [Z:0 N:0]  Action: LD $17 
+  DEBUG machine:new_tick {TICK: 1346 IP: 51 DA: 50} IR: 0xa8000000 ACC: 49 ALU [a:14 b:1 => 13] FLAGS: [Z:0 N:0]  Action: CMP #0 
+  DEBUG machine:new_tick {TICK: 1347 IP: 51 DA: 50} IR: 0xa8000000 ACC: 49 ALU [a:49 b:0 => 49] FLAGS: [Z:0 N:0]  Action: CMP #0 
+  DEBUG machine:new_tick {TICK: 1348 IP: 52 DA: 51} IR: 0xb0000039 ACC: 49 ALU [a:49 b:0 => 49] FLAGS: [Z:0 N:0]  Action: JE 57 
+  DEBUG machine:new_tick {TICK: 1349 IP: 53 DA: 52} IR: 0x30000002 ACC: 49 ALU [a:49 b:0 => 49] FLAGS: [Z:0 N:0]  Action: ST 2 
+  DEBUG machine:new_tick {TICK: 1350 IP: 53 DA: 2} IR: 0x30000002 ACC: 49 ALU [a:49 b:0 => 49] FLAGS: [Z:0 N:0]  Action: ST 2 
+  DEBUG machine:new_tick {TICK: 1351 IP: 53 DA: 2} IR: 0x30000002 ACC: 49 ALU [a:49 b:0 => 49] FLAGS: [Z:0 N:0]  Action: ST 2 
+  DEBUG machine:new_tick {TICK: 1352 IP: 54 DA: 53} IR: 0x20000011 ACC: 49 ALU [a:49 b:0 => 49] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1353 IP: 54 DA: 17} IR: 0x20000011 ACC: 49 ALU [a:49 b:0 => 49] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1354 IP: 54 DA: 17} IR: 0x20000011 ACC: 13 ALU [a:49 b:0 => 49] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1355 IP: 55 DA: 54} IR: 0x58000001 ACC: 13 ALU [a:49 b:0 => 49] FLAGS: [Z:0 N:0]  Action: SUB #1 
+  DEBUG machine:new_tick {TICK: 1356 IP: 55 DA: 54} IR: 0x58000001 ACC: 12 ALU [a:13 b:1 => 12] FLAGS: [Z:0 N:0]  Action: SUB #1 
+  DEBUG machine:new_tick {TICK: 1357 IP: 56 DA: 55} IR: 0x30000011 ACC: 12 ALU [a:13 b:1 => 12] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1358 IP: 56 DA: 17} IR: 0x30000011 ACC: 12 ALU [a:13 b:1 => 12] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1359 IP: 56 DA: 17} IR: 0x30000011 ACC: 12 ALU [a:13 b:1 => 12] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1360 IP: 57 DA: 56} IR: 0xf0000031 ACC: 12 ALU [a:13 b:1 => 12] FLAGS: [Z:0 N:0]  Action: JMP 49 
+  DEBUG machine:new_tick {TICK: 1361 IP: 49 DA: 56} IR: 0xf0000031 ACC: 12 ALU [a:13 b:1 => 12] FLAGS: [Z:0 N:0]  Action: JMP 49 
+  DEBUG machine:new_tick {TICK: 1362 IP: 50 DA: 49} IR: 0x24000011 ACC: 12 ALU [a:13 b:1 => 12] FLAGS: [Z:0 N:0]  Action: LD $17 
+  DEBUG machine:new_tick {TICK: 1363 IP: 50 DA: 17} IR: 0x24000011 ACC: 12 ALU [a:13 b:1 => 12] FLAGS: [Z:0 N:0]  Action: LD $17 
+  DEBUG machine:new_tick {TICK: 1364 IP: 50 DA: 12} IR: 0x24000011 ACC: 12 ALU [a:13 b:1 => 12] FLAGS: [Z:0 N:0]  Action: LD $17 
+  DEBUG machine:new_tick {TICK: 1365 IP: 50 DA: 12} IR: 0x24000011 ACC: 51 ALU [a:13 b:1 => 12] FLAGS: [Z:0 N:0]  Action: LD $17 
+  DEBUG machine:new_tick {TICK: 1366 IP: 51 DA: 50} IR: 0xa8000000 ACC: 51 ALU [a:13 b:1 => 12] FLAGS: [Z:0 N:0]  Action: CMP #0 
+  DEBUG machine:new_tick {TICK: 1367 IP: 51 DA: 50} IR: 0xa8000000 ACC: 51 ALU [a:51 b:0 => 51] FLAGS: [Z:0 N:0]  Action: CMP #0 
+  DEBUG machine:new_tick {TICK: 1368 IP: 52 DA: 51} IR: 0xb0000039 ACC: 51 ALU [a:51 b:0 => 51] FLAGS: [Z:0 N:0]  Action: JE 57 
+  DEBUG machine:new_tick {TICK: 1369 IP: 53 DA: 52} IR: 0x30000002 ACC: 51 ALU [a:51 b:0 => 51] FLAGS: [Z:0 N:0]  Action: ST 2 
+  DEBUG machine:new_tick {TICK: 1370 IP: 53 DA: 2} IR: 0x30000002 ACC: 51 ALU [a:51 b:0 => 51] FLAGS: [Z:0 N:0]  Action: ST 2 
+  DEBUG machine:new_tick {TICK: 1371 IP: 53 DA: 2} IR: 0x30000002 ACC: 51 ALU [a:51 b:0 => 51] FLAGS: [Z:0 N:0]  Action: ST 2 
+  DEBUG machine:new_tick {TICK: 1372 IP: 54 DA: 53} IR: 0x20000011 ACC: 51 ALU [a:51 b:0 => 51] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1373 IP: 54 DA: 17} IR: 0x20000011 ACC: 51 ALU [a:51 b:0 => 51] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1374 IP: 54 DA: 17} IR: 0x20000011 ACC: 12 ALU [a:51 b:0 => 51] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1375 IP: 55 DA: 54} IR: 0x58000001 ACC: 12 ALU [a:51 b:0 => 51] FLAGS: [Z:0 N:0]  Action: SUB #1 
+  DEBUG machine:new_tick {TICK: 1376 IP: 55 DA: 54} IR: 0x58000001 ACC: 11 ALU [a:12 b:1 => 11] FLAGS: [Z:0 N:0]  Action: SUB #1 
+  DEBUG machine:new_tick {TICK: 1377 IP: 56 DA: 55} IR: 0x30000011 ACC: 11 ALU [a:12 b:1 => 11] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1378 IP: 56 DA: 17} IR: 0x30000011 ACC: 11 ALU [a:12 b:1 => 11] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1379 IP: 56 DA: 17} IR: 0x30000011 ACC: 11 ALU [a:12 b:1 => 11] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1380 IP: 57 DA: 56} IR: 0xf0000031 ACC: 11 ALU [a:12 b:1 => 11] FLAGS: [Z:0 N:0]  Action: JMP 49 
+  DEBUG machine:new_tick {TICK: 1381 IP: 49 DA: 56} IR: 0xf0000031 ACC: 11 ALU [a:12 b:1 => 11] FLAGS: [Z:0 N:0]  Action: JMP 49 
+  DEBUG machine:new_tick {TICK: 1382 IP: 50 DA: 49} IR: 0x24000011 ACC: 11 ALU [a:12 b:1 => 11] FLAGS: [Z:0 N:0]  Action: LD $17 
+  DEBUG machine:new_tick {TICK: 1383 IP: 50 DA: 17} IR: 0x24000011 ACC: 11 ALU [a:12 b:1 => 11] FLAGS: [Z:0 N:0]  Action: LD $17 
+  DEBUG machine:new_tick {TICK: 1384 IP: 50 DA: 11} IR: 0x24000011 ACC: 11 ALU [a:12 b:1 => 11] FLAGS: [Z:0 N:0]  Action: LD $17 
+  DEBUG machine:new_tick {TICK: 1385 IP: 50 DA: 11} IR: 0x24000011 ACC: 55 ALU [a:12 b:1 => 11] FLAGS: [Z:0 N:0]  Action: LD $17 
+  DEBUG machine:new_tick {TICK: 1386 IP: 51 DA: 50} IR: 0xa8000000 ACC: 55 ALU [a:12 b:1 => 11] FLAGS: [Z:0 N:0]  Action: CMP #0 
+  DEBUG machine:new_tick {TICK: 1387 IP: 51 DA: 50} IR: 0xa8000000 ACC: 55 ALU [a:55 b:0 => 55] FLAGS: [Z:0 N:0]  Action: CMP #0 
+  DEBUG machine:new_tick {TICK: 1388 IP: 52 DA: 51} IR: 0xb0000039 ACC: 55 ALU [a:55 b:0 => 55] FLAGS: [Z:0 N:0]  Action: JE 57 
+  DEBUG machine:new_tick {TICK: 1389 IP: 53 DA: 52} IR: 0x30000002 ACC: 55 ALU [a:55 b:0 => 55] FLAGS: [Z:0 N:0]  Action: ST 2 
+  DEBUG machine:new_tick {TICK: 1390 IP: 53 DA: 2} IR: 0x30000002 ACC: 55 ALU [a:55 b:0 => 55] FLAGS: [Z:0 N:0]  Action: ST 2 
+  DEBUG machine:new_tick {TICK: 1391 IP: 53 DA: 2} IR: 0x30000002 ACC: 55 ALU [a:55 b:0 => 55] FLAGS: [Z:0 N:0]  Action: ST 2 
+  DEBUG machine:new_tick {TICK: 1392 IP: 54 DA: 53} IR: 0x20000011 ACC: 55 ALU [a:55 b:0 => 55] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1393 IP: 54 DA: 17} IR: 0x20000011 ACC: 55 ALU [a:55 b:0 => 55] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1394 IP: 54 DA: 17} IR: 0x20000011 ACC: 11 ALU [a:55 b:0 => 55] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1395 IP: 55 DA: 54} IR: 0x58000001 ACC: 11 ALU [a:55 b:0 => 55] FLAGS: [Z:0 N:0]  Action: SUB #1 
+  DEBUG machine:new_tick {TICK: 1396 IP: 55 DA: 54} IR: 0x58000001 ACC: 10 ALU [a:11 b:1 => 10] FLAGS: [Z:0 N:0]  Action: SUB #1 
+  DEBUG machine:new_tick {TICK: 1397 IP: 56 DA: 55} IR: 0x30000011 ACC: 10 ALU [a:11 b:1 => 10] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1398 IP: 56 DA: 17} IR: 0x30000011 ACC: 10 ALU [a:11 b:1 => 10] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1399 IP: 56 DA: 17} IR: 0x30000011 ACC: 10 ALU [a:11 b:1 => 10] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1400 IP: 57 DA: 56} IR: 0xf0000031 ACC: 10 ALU [a:11 b:1 => 10] FLAGS: [Z:0 N:0]  Action: JMP 49 
+  DEBUG machine:new_tick {TICK: 1401 IP: 49 DA: 56} IR: 0xf0000031 ACC: 10 ALU [a:11 b:1 => 10] FLAGS: [Z:0 N:0]  Action: JMP 49 
+  DEBUG machine:new_tick {TICK: 1402 IP: 50 DA: 49} IR: 0x24000011 ACC: 10 ALU [a:11 b:1 => 10] FLAGS: [Z:0 N:0]  Action: LD $17 
+  DEBUG machine:new_tick {TICK: 1403 IP: 50 DA: 17} IR: 0x24000011 ACC: 10 ALU [a:11 b:1 => 10] FLAGS: [Z:0 N:0]  Action: LD $17 
+  DEBUG machine:new_tick {TICK: 1404 IP: 50 DA: 10} IR: 0x24000011 ACC: 10 ALU [a:11 b:1 => 10] FLAGS: [Z:0 N:0]  Action: LD $17 
+  DEBUG machine:new_tick {TICK: 1405 IP: 50 DA: 10} IR: 0x24000011 ACC: 51 ALU [a:11 b:1 => 10] FLAGS: [Z:0 N:0]  Action: LD $17 
+  DEBUG machine:new_tick {TICK: 1406 IP: 51 DA: 50} IR: 0xa8000000 ACC: 51 ALU [a:11 b:1 => 10] FLAGS: [Z:0 N:0]  Action: CMP #0 
+  DEBUG machine:new_tick {TICK: 1407 IP: 51 DA: 50} IR: 0xa8000000 ACC: 51 ALU [a:51 b:0 => 51] FLAGS: [Z:0 N:0]  Action: CMP #0 
+  DEBUG machine:new_tick {TICK: 1408 IP: 52 DA: 51} IR: 0xb0000039 ACC: 51 ALU [a:51 b:0 => 51] FLAGS: [Z:0 N:0]  Action: JE 57 
+  DEBUG machine:new_tick {TICK: 1409 IP: 53 DA: 52} IR: 0x30000002 ACC: 51 ALU [a:51 b:0 => 51] FLAGS: [Z:0 N:0]  Action: ST 2 
+  DEBUG machine:new_tick {TICK: 1410 IP: 53 DA: 2} IR: 0x30000002 ACC: 51 ALU [a:51 b:0 => 51] FLAGS: [Z:0 N:0]  Action: ST 2 
+  DEBUG machine:new_tick {TICK: 1411 IP: 53 DA: 2} IR: 0x30000002 ACC: 51 ALU [a:51 b:0 => 51] FLAGS: [Z:0 N:0]  Action: ST 2 
+  DEBUG machine:new_tick {TICK: 1412 IP: 54 DA: 53} IR: 0x20000011 ACC: 51 ALU [a:51 b:0 => 51] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1413 IP: 54 DA: 17} IR: 0x20000011 ACC: 51 ALU [a:51 b:0 => 51] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1414 IP: 54 DA: 17} IR: 0x20000011 ACC: 10 ALU [a:51 b:0 => 51] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1415 IP: 55 DA: 54} IR: 0x58000001 ACC: 10 ALU [a:51 b:0 => 51] FLAGS: [Z:0 N:0]  Action: SUB #1 
+  DEBUG machine:new_tick {TICK: 1416 IP: 55 DA: 54} IR: 0x58000001 ACC: 9 ALU [a:10 b:1 => 9] FLAGS: [Z:0 N:0]  Action: SUB #1 
+  DEBUG machine:new_tick {TICK: 1417 IP: 56 DA: 55} IR: 0x30000011 ACC: 9 ALU [a:10 b:1 => 9] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1418 IP: 56 DA: 17} IR: 0x30000011 ACC: 9 ALU [a:10 b:1 => 9] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1419 IP: 56 DA: 17} IR: 0x30000011 ACC: 9 ALU [a:10 b:1 => 9] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1420 IP: 57 DA: 56} IR: 0xf0000031 ACC: 9 ALU [a:10 b:1 => 9] FLAGS: [Z:0 N:0]  Action: JMP 49 
+  DEBUG machine:new_tick {TICK: 1421 IP: 49 DA: 56} IR: 0xf0000031 ACC: 9 ALU [a:10 b:1 => 9] FLAGS: [Z:0 N:0]  Action: JMP 49 
+  DEBUG machine:new_tick {TICK: 1422 IP: 50 DA: 49} IR: 0x24000011 ACC: 9 ALU [a:10 b:1 => 9] FLAGS: [Z:0 N:0]  Action: LD $17 
+  DEBUG machine:new_tick {TICK: 1423 IP: 50 DA: 17} IR: 0x24000011 ACC: 9 ALU [a:10 b:1 => 9] FLAGS: [Z:0 N:0]  Action: LD $17 
+  DEBUG machine:new_tick {TICK: 1424 IP: 50 DA: 9} IR: 0x24000011 ACC: 9 ALU [a:10 b:1 => 9] FLAGS: [Z:0 N:0]  Action: LD $17 
+  DEBUG machine:new_tick {TICK: 1425 IP: 50 DA: 9} IR: 0x24000011 ACC: 50 ALU [a:10 b:1 => 9] FLAGS: [Z:0 N:0]  Action: LD $17 
+  DEBUG machine:new_tick {TICK: 1426 IP: 51 DA: 50} IR: 0xa8000000 ACC: 50 ALU [a:10 b:1 => 9] FLAGS: [Z:0 N:0]  Action: CMP #0 
+  DEBUG machine:new_tick {TICK: 1427 IP: 51 DA: 50} IR: 0xa8000000 ACC: 50 ALU [a:50 b:0 => 50] FLAGS: [Z:0 N:0]  Action: CMP #0 
+  DEBUG machine:new_tick {TICK: 1428 IP: 52 DA: 51} IR: 0xb0000039 ACC: 50 ALU [a:50 b:0 => 50] FLAGS: [Z:0 N:0]  Action: JE 57 
+  DEBUG machine:new_tick {TICK: 1429 IP: 53 DA: 52} IR: 0x30000002 ACC: 50 ALU [a:50 b:0 => 50] FLAGS: [Z:0 N:0]  Action: ST 2 
+  DEBUG machine:new_tick {TICK: 1430 IP: 53 DA: 2} IR: 0x30000002 ACC: 50 ALU [a:50 b:0 => 50] FLAGS: [Z:0 N:0]  Action: ST 2 
+  DEBUG machine:new_tick {TICK: 1431 IP: 53 DA: 2} IR: 0x30000002 ACC: 50 ALU [a:50 b:0 => 50] FLAGS: [Z:0 N:0]  Action: ST 2 
+  DEBUG machine:new_tick {TICK: 1432 IP: 54 DA: 53} IR: 0x20000011 ACC: 50 ALU [a:50 b:0 => 50] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1433 IP: 54 DA: 17} IR: 0x20000011 ACC: 50 ALU [a:50 b:0 => 50] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1434 IP: 54 DA: 17} IR: 0x20000011 ACC: 9 ALU [a:50 b:0 => 50] FLAGS: [Z:0 N:0]  Action: LD 17 
+  DEBUG machine:new_tick {TICK: 1435 IP: 55 DA: 54} IR: 0x58000001 ACC: 9 ALU [a:50 b:0 => 50] FLAGS: [Z:0 N:0]  Action: SUB #1 
+  DEBUG machine:new_tick {TICK: 1436 IP: 55 DA: 54} IR: 0x58000001 ACC: 8 ALU [a:9 b:1 => 8] FLAGS: [Z:0 N:0]  Action: SUB #1 
+  DEBUG machine:new_tick {TICK: 1437 IP: 56 DA: 55} IR: 0x30000011 ACC: 8 ALU [a:9 b:1 => 8] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1438 IP: 56 DA: 17} IR: 0x30000011 ACC: 8 ALU [a:9 b:1 => 8] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1439 IP: 56 DA: 17} IR: 0x30000011 ACC: 8 ALU [a:9 b:1 => 8] FLAGS: [Z:0 N:0]  Action: ST 17 
+  DEBUG machine:new_tick {TICK: 1440 IP: 57 DA: 56} IR: 0xf0000031 ACC: 8 ALU [a:9 b:1 => 8] FLAGS: [Z:0 N:0]  Action: JMP 49 
+  DEBUG machine:new_tick {TICK: 1441 IP: 49 DA: 56} IR: 0xf0000031 ACC: 8 ALU [a:9 b:1 => 8] FLAGS: [Z:0 N:0]  Action: JMP 49 
+  DEBUG machine:new_tick {TICK: 1442 IP: 50 DA: 49} IR: 0x24000011 ACC: 8 ALU [a:9 b:1 => 8] FLAGS: [Z:0 N:0]  Action: LD $17 
+  DEBUG machine:new_tick {TICK: 1443 IP: 50 DA: 17} IR: 0x24000011 ACC: 8 ALU [a:9 b:1 => 8] FLAGS: [Z:0 N:0]  Action: LD $17 
+  DEBUG machine:new_tick {TICK: 1444 IP: 50 DA: 8} IR: 0x24000011 ACC: 8 ALU [a:9 b:1 => 8] FLAGS: [Z:0 N:0]  Action: LD $17 
+  DEBUG machine:new_tick {TICK: 1445 IP: 50 DA: 8} IR: 0x24000011 ACC: 0 ALU [a:9 b:1 => 8] FLAGS: [Z:0 N:0]  Action: LD $17 
+  DEBUG machine:new_tick {TICK: 1446 IP: 51 DA: 50} IR: 0xa8000000 ACC: 0 ALU [a:9 b:1 => 8] FLAGS: [Z:0 N:0]  Action: CMP #0 
+  DEBUG machine:new_tick {TICK: 1447 IP: 51 DA: 50} IR: 0xa8000000 ACC: 0 ALU [a:0 b:0 => 0] FLAGS: [Z:1 N:0]  Action: CMP #0 
+  DEBUG machine:new_tick {TICK: 1448 IP: 52 DA: 51} IR: 0xb0000039 ACC: 0 ALU [a:0 b:0 => 0] FLAGS: [Z:1 N:0]  Action: JE 57 
+  DEBUG machine:new_tick {TICK: 1449 IP: 57 DA: 51} IR: 0xb0000039 ACC: 0 ALU [a:0 b:0 => 0] FLAGS: [Z:1 N:0]  Action: JE 57 
+  DEBUG machine:new_tick {TICK: 1450 IP: 58 DA: 57} IR: 0x10000000 ACC: 0 ALU [a:0 b:0 => 0] FLAGS: [Z:1 N:0]  Action: HLT
+  DEBUG machine:simulation Memory after stop
+  JMP 18 
+  NOP 0 
+  NOP 50 
+  NOP 4 
+  NOP 3524578 
+  NOP 5702887 
+  NOP 1 
+  NOP 4000000 
+  NOP 0 
+  NOP 50 
+  NOP 51 
+  NOP 55 
+  NOP 51 
+  NOP 49 
+  NOP 54 
+  NOP 52 
+  NOP 0 
+  NOP 8 
+  LD 5 
+  AND 6 
+  JE 22 
+  JMP 25 
+  LD 3 
+  ADD 5 
+  ST 3 
+  LD 5 
+  ADD 4 
+  ST 5 
+  SUB 4 
+  ST 4 
+  LD 5 
+  SUB 7 
+  JL 18 
+  LD 17 
+  ADD #1 
+  ST 17 
+  LD 3 
+  MOD #10 
+  ADD #48 
+  ST $17 
+  LD 3 
+  DIV #10 
+  CMP #0 
+  JE 49 
+  ST 3 
+  LD 17 
+  ADD #1 
+  ST 17 
+  JMP 36 
+  LD $17 
+  CMP #0 
+  JE 57 
+  ST 2 
+  LD 17 
+  SUB #1 
+  ST 17 
+  JMP 49 
+  HLT
+
+output: |
+  Размер бинарного файла: 232 байта, что равняется 58 ячейкам
+  JMP "18 
+      "#0 
+      "#0 
+      "#0 
+      "#1 
+      "#2 
+      "#1 
+      "#4000000 
+      "#0 
+      "#0 
+      "#0 
+      "#0 
+      "#0 
+      "#0 
+      "#0 
+      "#0 
+      "#0 
+      "#8 
+   LD "5 
+  AND "6 
+   JE "22 
+  JMP "25 
+   LD "3 
+  ADD "5 
+   ST "3 
+   LD "5 
+  ADD "4 
+   ST "5 
+  SUB "4 
+   ST "4 
+   LD "5 
+  SUB "7 
+   JL "18 
+   LD "17 
+  ADD "#1 
+   ST "17 
+   LD "3 
+  MOD "#10 
+  ADD "#48 
+   ST "$17 
+   LD "3 
+  DIV "#10 
+  CMP "#0 
+   JE "49 
+   ST "3 
+   LD "17 
+  ADD "#1 
+   ST "17 
+  JMP "36 
+   LD "$17 
+  CMP "#0 
+   JE "57 
+   ST "2 
+   LD "17 
+  SUB "#1 
+   ST "17 
+  JMP "49 
+  HLT " 
+  ============================================================
+  4613732
+  instr_counter:  543 ticks: 1451
+struct_code: |
+  JMP  18
+       #0
+       #0
+       #0
+       #1
+       #2
+       #1
+       #4000000
+       #0
+       #0
+       #0
+       #0
+       #0
+       #0
+       #0
+       #0
+       #0
+       #8
+   LD  5
+  AND  6
+   JE  22
+  JMP  25
+   LD  3
+  ADD  5
+   ST  3
+   LD  5
+  ADD  4
+   ST  5
+  SUB  4
+   ST  4
+   LD  5
+  SUB  7
+   JL  18
+   LD  17
+  ADD  #1
+   ST  17
+   LD  3
+  MOD  #10
+  ADD  #48
+   ST  $17
+   LD  3
+  DIV  #10
+  CMP  #0
+   JE  49
+   ST  3
+   LD  17
+  ADD  #1
+   ST  17
+  JMP  36
+   LD  $17
+  CMP  #0
+   JE  57
+   ST  2
+   LD  17
+  SUB  #1
+   ST  17
+  JMP  49
+  HLT  
+binary_code: !!binary |
+  8AAAEgAAAAAAAAAAAAAAAAAAAAEAAAACAAAAAQA9CQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+  AAAAAAAAAAAAAAAAAAAIIAAABWAAAAawAAAW8AAAGSAAAANAAAAFMAAAAyAAAAVAAAAEMAAABVAA
+  AAQwAAAEIAAABVAAAAfQAAASIAAAEUgAAAEwAAARIAAAA5gAAApIAAAwNAAAESAAAAOIAAAKqAAA
+  ALAAADEwAAADIAAAEUgAAAEwAAAR8AAAJCQAABGoAAAAsAAAOTAAAAIgAAARWAAAATAAABHwAAAx
+  EAAAAA==
